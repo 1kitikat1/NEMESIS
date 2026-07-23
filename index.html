@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEMESIS STEAM BOOSTER | Registration</title>
     <style>
-        /* КИБЕРСПОРТИВНЫЙ LIQUID GLASS ДИЗАЙН */
+        /* --- ВСЕ ТВОИ СТИЛИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ --- */
         * {
             margin: 0;
             padding: 0;
@@ -13,15 +13,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
         }
-
         body {
             background: linear-gradient(135deg, #0a050f 0%, #1e0a30 100%);
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
         }
-
-        /* ЗАДНИЙ ФОН: НЕОНОВЫЕ СВЕТЯЩИЕСЯ СФЕРЫ */
         .bg-glow {
             position: absolute;
             width: 500px;
@@ -32,7 +29,6 @@
             z-index: 0;
             pointer-events: none;
         }
-
         .bg-glow-2 {
             position: absolute;
             width: 400px;
@@ -43,8 +39,6 @@
             z-index: 0;
             pointer-events: none;
         }
-
-        /* ВЕРХНЯЯ ПАНЕЛЬ (HEADER) */
         header {
             display: flex;
             justify-content: space-between;
@@ -53,13 +47,11 @@
             position: relative;
             z-index: 10;
         }
-
         .logo-block {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .logo-circle {
             width: 38px;
             height: 38px;
@@ -74,7 +66,6 @@
             color: #ffffff;
             box-shadow: 0 0 15px rgba(186, 0, 255, 0.6);
         }
-
         .logo-text {
             font-size: 20px;
             font-weight: 900;
@@ -83,7 +74,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         nav a {
             color: #aaaaaa;
             text-decoration: none;
@@ -92,13 +82,10 @@
             margin-left: 30px;
             transition: 0.3s;
         }
-
         nav a.active {
             color: #ba00ff;
             text-shadow: 0 0 10px rgba(186, 0, 255, 0.5);
         }
-
-        /* ГЛАВНЫЙ БЛОК (HERO SECTION) */
         .container {
             display: flex;
             justify-content: space-between;
@@ -109,31 +96,25 @@
             z-index: 5;
             gap: 40px;
         }
-
         .hero-info {
             max-width: 550px;
         }
-
         .hero-info h1 {
             font-size: 46px;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
         }
-
         .hero-info h1 span {
             color: #ba00ff;
             text-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
         }
-
         .hero-info p {
             color: #b3b3b3;
             font-size: 15px;
             line-height: 1.6;
             margin-bottom: 35px;
         }
-
-        /* КНОПКА СКАЧИВАНИЯ С НЕОНОВЫМ ПЕРЕЛИВОМ */
         .btn-download {
             display: inline-flex;
             align-items: center;
@@ -149,14 +130,11 @@
             box-shadow: 0 0 15px rgba(186, 0, 255, 0.2);
             transition: 0.3s;
         }
-
         .btn-download:hover {
             background: #ba00ff;
             box-shadow: 0 0 25px rgba(186, 0, 255, 0.6);
             transform: translateY(-2px);
         }
-
-        /* МАТОВАЯ ПАНЕЛЬ РЕГИСТРАЦИИ (GLASS AUTH) */
         .auth-card {
             width: 380px;
             background: rgba(25, 12, 40, 0.6);
@@ -170,7 +148,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             position: relative;
         }
-
         .auth-card h2 {
             font-size: 20px;
             font-weight: 800;
@@ -178,7 +155,6 @@
             letter-spacing: 0.5px;
             margin-bottom: 8px;
         }
-
         .auth-card .sub-title {
             font-size: 11px;
             color: #777777;
@@ -187,12 +163,10 @@
             letter-spacing: 1px;
             margin-bottom: 30px;
         }
-
         .input-group {
             position: relative;
             margin-bottom: 20px;
         }
-
         .input-group input {
             width: 100%;
             padding: 12px 15px;
@@ -204,12 +178,10 @@
             outline: none;
             transition: 0.3s;
         }
-
         .input-group input:focus {
             border-color: #ba00ff;
             box-shadow: 0 0 10px rgba(186, 0, 255, 0.2);
         }
-
         .btn-submit {
             width: 100%;
             padding: 12px;
@@ -223,13 +195,10 @@
             transition: 0.3s;
             margin-top: 10px;
         }
-
         .btn-submit:hover {
             background: #ba00ff;
             box-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
         }
-
-        /* АДАПТИВНОСТЬ ПОД МОБИЛКИ */
         @media (max-width: 900px) {
             header { padding: 20px 4%; }
             .container {
@@ -249,7 +218,6 @@
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
 
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
     <header>
         <div class="logo-block">
             <div class="logo-circle">N</div>
@@ -261,7 +229,6 @@
         </nav>
     </header>
 
-    <!-- ГЛАВНЫЙ БЛОК -->
     <div class="container">
         <div class="hero-info">
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
@@ -269,7 +236,6 @@
             <a href="NemesisSteam.exe" class="btn-download" download>DOWNLOAD LAUNCHER (.EXE)</a>
         </div>
 
-        <!-- ФОРМА СТРОГОЙ РЕГИСТРАЦИИ -->
         <div class="auth-card">
             <h2>NEMESIS REGISTRATION</h2>
             <div class="sub-title">CREATE NEW EXCLUSIVE ACCESS TOKEN</div>
@@ -286,31 +252,77 @@
         </div>
     </div>
 
-    <script>
-        // ИНТЕГРАЦИЯ С ТВОЕЙ ОБЛАЧНОЙ БАЗОЙ ДАННЫХ FIREBASE
-        function handleRegister(event) {
+    <!-- ИСПРАВЛЕННЫЙ ИНТЕГРАЦИОННЫЙ СКРИПТ -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        // ИМПОРТЫ FIREBASE
+        import { initializeApp } from "firebase/app";
+        import { getDatabase, ref, set, get, child } from "firebase/database";
+
+        // ⚠️ ЗАМЕНИ ЭТИ ДАННЫЕ НА СВОИ ИЗ КОНСОЛИ FIREBASE (Шаг 1)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummyKeyReplaceWithYourOwn",
+            authDomain: "nemesissteam-13577.firebaseapp.com",
+            databaseURL: "https://nemesissteam-13577-default-rtdb.firebaseio.com",
+            projectId: "nemesissteam-13577",
+            storageBucket: "nemesissteam-13577.firebasestorage.app",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
+        };
+
+        // ИНИЦИАЛИЗАЦИЯ
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        console.log("✅ Firebase подключен!");
+
+        // ДЕЛАЕМ ФУНКЦИЮ ГЛОБАЛЬНОЙ ДЛЯ HTML
+        window.handleRegister = async function(event) {
             event.preventDefault();
+
             const user = document.getElementById("reg-user").value.trim();
             const pass = document.getElementById("reg-pass").value.trim();
 
-            // Твоя личная сетевая ссылка
-            const firebaseURL = `https://firebaseio.com{user}.json`;
+            if (user.length < 3) {
+                alert("❌ Имя пользователя должно быть не менее 3 символов!");
+                return;
+            }
+            if (pass.length < 4) {
+                alert("❌ Пароль должен быть не менее 4 символов!");
+                return;
+            }
 
-            fetch(firebaseURL, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password: pass })
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert(`[Nemesis DB] Аккаунт ${user} успешно зарегистрирован! Введите эти данные в лаунчере.`);
-                    document.getElementById("reg-form").reset();
-                } else {
-                    alert("[Nemesis DB] Ошибка сервера. Попробуйте другой логин.");
-                }
-            })
-            .catch(error => alert("[Nemesis DB] Ошибка сети: " + error));
-        }
+            // 1. ПРОВЕРКА: ЕСТЬ ЛИ ПОЛЬЗОВАТЕЛЬ?
+            const userRef = ref(db, `users/${user}`);
+            const snapshot = await get(child(ref(db), `users/${user}`));
+
+            if (snapshot.exists()) {
+                alert("❌ Пользователь с таким именем уже существует!");
+                return;
+            }
+
+            // 2. СОХРАНЕНИЕ ДАННЫХ (пароль в открытом виде для простоты, позже добавим хеширование)
+            try {
+                await set(userRef, {
+                    password: pass,
+                    createdAt: new Date().toISOString()
+                });
+                alert(`✅ Аккаунт ${user} успешно зарегистрирован!`);
+                document.getElementById("reg-form").reset();
+            } catch (error) {
+                console.error("Ошибка записи:", error);
+                alert("❌ Ошибка сервера. Подробности в консоли (F12).");
+            }
+        };
+
+        console.log("📝 Функция handleRegister готова!");
     </script>
 </body>
 </html>
