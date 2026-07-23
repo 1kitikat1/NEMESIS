@@ -51,19 +51,13 @@
             align-items: center;
             gap: 12px;
         }
-        .logo-circle {
+        .logo-img {
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: #0a050f;
             border: 2px solid #ba00ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            color: #ffffff;
             box-shadow: 0 0 15px rgba(186, 0, 255, 0.6);
+            object-fit: cover;
         }
         .logo-text {
             font-size: 20px;
@@ -317,7 +311,7 @@
 
     <header>
         <div class="logo-block">
-            <div class="logo-circle">N</div>
+            <img src="logo.png" alt="NEMESIS" class="logo-img">
             <div class="logo-text">NEMESIS CORE</div>
         </div>
         <nav>
@@ -410,7 +404,6 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
         import { getDatabase, ref, set, get } from "firebase/database";
 
-        // ===== КОНФИГ (СКРЫТ ОТ ПОЛЬЗОВАТЕЛЕЙ) =====
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
             authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -434,7 +427,6 @@
         const navHome = document.getElementById('nav-home');
         const downloadSection = document.getElementById('download-section');
 
-        // ===== ПОКАЗАТЬ АККАУНТ =====
         function showAccount(userData) {
             authFormContainer.style.display = 'none';
             accountInfo.classList.add('active');
@@ -448,7 +440,6 @@
             document.getElementById('acc-status').textContent = 'Активен';
         }
 
-        // ===== ПОКАЗАТЬ ФОРМУ ВХОДА =====
         function showAuthForm() {
             authFormContainer.style.display = 'block';
             accountInfo.classList.remove('active');
@@ -457,7 +448,6 @@
             navAccount.classList.remove('active');
         }
 
-        // ===== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА =====
         async function updateUI(user) {
             if (user) {
                 try {
@@ -487,7 +477,6 @@
             }
         }
 
-        // ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ВХОДОМ И РЕГИСТРАЦИЕЙ =====
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
             
@@ -521,7 +510,6 @@
             statusDiv.style.color = '#888';
         });
 
-        // ===== ОБРАБОТЧИК ФОРМЫ =====
         window.handleAuth = async function(event) {
             event.preventDefault();
             
@@ -533,13 +521,11 @@
 
             try {
                 if (isLoginMode) {
-                    // ===== ВХОД =====
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     await updateUI(userCredential.user);
                     document.getElementById('auth-form').reset();
                     
                 } else {
-                    // ===== РЕГИСТРАЦИЯ =====
                     const username = document.getElementById('reg-username').value.trim();
                     const passwordRepeat = document.getElementById('auth-pass-repeat').value;
                     
@@ -605,7 +591,6 @@
             }
         };
 
-        // ===== ВЫХОД =====
         document.getElementById('btn-logout').addEventListener('click', async function() {
             try {
                 await signOut(auth);
@@ -616,7 +601,6 @@
             }
         });
 
-        // ===== НАВИГАЦИЯ =====
         navHome.addEventListener('click', function(e) {
             e.preventDefault();
             if (auth.currentUser) {
@@ -641,7 +625,6 @@
             showAccount(userData);
         });
 
-        // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 console.log('👤 Пользователь авторизован');
@@ -652,7 +635,6 @@
             }
         });
 
-        // ===== ТОСТ УВЕДОМЛЕНИЕ =====
         function showCustomToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = `
