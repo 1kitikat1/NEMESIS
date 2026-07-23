@@ -73,17 +73,33 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
         nav a {
             color: #aaaaaa;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            margin-left: 30px;
             transition: 0.3s;
         }
         nav a.active {
             color: #ba00ff;
             text-shadow: 0 0 10px rgba(186, 0, 255, 0.5);
+        }
+        nav a:hover {
+            color: #ba00ff;
+        }
+        .nav-user {
+            color: #ba00ff !important;
+            font-weight: 700 !important;
+            font-size: 13px !important;
+            background: rgba(186, 0, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(186, 0, 255, 0.3);
         }
         .container {
             display: flex;
@@ -154,6 +170,7 @@
             padding: 40px 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             position: relative;
+            min-height: 400px;
         }
         .auth-card h2 {
             font-size: 20px;
@@ -233,6 +250,50 @@
             color: #888;
             min-height: 20px;
         }
+        /* ===== СТИЛИ ДЛЯ АККАУНТА ===== */
+        .account-info {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .account-info.active {
+            display: flex;
+        }
+        .account-info .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .account-info .info-label {
+            color: #888;
+            font-size: 13px;
+        }
+        .account-info .info-value {
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .account-info .info-value.highlight {
+            color: #ba00ff;
+        }
+        .btn-logout {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 0, 55, 0.1);
+            border: 1px solid rgba(255, 0, 55, 0.3);
+            color: #ff4455;
+            font-weight: 700;
+            font-size: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-logout:hover {
+            background: rgba(255, 0, 55, 0.2);
+            border-color: #ff4455;
+        }
         @media (max-width: 900px) {
             header { padding: 20px 4%; }
             .container { 
@@ -245,7 +306,8 @@
                 max-width: 100%;
             }
             .auth-card { width: 100%; max-width: 380px; }
-            nav { display: none; }
+            nav { flex-wrap: wrap; justify-content: center; }
+            nav a { font-size: 12px; margin: 0 8px; }
         }
     </style>
 </head>
@@ -260,53 +322,79 @@
             <div class="logo-text">NEMESIS CORE</div>
         </div>
         <nav>
-            <a href="#" class="active">ГЛАВНАЯ</a>
+            <a href="#" class="active" id="nav-home">ГЛАВНАЯ</a>
+            <a href="#" id="nav-account" class="hidden nav-user">АККАУНТ</a>
         </nav>
     </header>
 
     <div class="container">
         <!-- ЛЕВАЯ ЧАСТЬ - СКАЧИВАНИЕ -->
-        <div class="download-section">
+        <div class="download-section" id="download-section">
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam. Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
             <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР (.EXE)</a>
             <div class="download-note">Скачивание доступно без регистрации</div>
         </div>
 
-        <!-- ПРАВАЯ ЧАСТЬ - АВТОРИЗАЦИЯ -->
-        <div class="auth-card">
-            <h2 id="form-title">NEMESIS ВХОД</h2>
-            <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
-            
-            <form id="auth-form" onsubmit="handleAuth(event)">
-                <!-- ПОЛЯ ДЛЯ РЕГИСТРАЦИИ (скрыты по умолчанию) -->
-                <div id="reg-fields" class="hidden">
-                    <div class="input-group">
-                        <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ (НИК)" autocomplete="off">
+        <!-- ПРАВАЯ ЧАСТЬ - АВТОРИЗАЦИЯ / АККАУНТ -->
+        <div class="auth-card" id="auth-card">
+            <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
+            <div id="auth-form-container">
+                <h2 id="form-title">NEMESIS ВХОД</h2>
+                <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+                
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <div id="reg-fields" class="hidden">
+                        <div class="input-group">
+                            <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ (НИК)" autocomplete="off">
+                        </div>
                     </div>
+                    
+                    <div class="input-group">
+                        <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password">
+                    </div>
+                    
+                    <div id="reg-pass-repeat" class="input-group hidden">
+                        <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password">
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
+                </form>
+                
+                <div class="toggle-mode">
+                    <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
                 </div>
                 
-                <!-- ОБЩИЕ ПОЛЯ -->
-                <div class="input-group">
-                    <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email">
-                </div>
-                <div class="input-group">
-                    <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password">
-                </div>
-                
-                <!-- ПОЛЕ ПОВТОРА ПАРОЛЯ (для регистрации) -->
-                <div id="reg-pass-repeat" class="input-group hidden">
-                    <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password">
-                </div>
-                
-                <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
-            </form>
-            
-            <div class="toggle-mode">
-                <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+                <div id="auth-status"></div>
             </div>
-            
-            <div id="auth-status"></div>
+
+            <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ (появляется после входа) -->
+            <div class="account-info" id="account-info">
+                <h2 style="font-size:20px; font-weight:800; text-align:center; margin-bottom:5px;">👤 АККАУНТ</h2>
+                <div class="sub-title" style="text-align:center; font-size:11px; color:#777; margin-bottom:20px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
+                
+                <div class="info-row">
+                    <span class="info-label">Имя пользователя</span>
+                    <span class="info-value highlight" id="acc-username">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email</span>
+                    <span class="info-value" id="acc-email">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Дата регистрации</span>
+                    <span class="info-value" id="acc-date">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Статус</span>
+                    <span class="info-value" style="color:#00ff88;" id="acc-status">Активен</span>
+                </div>
+                
+                <button class="btn-logout" id="btn-logout">ВЫЙТИ ИЗ АККАУНТА</button>
+            </div>
         </div>
     </div>
 
@@ -322,10 +410,9 @@
 
     <script type="module">
         import { initializeApp } from "firebase/app";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
         import { getDatabase, ref, set, get } from "firebase/database";
 
-        // ===== ТВОИ РЕАЛЬНЫЕ ДАННЫЕ FIREBASE =====
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
             authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -344,6 +431,66 @@
 
         let isLoginMode = true;
         const statusDiv = document.getElementById('auth-status');
+        const authFormContainer = document.getElementById('auth-form-container');
+        const accountInfo = document.getElementById('account-info');
+        const navAccount = document.getElementById('nav-account');
+        const navHome = document.getElementById('nav-home');
+        const downloadSection = document.getElementById('download-section');
+
+        // ===== ПОКАЗАТЬ АККАУНТ =====
+        function showAccount(userData) {
+            authFormContainer.style.display = 'none';
+            accountInfo.classList.add('active');
+            navAccount.classList.remove('hidden');
+            navHome.classList.remove('active');
+            navAccount.classList.add('active');
+            
+            document.getElementById('acc-username').textContent = userData.username || '—';
+            document.getElementById('acc-email').textContent = userData.email || '—';
+            document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
+            document.getElementById('acc-status').textContent = 'Активен';
+        }
+
+        // ===== ПОКАЗАТЬ ФОРМУ ВХОДА =====
+        function showAuthForm() {
+            authFormContainer.style.display = 'block';
+            accountInfo.classList.remove('active');
+            navAccount.classList.add('hidden');
+            navHome.classList.add('active');
+            navAccount.classList.remove('active');
+        }
+
+        // ===== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА =====
+        async function updateUI(user) {
+            if (user) {
+                try {
+                    const userRef = ref(db, `users/${user.uid}`);
+                    const snapshot = await get(userRef);
+                    const data = snapshot.exists() ? snapshot.val() : {};
+                    
+                    const userData = {
+                        username: data.username || user.displayName || user.email.split('@')[0],
+                        email: user.email,
+                        createdAt: data.createdAt || null
+                    };
+                    
+                    showAccount(userData);
+                    
+                    // Сохраняем в localStorage
+                    localStorage.setItem('nemesis_user', userData.username);
+                    localStorage.setItem('nemesis_email', userData.email);
+                    localStorage.setItem('nemesis_logged', 'true');
+                    
+                } catch (error) {
+                    console.error('Ошибка загрузки данных:', error);
+                }
+            } else {
+                showAuthForm();
+                localStorage.removeItem('nemesis_user');
+                localStorage.removeItem('nemesis_email');
+                localStorage.removeItem('nemesis_logged');
+            }
+        }
 
         // ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ВХОДОМ И РЕГИСТРАЦИЕЙ =====
         document.getElementById('toggle-link').addEventListener('click', function() {
@@ -393,32 +540,14 @@
                 if (isLoginMode) {
                     // ===== ВХОД =====
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    
-                    // Получаем ник из базы данных
-                    const userRef = ref(db, `users/${user.uid}`);
-                    const snapshot = await get(userRef);
-                    let displayName = user.displayName || email.split('@')[0];
-                    
-                    if (snapshot.exists()) {
-                        const data = snapshot.val();
-                        if (data.username) displayName = data.username;
-                    }
-                    
-                    statusDiv.textContent = `✅ Добро пожаловать, ${displayName}!`;
-                    statusDiv.style.color = '#00ff88';
+                    await updateUI(userCredential.user);
                     document.getElementById('auth-form').reset();
-                    
-                    setTimeout(() => {
-                        statusDiv.textContent = '✅ Вы успешно вошли в систему!';
-                    }, 2000);
                     
                 } else {
                     // ===== РЕГИСТРАЦИЯ =====
                     const username = document.getElementById('reg-username').value.trim();
                     const passwordRepeat = document.getElementById('auth-pass-repeat').value;
                     
-                    // Валидация
                     if (!username || username.length < 3) {
                         statusDiv.textContent = '❌ Имя пользователя должно быть не менее 3 символов!';
                         statusDiv.style.color = '#ff4444';
@@ -437,30 +566,19 @@
                         return;
                     }
                     
-                    // Создаем пользователя в Firebase Auth
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
                     
-                    // Обновляем профиль (устанавливаем ник)
-                    await updateProfile(user, {
-                        displayName: username
-                    });
+                    await updateProfile(user, { displayName: username });
                     
-                    // Сохраняем ник в базу данных
                     await set(ref(db, `users/${user.uid}`), {
                         username: username,
                         email: email,
                         createdAt: new Date().toISOString()
                     });
                     
-                    statusDiv.textContent = `✅ Аккаунт ${username} успешно создан!`;
-                    statusDiv.style.color = '#00ff88';
+                    await updateUI(user);
                     document.getElementById('auth-form').reset();
-                    
-                    setTimeout(() => {
-                        document.getElementById('toggle-link').click();
-                        statusDiv.textContent = '✅ Теперь войдите в свой аккаунт!';
-                    }, 1500);
                 }
                 
             } catch (error) {
@@ -492,15 +610,85 @@
             }
         };
 
-        // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log('👤 Пользователь авторизован:', user.displayName || user.email);
-            } else {
-                console.log('👤 Пользователь не авторизован');
+        // ===== ВЫХОД =====
+        document.getElementById('btn-logout').addEventListener('click', async function() {
+            try {
+                await signOut(auth);
+                await updateUI(null);
+                showCustomToast('Вы вышли из аккаунта!');
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
             }
         });
-        
+
+        // ===== НАВИГАЦИЯ =====
+        navHome.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (auth.currentUser) {
+                // Показываем аккаунт
+                const userData = {
+                    username: localStorage.getItem('nemesis_user') || '—',
+                    email: localStorage.getItem('nemesis_email') || '—',
+                    createdAt: null
+                };
+                showAccount(userData);
+            } else {
+                showAuthForm();
+            }
+        });
+
+        navAccount.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Показываем аккаунт
+            const userData = {
+                username: localStorage.getItem('nemesis_user') || '—',
+                email: localStorage.getItem('nemesis_email') || '—',
+                createdAt: null
+            };
+            showAccount(userData);
+        });
+
+        // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                console.log('👤 Пользователь авторизован:', user.displayName || user.email);
+                await updateUI(user);
+            } else {
+                console.log('👤 Пользователь не авторизован');
+                await updateUI(null);
+            }
+        });
+
+        // ===== ТОСТ УВЕДОМЛЕНИЕ =====
+        function showCustomToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                background: rgba(25, 15, 40, 0.95); color: white; padding: 12px 30px;
+                border-radius: 10px; border: 1px solid #ba00ff;
+                font-size: 14px; font-weight: 600; z-index: 9999;
+                box-shadow: 0 0 30px rgba(186, 0, 255, 0.3);
+                animation: fadeInUp 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // ===== СТИЛИ ДЛЯ ТОСТА =====
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
         console.log("📝 Firebase Auth готов!");
     </script>
 </body>
