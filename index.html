@@ -3,44 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEMESIS STEAM BOOSTER | Official</title>
+    <title>NEMESIS STEAM | Вход</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
-
         body {
-            background: linear-gradient(135deg, #0a050f 0%, #1a0a2e 50%, #0d0520 100%);
+            background: linear-gradient(135deg, #0a050f 0%, #1e0a30 100%);
             color: #ffffff;
-            min-height: 100vh;
             overflow-x: hidden;
+            min-height: 100vh;
         }
-
-        .glow-1 {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(186, 0, 255, 0.08) 0%, transparent 70%);
-            top: -15%;
+        .bg-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(186, 0, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -10%;
             right: -10%;
             z-index: 0;
             pointer-events: none;
         }
-
-        .glow-2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0, 255, 200, 0.06) 0%, transparent 70%);
-            bottom: -10%;
-            left: -10%;
+        .bg-glow-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 255, 180, 0.1) 0%, rgba(0,0,0,0) 70%);
+            bottom: -5%;
+            left: -5%;
             z-index: 0;
             pointer-events: none;
         }
-
         header {
             display: flex;
             justify-content: space-between;
@@ -48,646 +45,463 @@
             padding: 20px 8%;
             position: relative;
             z-index: 10;
-            background: rgba(10, 5, 15, 0.4);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(186, 0, 255, 0.1);
         }
-
-        .logo {
+        .logo-block {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
-
-        .logo-icon {
-            width: 44px;
-            height: 44px;
+        .logo-circle {
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ba00ff, #6a00cc);
+            background: #0a050f;
+            border: 2px solid #ba00ff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            font-weight: 900;
-            color: #fff;
-            box-shadow: 0 0 30px rgba(186, 0, 255, 0.3);
+            font-weight: bold;
+            font-size: 18px;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(186, 0, 255, 0.6);
         }
-
         .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            background: linear-gradient(90deg, #ffffff, #ba00ff);
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #ffffff, #ba00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .logo-text span {
-            -webkit-text-fill-color: #666;
-            font-weight: 300;
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
         nav a {
-            color: #aaa;
+            color: #aaaaaa;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ba00ff;
+            margin-left: 30px;
             transition: 0.3s;
         }
-
-        nav a:hover::after,
-        nav a.active::after {
-            width: 100%;
-        }
-
-        nav a:hover,
         nav a.active {
-            color: #ffffff;
+            color: #ba00ff;
+            text-shadow: 0 0 10px rgba(186, 0, 255, 0.5);
         }
-
-        .btn-nav {
-            padding: 8px 22px;
-            border: 1px solid #ba00ff;
-            border-radius: 6px;
-            background: rgba(186, 0, 255, 0.1);
-            color: #fff;
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-        }
-
-        .btn-nav:hover {
-            background: #ba00ff;
-            box-shadow: 0 0 25px rgba(186, 0, 255, 0.4);
-        }
-
-        .hero {
+        .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 60px 8%;
+            padding: 40px 8%;
+            min-height: calc(100vh - 150px);
             position: relative;
             z-index: 5;
-            gap: 50px;
-            min-height: calc(100vh - 100px);
-        }
-
-        .hero-content {
-            max-width: 550px;
-        }
-
-        .hero-content .badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border: 1px solid rgba(186, 0, 255, 0.3);
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #ba00ff;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .hero-content h1 {
-            font-size: 50px;
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 20px;
-        }
-
-        .hero-content h1 span {
-            color: #ba00ff;
-            text-shadow: 0 0 30px rgba(186, 0, 255, 0.3);
-        }
-
-        .hero-content p {
-            color: #999;
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 35px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
+            gap: 40px;
             flex-wrap: wrap;
         }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 36px;
-            background: linear-gradient(135deg, #ba00ff, #7a00cc);
-            color: #fff;
-            font-weight: 700;
-            font-size: 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s;
-            box-shadow: 0 0 30px rgba(186, 0, 255, 0.2);
+        .download-section {
+            max-width: 450px;
+            text-align: left;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 50px rgba(186, 0, 255, 0.4);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 36px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-weight: 700;
-            font-size: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .stats-card {
-            background: rgba(25, 12, 45, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(186, 0, 255, 0.15);
-            border-radius: 16px;
-            padding: 40px 35px;
-            min-width: 280px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ba00ff, transparent);
-        }
-
-        .stats-card .stat-number {
+        .download-section h1 {
             font-size: 42px;
             font-weight: 800;
-            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 20px;
         }
-
-        .stats-card .stat-number span {
+        .download-section h1 span {
             color: #ba00ff;
+            text-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
         }
-
-        .stats-card .stat-label {
-            color: #888;
-            font-size: 13px;
-            margin-top: 4px;
+        .download-section p {
+            color: #b3b3b3;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
-
-        .stats-card .stat-divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.05);
-            margin: 20px 0;
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .stats-row .stat-item {
-            text-align: center;
-        }
-
-        .stats-row .stat-item .num {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .stats-row .stat-item .num.green {
-            color: #00ff88;
-        }
-
-        .stats-row .stat-item .num.purple {
-            color: #ba00ff;
-        }
-
-        .stats-row .stat-item .label {
-            font-size: 11px;
-            color: #666;
-            margin-top: 2px;
-        }
-
-        .version-tag {
-            display: inline-block;
-            padding: 4px 14px;
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 35px;
             background: rgba(186, 0, 255, 0.15);
-            border-radius: 12px;
-            font-size: 12px;
-            color: #ba00ff;
-            font-weight: 600;
-            margin-top: 15px;
-        }
-
-        .features {
-            padding: 80px 8%;
-            position: relative;
-            z-index: 5;
-        }
-
-        .features-title {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 800;
+            border: 2px solid #ba00ff;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(186, 0, 255, 0.2);
+            transition: 0.3s;
             margin-bottom: 10px;
         }
-
-        .features-title span {
-            color: #ba00ff;
+        .btn-download:hover {
+            background: #ba00ff;
+            box-shadow: 0 0 25px rgba(186, 0, 255, 0.6);
+            transform: translateY(-2px);
         }
-
-        .features-subtitle {
+        .download-note {
+            color: #777;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .auth-card {
+            width: 380px;
+            background: rgba(25, 12, 40, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-top: 1px solid rgba(186, 0, 255, 0.4);
+            border-bottom: 1px solid rgba(0, 255, 180, 0.2);
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .auth-card h2 {
+            font-size: 20px;
+            font-weight: 800;
             text-align: center;
-            color: #888;
-            font-size: 15px;
-            margin-bottom: 50px;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+        .auth-card .sub-title {
+            font-size: 11px;
+            color: #777777;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
         }
-
-        .feature-card {
-            background: rgba(20, 10, 40, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 30px 25px;
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(186, 0, 255, 0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .feature-card .icon {
-            font-size: 32px;
+        .input-group {
+            position: relative;
             margin-bottom: 15px;
         }
-
-        .feature-card h3 {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .feature-card p {
-            color: #888;
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            color: white;
             font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .achievements-section {
-            padding: 60px 8%;
-            position: relative;
-            z-index: 5;
-        }
-
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .achievement-card {
-            background: rgba(20, 10, 40, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
+            outline: none;
             transition: 0.3s;
         }
-
-        .achievement-card.locked {
-            opacity: 0.5;
+        .input-group input:focus {
+            border-color: #ba00ff;
+            box-shadow: 0 0 10px rgba(186, 0, 255, 0.2);
         }
-
-        .achievement-card .ach-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
+        .input-group input::placeholder {
+            color: #666;
         }
-
-        .achievement-card h4 {
-            font-size: 14px;
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: rgba(186, 0, 255, 0.1);
+            border: 1px solid #ba00ff;
+            color: white;
             font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .achievement-card p {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .achievement-card .ach-status {
+            font-size: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
             margin-top: 10px;
-            font-size: 12px;
-            font-weight: 600;
         }
-
-        .achievement-card .ach-status.unlocked {
-            color: #00ff88;
+        .btn-submit:hover {
+            background: #ba00ff;
+            box-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
         }
-
-        .achievement-card .ach-status.locked {
-            color: #666;
-        }
-
-        footer {
-            padding: 30px 8%;
+        .toggle-mode {
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            position: relative;
-            z-index: 5;
-        }
-
-        footer p {
-            color: #444;
+            margin-top: 15px;
+            color: #888;
             font-size: 12px;
         }
-
-        footer a {
-            color: #666;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        footer a:hover {
+        .toggle-mode span {
             color: #ba00ff;
+            cursor: pointer;
+            font-weight: bold;
         }
-
+        .toggle-mode span:hover {
+            text-decoration: underline;
+        }
+        .hidden {
+            display: none !important;
+        }
+        #auth-status {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            min-height: 20px;
+        }
         @media (max-width: 900px) {
-            .hero {
+            header { padding: 20px 4%; }
+            .container { 
                 flex-direction: column;
+                padding: 40px 4%;
                 text-align: center;
-                padding: 40px 5%;
             }
-
-            .hero-content h1 {
-                font-size: 36px;
+            .download-section {
+                text-align: center;
+                max-width: 100%;
             }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .stats-card {
-                width: 100%;
-                min-width: unset;
-            }
-
-            header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px 5%;
-            }
-
-            nav {
-                justify-content: center;
-            }
-
-            nav a {
-                font-size: 13px;
-            }
-
-            .features {
-                padding: 50px 5%;
-            }
-
-            .features-title {
-                font-size: 26px;
-            }
-
-            .achievements-section {
-                padding: 40px 5%;
-            }
-
-            .achievements-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .hero-content h1 {
-                font-size: 28px;
-            }
-
-            .stats-row {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .achievements-grid {
-                grid-template-columns: 1fr;
-            }
+            .auth-card { width: 100%; max-width: 380px; }
+            nav { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glow-1"></div>
-    <div class="glow-2"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
 
     <header>
-        <div class="logo">
-            <div class="logo-icon">N</div>
-            <div class="logo-text">NEMESIS <span>// CORE</span></div>
+        <div class="logo-block">
+            <div class="logo-circle">N</div>
+            <div class="logo-text">NEMESIS CORE</div>
         </div>
         <nav>
-            <a href="#" class="active">Главная</a>
-            <a href="#features">Возможности</a>
-            <a href="#achievements">Достижения</a>
-            <a href="#download">Скачать</a>
-            <a href="https://github.com/yourusername/nemesis-steam-booster" target="_blank" class="btn-nav">GitHub</a>
+            <a href="#" class="active">ГЛАВНАЯ</a>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="badge">ПРЕМИУМ ОПТИМИЗАТОР</div>
+    <div class="container">
+        <!-- ЛЕВАЯ ЧАСТЬ - СКАЧИВАНИЕ -->
+        <div class="download-section">
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
-            <p>
-                Приватный комплекс утилит для Windows и лаунчера Steam. Аппаратное высвобождение
-                ресурсов ОЗУ, блокировка Chromium-слоев, обход инпут-лага сети и оптимизация
-                ядер процессора для максимальной производительности в играх.
-            </p>
-            <div class="hero-buttons">
-                <a href="#download" class="btn-primary">Скачать .EXE</a>
-                <a href="https://github.com/yourusername/nemesis-steam-booster" target="_blank" class="btn-secondary">GitHub</a>
-            </div>
-            <div class="version-tag">v0.1 Beta • Режим разработчика встроен</div>
+            <p>Приватный комплекс утилит для Windows и лаунчера Steam. Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
+            <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР (.EXE)</a>
+            <div class="download-note">Скачивание доступно без регистрации</div>
         </div>
 
-        <div class="stats-card">
-            <div class="stat-number">⚡ <span>DEV</span></div>
-            <div class="stat-label">Режим разработчика в ядре</div>
-            <div class="stat-divider"></div>
-            <div class="stats-row">
-                <div class="stat-item">
-                    <div class="num purple">/dev</div>
-                    <div class="label">Консольная команда</div>
+        <!-- ПРАВАЯ ЧАСТЬ - АВТОРИЗАЦИЯ -->
+        <div class="auth-card">
+            <h2 id="form-title">NEMESIS ВХОД</h2>
+            <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+            
+            <form id="auth-form" onsubmit="handleAuth(event)">
+                <!-- ПОЛЯ ДЛЯ РЕГИСТРАЦИИ (скрыты по умолчанию) -->
+                <div id="reg-fields" class="hidden">
+                    <div class="input-group">
+                        <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ (НИК)" autocomplete="off">
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="num green">/game</div>
-                    <div class="label">Мини-игра в терминале</div>
+                
+                <!-- ОБЩИЕ ПОЛЯ -->
+                <div class="input-group">
+                    <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email">
                 </div>
-                <div class="stat-item">
-                    <div class="num">🧪</div>
-                    <div class="label">Тестовый режим</div>
+                <div class="input-group">
+                    <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password">
                 </div>
+                
+                <!-- ПОЛЕ ПОВТОРА ПАРОЛЯ (для регистрации) -->
+                <div id="reg-pass-repeat" class="input-group hidden">
+                    <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password">
+                </div>
+                
+                <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
+            </form>
+            
+            <div class="toggle-mode">
+                <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
             </div>
+            
+            <div id="auth-status"></div>
         </div>
-    </section>
+    </div>
 
-    <section class="features" id="features">
-        <h2 class="features-title">Ключевые <span>возможности</span></h2>
-        <p class="features-subtitle">Всё что нужно для максимальной производительности</p>
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
+            }
+        }
+    </script>
 
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="icon">🧠</div>
-                <h3>RAM Booster</h3>
-                <p>Очистка скрытых процессов Steam и высвобождение оперативной памяти перед запуском игры.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">⚡</div>
-                <h3>CPU Priority</h3>
-                <p>Автоматическое повышение приоритета процессора для запущенной игры.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🎮</div>
-                <h3>Game Mode</h3>
-                <p>Активация встроенного игрового режима Windows для максимальной производительности.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🔗</div>
-                <h3>Auto Launcher</h3>
-                <p>Автоматический запуск Discord и Spotify вместе с игрой.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🛡️</div>
-                <h3>Steam Debloater</h3>
-                <p>Блокировка Chromium-слоев и рекламных элементов Steam.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">💻</div>
-                <h3>Developer Mode</h3>
-                <p>Встроенная консоль разработчика с набором тестовых и отладочных команд.</p>
-            </div>
-        </div>
-    </section>
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+        import { getDatabase, ref, set, get } from "firebase/database";
 
-    <section class="achievements-section" id="achievements">
-        <h2 class="features-title">Достижения <span>игроков</span></h2>
-        <p class="features-subtitle">Разблокируйте все достижения, чтобы стать настоящим мастером Nemesis</p>
+        // ===== ТВОИ РЕАЛЬНЫЕ ДАННЫЕ FIREBASE =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
+            authDomain: "nemesissteam-13577.firebaseapp.com",
+            databaseURL: "https://nemesissteam-13577-default-rtdb.firebaseio.com",
+            projectId: "nemesissteam-13577",
+            storageBucket: "nemesissteam-13577.firebasestorage.app",
+            messagingSenderId: "649763368476",
+            appId: "1:649763368476:web:de4e044d4d971168fa79d9",
+            measurementId: "G-GJ9KHSG65L"
+        };
 
-        <div class="achievements-grid">
-            <div class="achievement-card unlocked">
-                <div class="ach-icon">🚀</div>
-                <h4>Оптимизатор</h4>
-                <p>Включить все модули оптимизации</p>
-                <div class="ach-status unlocked">РАЗБЛОКИРОВАНО</div>
-            </div>
-            <div class="achievement-card locked">
-                <div class="ach-icon">🎮</div>
-                <h4>Геймер</h4>
-                <p>Запустить 10 игр через лаунчер</p>
-                <div class="ach-status locked">ЗАБЛОКИРОВАНО</div>
-            </div>
-            <div class="achievement-card locked">
-                <div class="ach-icon">💻</div>
-                <h4>Разработчик</h4>
-                <p>Активировать DEV режим</p>
-                <div class="ach-status locked">ЗАБЛОКИРОВАНО</div>
-            </div>
-            <div class="achievement-card locked">
-                <div class="ach-icon">📚</div>
-                <h4>Коллекционер</h4>
-                <p>Добавить 5 игр в библиотеку</p>
-                <div class="ach-status locked">ЗАБЛОКИРОВАНО</div>
-            </div>
-        </div>
-    </section>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        console.log("✅ Firebase подключен!");
 
-    <section class="hero" id="download" style="padding-top: 20px; padding-bottom: 40px;">
-        <div class="hero-content" style="max-width: 100%; text-align: center;">
-            <h2 style="font-size: 34px; margin-bottom: 15px;">Готов <span>ускорить</span> свой Steam?</h2>
-            <p style="max-width: 600px; margin: 0 auto 30px;">
-                Скачай Nemesis Steam Booster прямо сейчас и получи максимальную производительность в играх.
-            </p>
-            <div class="hero-buttons" style="justify-content: center;">
-                <a href="NemesisSteam.exe" download class="btn-primary" style="padding: 16px 50px; font-size: 17px;">
-                    Скачать .EXE
-                </a>
-                <a href="https://github.com/yourusername/nemesis-steam-booster" target="_blank" class="btn-secondary">GitHub</a>
-                <a href="#" class="btn-secondary">Telegram</a>
-            </div>
-            <div class="version-tag" style="margin-top: 20px;">Windows 10/11 • x64 • v0.1 Beta</div>
-        </div>
-    </section>
+        let isLoginMode = true;
+        const statusDiv = document.getElementById('auth-status');
 
-    <footer>
-        <p>
-            © 2026 <a href="#">NEMESIS CORE</a> — не аффилирован с Valve Corporation.
-            Все права защищены. | <a href="https://github.com/yourusername/nemesis-steam-booster" target="_blank">GitHub</a>
-        </p>
-    </footer>
+        // ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ВХОДОМ И РЕГИСТРАЦИЕЙ =====
+        document.getElementById('toggle-link').addEventListener('click', function() {
+            isLoginMode = !isLoginMode;
+            
+            const title = document.getElementById('form-title');
+            const subtitle = document.getElementById('form-subtitle');
+            const btn = document.getElementById('auth-btn');
+            const link = this;
+            const regFields = document.getElementById('reg-fields');
+            const regPassRepeat = document.getElementById('reg-pass-repeat');
+            const emailField = document.getElementById('auth-email');
+            
+            if (isLoginMode) {
+                title.textContent = 'NEMESIS ВХОД';
+                subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
+                btn.textContent = 'ВОЙТИ';
+                link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                regFields.classList.add('hidden');
+                regPassRepeat.classList.add('hidden');
+                emailField.placeholder = 'EMAIL';
+            } else {
+                title.textContent = 'NEMESIS РЕГИСТРАЦИЯ';
+                subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
+                btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
+                link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
+                regFields.classList.remove('hidden');
+                regPassRepeat.classList.remove('hidden');
+                emailField.placeholder = 'EMAIL (для входа)';
+            }
+            
+            statusDiv.textContent = '';
+            statusDiv.style.color = '#888';
+        });
 
+        // ===== ОБРАБОТЧИК ФОРМЫ =====
+        window.handleAuth = async function(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-pass').value;
+            
+            statusDiv.textContent = '⏳ Обработка...';
+            statusDiv.style.color = '#888';
+
+            try {
+                if (isLoginMode) {
+                    // ===== ВХОД =====
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    
+                    // Получаем ник из базы данных
+                    const userRef = ref(db, `users/${user.uid}`);
+                    const snapshot = await get(userRef);
+                    let displayName = user.displayName || email.split('@')[0];
+                    
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        if (data.username) displayName = data.username;
+                    }
+                    
+                    statusDiv.textContent = `✅ Добро пожаловать, ${displayName}!`;
+                    statusDiv.style.color = '#00ff88';
+                    document.getElementById('auth-form').reset();
+                    
+                    setTimeout(() => {
+                        statusDiv.textContent = '✅ Вы успешно вошли в систему!';
+                    }, 2000);
+                    
+                } else {
+                    // ===== РЕГИСТРАЦИЯ =====
+                    const username = document.getElementById('reg-username').value.trim();
+                    const passwordRepeat = document.getElementById('auth-pass-repeat').value;
+                    
+                    // Валидация
+                    if (!username || username.length < 3) {
+                        statusDiv.textContent = '❌ Имя пользователя должно быть не менее 3 символов!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    
+                    if (password.length < 6) {
+                        statusDiv.textContent = '❌ Пароль должен быть не менее 6 символов!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    
+                    if (password !== passwordRepeat) {
+                        statusDiv.textContent = '❌ Пароли не совпадают!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    
+                    // Создаем пользователя в Firebase Auth
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    
+                    // Обновляем профиль (устанавливаем ник)
+                    await updateProfile(user, {
+                        displayName: username
+                    });
+                    
+                    // Сохраняем ник в базу данных
+                    await set(ref(db, `users/${user.uid}`), {
+                        username: username,
+                        email: email,
+                        createdAt: new Date().toISOString()
+                    });
+                    
+                    statusDiv.textContent = `✅ Аккаунт ${username} успешно создан!`;
+                    statusDiv.style.color = '#00ff88';
+                    document.getElementById('auth-form').reset();
+                    
+                    setTimeout(() => {
+                        document.getElementById('toggle-link').click();
+                        statusDiv.textContent = '✅ Теперь войдите в свой аккаунт!';
+                    }, 1500);
+                }
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                
+                let errorMessage = '❌ Ошибка! ';
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage += 'Этот email уже используется.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage += 'Некорректный email.';
+                        break;
+                    case 'auth/user-not-found':
+                        errorMessage += 'Пользователь не найден.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage += 'Неверный пароль.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage += 'Слишком слабый пароль (минимум 6 символов).';
+                        break;
+                    default:
+                        errorMessage += error.message;
+                }
+                
+                statusDiv.textContent = errorMessage;
+                statusDiv.style.color = '#ff4444';
+            }
+        };
+
+        // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log('👤 Пользователь авторизован:', user.displayName || user.email);
+            } else {
+                console.log('👤 Пользователь не авторизован');
+            }
+        });
+        
+        console.log("📝 Firebase Auth готов!");
+    </script>
 </body>
 </html>
