@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEMESIS STEAM</title>
+    <title>NEMESIS</title>
     <style>
         * {
             margin: 0;
@@ -70,7 +70,7 @@
         nav {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
         nav a {
             color: #aaaaaa;
@@ -78,18 +78,18 @@
             font-size: 14px;
             font-weight: 600;
             transition: 0.3s;
+            cursor: pointer;
+        }
+        nav a:hover {
+            color: #ba00ff;
         }
         nav a.active {
             color: #ba00ff;
             text-shadow: 0 0 10px rgba(186, 0, 255, 0.5);
         }
-        nav a:hover {
-            color: #ba00ff;
-        }
         .nav-user {
             color: #ba00ff !important;
             font-weight: 700 !important;
-            font-size: 13px !important;
             background: rgba(186, 0, 255, 0.15);
             padding: 6px 14px;
             border-radius: 20px;
@@ -312,32 +312,34 @@
     <header>
         <div class="logo-block">
             <img src="logo.png" alt="NEMESIS" class="logo-img">
-            <div class="logo-text">NEMESIS CORE</div>
+            <div class="logo-text">NEMESIS</div>
         </div>
         <nav>
-            <a href="#" class="active" id="nav-home">ГЛАВНАЯ</a>
-            <a href="#" id="nav-account" class="hidden nav-user">АККАУНТ</a>
+            <a class="active" id="nav-home">ГЛАВНАЯ</a>
+            <a id="nav-account" class="hidden nav-user">АККАУНТ</a>
         </nav>
     </header>
 
     <div class="container">
+        <!-- ЛЕВАЯ ЧАСТЬ - СКАЧИВАНИЕ -->
         <div class="download-section" id="download-section">
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam. Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
-            <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР (.EXE)</a>
+            <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР</a>
             <div class="download-note">Скачивание доступно без регистрации</div>
         </div>
 
+        <!-- ПРАВАЯ ЧАСТЬ - АВТОРИЗАЦИЯ -->
         <div class="auth-card" id="auth-card">
             <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
             <div id="auth-form-container">
-                <h2 id="form-title">NEMESIS ВХОД</h2>
+                <h2 id="form-title">ВХОД</h2>
                 <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
                 
                 <form id="auth-form" onsubmit="handleAuth(event)">
                     <div id="reg-fields" class="hidden">
                         <div class="input-group">
-                            <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ (НИК)" autocomplete="off">
+                            <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off">
                         </div>
                     </div>
                     
@@ -384,7 +386,7 @@
                     <span class="info-value" style="color:#00ff88;" id="acc-status">Активен</span>
                 </div>
                 
-                <button class="btn-logout" id="btn-logout">ВЫЙТИ ИЗ АККАУНТА</button>
+                <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
             </div>
         </div>
     </div>
@@ -425,7 +427,6 @@
         const accountInfo = document.getElementById('account-info');
         const navAccount = document.getElementById('nav-account');
         const navHome = document.getElementById('nav-home');
-        const downloadSection = document.getElementById('download-section');
 
         function showAccount(userData) {
             authFormContainer.style.display = 'none';
@@ -489,7 +490,7 @@
             const emailField = document.getElementById('auth-email');
             
             if (isLoginMode) {
-                title.textContent = 'NEMESIS ВХОД';
+                title.textContent = 'ВХОД';
                 subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
                 btn.textContent = 'ВОЙТИ';
                 link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
@@ -497,7 +498,7 @@
                 regPassRepeat.classList.add('hidden');
                 emailField.placeholder = 'EMAIL';
             } else {
-                title.textContent = 'NEMESIS РЕГИСТРАЦИЯ';
+                title.textContent = 'РЕГИСТРАЦИЯ';
                 subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
                 btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
                 link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
@@ -601,8 +602,7 @@
             }
         });
 
-        navHome.addEventListener('click', function(e) {
-            e.preventDefault();
+        navHome.addEventListener('click', function() {
             if (auth.currentUser) {
                 const userData = {
                     username: localStorage.getItem('nemesis_user') || '—',
@@ -615,8 +615,7 @@
             }
         });
 
-        navAccount.addEventListener('click', function(e) {
-            e.preventDefault();
+        navAccount.addEventListener('click', function() {
             const userData = {
                 username: localStorage.getItem('nemesis_user') || '—',
                 email: localStorage.getItem('nemesis_email') || '—',
