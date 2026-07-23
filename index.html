@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEMESIS</title>
-        <!-- ИКОНКА -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    <!-- ДЛЯ APPLE -->
-    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
         * {
             margin: 0;
@@ -127,6 +124,26 @@
             font-size: 16px;
             line-height: 1.8;
             margin-bottom: 10px;
+        }
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 35px;
+            background: rgba(186, 0, 255, 0.15);
+            border: 2px solid #ba00ff;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(186, 0, 255, 0.2);
+            transition: 0.3s;
+        }
+        .btn-download:hover {
+            background: #ba00ff;
+            box-shadow: 0 0 25px rgba(186, 0, 255, 0.6);
+            transform: translateY(-2px);
         }
         .auth-card {
             width: 380px;
@@ -291,12 +308,16 @@
     </header>
 
     <div class="container">
-        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <!-- ГЛАВНАЯ СТРАНИЦА С КНОПКОЙ СКАЧИВАНИЯ -->
         <div class="content" id="page-home">
             <h1>ДОБРО ПОЖАЛОВАТЬ В <span>NEMESIS</span></h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
             <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
-            <p style="margin-top: 20px; color: #666; font-size: 13px;">Войдите в аккаунт, чтобы получить доступ к функциям</p>
+            
+            <div style="margin-top: 30px;">
+                <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР</a>
+                <div style="color: #777; font-size: 12px; margin-top: 8px;">Скачивание доступно без регистрации</div>
+            </div>
         </div>
 
         <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
@@ -400,7 +421,6 @@
         const navLogin = document.getElementById('nav-login');
         const navAccount = document.getElementById('nav-account');
 
-        // ===== ПОКАЗАТЬ СТРАНИЦУ =====
         function showPage(page) {
             pageHome.classList.add('hidden');
             authCard.classList.add('hidden');
@@ -417,20 +437,17 @@
             } else if (page === 'account') {
                 authCard.classList.remove('hidden');
                 navAccount.classList.add('active');
-                // Показываем информацию об аккаунте
                 authFormContainer.style.display = 'none';
                 accountInfo.classList.add('active');
             }
         }
 
-        // ===== ПОКАЗАТЬ ФОРМУ ВХОДА =====
         function showAuthForm() {
             authFormContainer.style.display = 'block';
             accountInfo.classList.remove('active');
             showPage('auth');
         }
 
-        // ===== ПОКАЗАТЬ АККАУНТ =====
         function showAccount(userData) {
             authFormContainer.style.display = 'none';
             accountInfo.classList.add('active');
@@ -442,7 +459,6 @@
             document.getElementById('acc-status').textContent = 'Активен';
         }
 
-        // ===== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА =====
         async function updateUI(user) {
             if (user) {
                 try {
@@ -476,7 +492,6 @@
             }
         }
 
-        // ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ВХОДОМ И РЕГИСТРАЦИЕЙ =====
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
             
@@ -510,7 +525,6 @@
             statusDiv.style.color = '#888';
         });
 
-        // ===== ОБРАБОТЧИК ФОРМЫ =====
         window.handleAuth = async function(event) {
             event.preventDefault();
             
@@ -592,7 +606,6 @@
             }
         };
 
-        // ===== ВЫХОД =====
         document.getElementById('btn-logout').addEventListener('click', async function() {
             try {
                 await signOut(auth);
@@ -603,18 +616,8 @@
             }
         });
 
-        // ===== НАВИГАЦИЯ =====
         navHome.addEventListener('click', function() {
-            if (auth.currentUser) {
-                const userData = {
-                    username: localStorage.getItem('nemesis_user') || '—',
-                    email: localStorage.getItem('nemesis_email') || '—',
-                    createdAt: null
-                };
-                showAccount(userData);
-            } else {
-                showPage('home');
-            }
+            showPage('home');
         });
 
         navLogin.addEventListener('click', function() {
@@ -626,7 +629,6 @@
                 };
                 showAccount(userData);
             } else {
-                // Сбрасываем форму на вход
                 isLoginMode = true;
                 document.getElementById('form-title').textContent = 'ВХОД';
                 document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
@@ -649,7 +651,6 @@
             showAccount(userData);
         });
 
-        // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 console.log('👤 Пользователь авторизован');
@@ -660,7 +661,6 @@
             }
         });
 
-        // ===== ТОСТ УВЕДОМЛЕНИЕ =====
         function showCustomToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = `
