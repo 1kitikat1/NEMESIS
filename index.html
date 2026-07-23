@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEMESIS STEAM | Вход</title>
+    <title>NEMESIS STEAM</title>
     <style>
         * {
             margin: 0;
@@ -250,7 +250,6 @@
             color: #888;
             min-height: 20px;
         }
-        /* ===== СТИЛИ ДЛЯ АККАУНТА ===== */
         .account-info {
             display: none;
             flex-direction: column;
@@ -328,7 +327,6 @@
     </header>
 
     <div class="container">
-        <!-- ЛЕВАЯ ЧАСТЬ - СКАЧИВАНИЕ -->
         <div class="download-section" id="download-section">
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam. Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
@@ -336,7 +334,6 @@
             <div class="download-note">Скачивание доступно без регистрации</div>
         </div>
 
-        <!-- ПРАВАЯ ЧАСТЬ - АВТОРИЗАЦИЯ / АККАУНТ -->
         <div class="auth-card" id="auth-card">
             <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
             <div id="auth-form-container">
@@ -371,7 +368,7 @@
                 <div id="auth-status"></div>
             </div>
 
-            <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ (появляется после входа) -->
+            <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
             <div class="account-info" id="account-info">
                 <h2 style="font-size:20px; font-weight:800; text-align:center; margin-bottom:5px;">👤 АККАУНТ</h2>
                 <div class="sub-title" style="text-align:center; font-size:11px; color:#777; margin-bottom:20px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
@@ -413,6 +410,7 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
         import { getDatabase, ref, set, get } from "firebase/database";
 
+        // ===== КОНФИГ (СКРЫТ ОТ ПОЛЬЗОВАТЕЛЕЙ) =====
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
             authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -427,7 +425,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
-        console.log("✅ Firebase подключен!");
 
         let isLoginMode = true;
         const statusDiv = document.getElementById('auth-status');
@@ -475,8 +472,6 @@
                     };
                     
                     showAccount(userData);
-                    
-                    // Сохраняем в localStorage
                     localStorage.setItem('nemesis_user', userData.username);
                     localStorage.setItem('nemesis_email', userData.email);
                     localStorage.setItem('nemesis_logged', 'true');
@@ -625,7 +620,6 @@
         navHome.addEventListener('click', function(e) {
             e.preventDefault();
             if (auth.currentUser) {
-                // Показываем аккаунт
                 const userData = {
                     username: localStorage.getItem('nemesis_user') || '—',
                     email: localStorage.getItem('nemesis_email') || '—',
@@ -639,7 +633,6 @@
 
         navAccount.addEventListener('click', function(e) {
             e.preventDefault();
-            // Показываем аккаунт
             const userData = {
                 username: localStorage.getItem('nemesis_user') || '—',
                 email: localStorage.getItem('nemesis_email') || '—',
@@ -651,7 +644,7 @@
         // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                console.log('👤 Пользователь авторизован:', user.displayName || user.email);
+                console.log('👤 Пользователь авторизован');
                 await updateUI(user);
             } else {
                 console.log('👤 Пользователь не авторизован');
@@ -679,7 +672,6 @@
             }, 3000);
         }
 
-        // ===== СТИЛИ ДЛЯ ТОСТА =====
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fadeInUp {
@@ -688,8 +680,6 @@
             }
         `;
         document.head.appendChild(style);
-
-        console.log("📝 Firebase Auth готов!");
     </script>
 </body>
 </html>
