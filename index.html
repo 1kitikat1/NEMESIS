@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -99,58 +99,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 8%;
+            padding: 60px 8%;
             min-height: calc(100vh - 150px);
             position: relative;
             z-index: 5;
-            gap: 40px;
-            flex-wrap: wrap;
         }
-        .download-section {
-            max-width: 450px;
-            text-align: left;
+        .content {
+            max-width: 700px;
+            text-align: center;
         }
-        .download-section h1 {
-            font-size: 42px;
+        .content h1 {
+            font-size: 48px;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
         }
-        .download-section h1 span {
+        .content h1 span {
             color: #ba00ff;
             text-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
         }
-        .download-section p {
+        .content p {
             color: #b3b3b3;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            padding: 14px 35px;
-            background: rgba(186, 0, 255, 0.15);
-            border: 2px solid #ba00ff;
-            color: white;
-            font-weight: 700;
-            font-size: 14px;
-            text-decoration: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(186, 0, 255, 0.2);
-            transition: 0.3s;
+            font-size: 16px;
+            line-height: 1.8;
             margin-bottom: 10px;
-        }
-        .btn-download:hover {
-            background: #ba00ff;
-            box-shadow: 0 0 25px rgba(186, 0, 255, 0.6);
-            transform: translateY(-2px);
-        }
-        .download-note {
-            color: #777;
-            font-size: 12px;
-            margin-top: 5px;
         }
         .auth-card {
             width: 380px;
@@ -164,7 +136,7 @@
             padding: 40px 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             position: relative;
-            min-height: 400px;
+            margin: 0 auto;
         }
         .auth-card h2 {
             font-size: 20px;
@@ -289,18 +261,11 @@
         }
         @media (max-width: 900px) {
             header { padding: 20px 4%; }
-            .container { 
-                flex-direction: column;
-                padding: 40px 4%;
-                text-align: center;
-            }
-            .download-section {
-                text-align: center;
-                max-width: 100%;
-            }
+            .container { padding: 40px 4%; }
             .auth-card { width: 100%; max-width: 380px; }
             nav { flex-wrap: wrap; justify-content: center; }
             nav a { font-size: 12px; margin: 0 8px; }
+            .content h1 { font-size: 32px; }
         }
     </style>
 </head>
@@ -316,22 +281,22 @@
         </div>
         <nav>
             <a class="active" id="nav-home">ГЛАВНАЯ</a>
+            <a id="nav-login">ВХОД</a>
             <a id="nav-account" class="hidden nav-user">АККАУНТ</a>
         </nav>
     </header>
 
     <div class="container">
-        <!-- ЛЕВАЯ ЧАСТЬ - СКАЧИВАНИЕ -->
-        <div class="download-section" id="download-section">
-            <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
-            <p>Приватный комплекс утилит для Windows и лаунчера Steam. Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
-            <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР</a>
-            <div class="download-note">Скачивание доступно без регистрации</div>
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <div class="content" id="page-home">
+            <h1>ДОБРО ПОЖАЛОВАТЬ В <span>NEMESIS</span></h1>
+            <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
+            <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
+            <p style="margin-top: 20px; color: #666; font-size: 13px;">Войдите в аккаунт, чтобы получить доступ к функциям</p>
         </div>
 
-        <!-- ПРАВАЯ ЧАСТЬ - АВТОРИЗАЦИЯ -->
-        <div class="auth-card" id="auth-card">
-            <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
+        <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
+        <div class="auth-card hidden" id="auth-card">
             <div id="auth-form-container">
                 <h2 id="form-title">ВХОД</h2>
                 <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
@@ -425,15 +390,47 @@
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
         const accountInfo = document.getElementById('account-info');
-        const navAccount = document.getElementById('nav-account');
+        const authCard = document.getElementById('auth-card');
+        const pageHome = document.getElementById('page-home');
         const navHome = document.getElementById('nav-home');
+        const navLogin = document.getElementById('nav-login');
+        const navAccount = document.getElementById('nav-account');
 
+        // ===== ПОКАЗАТЬ СТРАНИЦУ =====
+        function showPage(page) {
+            pageHome.classList.add('hidden');
+            authCard.classList.add('hidden');
+            navHome.classList.remove('active');
+            navLogin.classList.remove('active');
+            navAccount.classList.remove('active');
+            
+            if (page === 'home') {
+                pageHome.classList.remove('hidden');
+                navHome.classList.add('active');
+            } else if (page === 'auth') {
+                authCard.classList.remove('hidden');
+                navLogin.classList.add('active');
+            } else if (page === 'account') {
+                authCard.classList.remove('hidden');
+                navAccount.classList.add('active');
+                // Показываем информацию об аккаунте
+                authFormContainer.style.display = 'none';
+                accountInfo.classList.add('active');
+            }
+        }
+
+        // ===== ПОКАЗАТЬ ФОРМУ ВХОДА =====
+        function showAuthForm() {
+            authFormContainer.style.display = 'block';
+            accountInfo.classList.remove('active');
+            showPage('auth');
+        }
+
+        // ===== ПОКАЗАТЬ АККАУНТ =====
         function showAccount(userData) {
             authFormContainer.style.display = 'none';
             accountInfo.classList.add('active');
-            navAccount.classList.remove('hidden');
-            navHome.classList.remove('active');
-            navAccount.classList.add('active');
+            showPage('account');
             
             document.getElementById('acc-username').textContent = userData.username || '—';
             document.getElementById('acc-email').textContent = userData.email || '—';
@@ -441,14 +438,7 @@
             document.getElementById('acc-status').textContent = 'Активен';
         }
 
-        function showAuthForm() {
-            authFormContainer.style.display = 'block';
-            accountInfo.classList.remove('active');
-            navAccount.classList.add('hidden');
-            navHome.classList.add('active');
-            navAccount.classList.remove('active');
-        }
-
+        // ===== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА =====
         async function updateUI(user) {
             if (user) {
                 try {
@@ -463,6 +453,8 @@
                     };
                     
                     showAccount(userData);
+                    navLogin.classList.add('hidden');
+                    navAccount.classList.remove('hidden');
                     localStorage.setItem('nemesis_user', userData.username);
                     localStorage.setItem('nemesis_email', userData.email);
                     localStorage.setItem('nemesis_logged', 'true');
@@ -471,13 +463,16 @@
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
-                showAuthForm();
+                showPage('home');
+                navLogin.classList.remove('hidden');
+                navAccount.classList.add('hidden');
                 localStorage.removeItem('nemesis_user');
                 localStorage.removeItem('nemesis_email');
                 localStorage.removeItem('nemesis_logged');
             }
         }
 
+        // ===== ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ВХОДОМ И РЕГИСТРАЦИЕЙ =====
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
             
@@ -511,6 +506,7 @@
             statusDiv.style.color = '#888';
         });
 
+        // ===== ОБРАБОТЧИК ФОРМЫ =====
         window.handleAuth = async function(event) {
             event.preventDefault();
             
@@ -592,6 +588,7 @@
             }
         };
 
+        // ===== ВЫХОД =====
         document.getElementById('btn-logout').addEventListener('click', async function() {
             try {
                 await signOut(auth);
@@ -602,6 +599,7 @@
             }
         });
 
+        // ===== НАВИГАЦИЯ =====
         navHome.addEventListener('click', function() {
             if (auth.currentUser) {
                 const userData = {
@@ -611,6 +609,29 @@
                 };
                 showAccount(userData);
             } else {
+                showPage('home');
+            }
+        });
+
+        navLogin.addEventListener('click', function() {
+            if (auth.currentUser) {
+                const userData = {
+                    username: localStorage.getItem('nemesis_user') || '—',
+                    email: localStorage.getItem('nemesis_email') || '—',
+                    createdAt: null
+                };
+                showAccount(userData);
+            } else {
+                // Сбрасываем форму на вход
+                isLoginMode = true;
+                document.getElementById('form-title').textContent = 'ВХОД';
+                document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
+                document.getElementById('auth-btn').textContent = 'ВОЙТИ';
+                document.getElementById('toggle-link').textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                document.getElementById('reg-fields').classList.add('hidden');
+                document.getElementById('reg-pass-repeat').classList.add('hidden');
+                document.getElementById('auth-email').placeholder = 'EMAIL';
+                statusDiv.textContent = '';
                 showAuthForm();
             }
         });
@@ -624,6 +645,7 @@
             showAccount(userData);
         });
 
+        // ===== СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ =====
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 console.log('👤 Пользователь авторизован');
@@ -634,6 +656,7 @@
             }
         });
 
+        // ===== ТОСТ УВЕДОМЛЕНИЕ =====
         function showCustomToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = `
