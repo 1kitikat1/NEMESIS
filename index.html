@@ -128,22 +128,28 @@
         .btn-download {
             display: inline-flex;
             align-items: center;
-            padding: 14px 35px;
+            padding: 14px 40px;
             background: rgba(186, 0, 255, 0.15);
             border: 2px solid #ba00ff;
             color: white;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(186, 0, 255, 0.2);
+            box-shadow: 0 0 20px rgba(186, 0, 255, 0.15);
             transition: 0.3s;
+            margin-top: 20px;
         }
         .btn-download:hover {
             background: #ba00ff;
-            box-shadow: 0 0 25px rgba(186, 0, 255, 0.6);
+            box-shadow: 0 0 35px rgba(186, 0, 255, 0.4);
             transform: translateY(-2px);
+        }
+        .download-note {
+            color: #777;
+            font-size: 12px;
+            margin-top: 10px;
         }
         .auth-card {
             width: 380px;
@@ -263,6 +269,17 @@
         .account-info .info-value.highlight {
             color: #ba00ff;
         }
+        .role-nemesis {
+            color: #ffd700 !important;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        .role-pro {
+            color: #00ffcc !important;
+            text-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+        }
+        .role-free {
+            color: #888 !important;
+        }
         .btn-logout {
             width: 100%;
             padding: 12px;
@@ -308,15 +325,15 @@
     </header>
 
     <div class="container">
-        <!-- ГЛАВНАЯ СТРАНИЦА С КНОПКОЙ СКАЧИВАНИЯ -->
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
         <div class="content" id="page-home">
-            <h1>ДОБРО ПОЖАЛОВАТЬ В <span>NEMESIS</span></h1>
+            <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
             <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
             
             <div style="margin-top: 30px;">
                 <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР</a>
-                <div style="color: #777; font-size: 12px; margin-top: 8px;">Скачивание доступно без регистрации</div>
+                <div class="download-note">Скачивание доступно без регистрации</div>
             </div>
         </div>
 
@@ -366,6 +383,10 @@
                 <div class="info-row">
                     <span class="info-label">Email</span>
                     <span class="info-value" id="acc-email">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Роль</span>
+                    <span class="info-value" id="acc-role">—</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Дата регистрации</span>
@@ -455,6 +476,12 @@
             
             document.getElementById('acc-username').textContent = userData.username || '—';
             document.getElementById('acc-email').textContent = userData.email || '—';
+            
+            const roleElement = document.getElementById('acc-role');
+            const role = userData.role || 'free';
+            roleElement.textContent = role.toUpperCase();
+            roleElement.className = 'info-value role-' + role;
+            
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
             document.getElementById('acc-status').textContent = 'Активен';
         }
@@ -469,6 +496,7 @@
                     const userData = {
                         username: data.username || user.displayName || user.email.split('@')[0],
                         email: user.email,
+                        role: data.role || 'free',
                         createdAt: data.createdAt || null
                     };
                     
@@ -477,6 +505,7 @@
                     navAccount.classList.remove('hidden');
                     localStorage.setItem('nemesis_user', userData.username);
                     localStorage.setItem('nemesis_email', userData.email);
+                    localStorage.setItem('nemesis_role', userData.role);
                     localStorage.setItem('nemesis_logged', 'true');
                     
                 } catch (error) {
@@ -488,6 +517,7 @@
                 navAccount.classList.add('hidden');
                 localStorage.removeItem('nemesis_user');
                 localStorage.removeItem('nemesis_email');
+                localStorage.removeItem('nemesis_role');
                 localStorage.removeItem('nemesis_logged');
             }
         }
@@ -570,6 +600,7 @@
                     await set(ref(db, `users/${user.uid}`), {
                         username: username,
                         email: email,
+                        role: "free",
                         createdAt: new Date().toISOString()
                     });
                     
@@ -625,6 +656,7 @@
                 const userData = {
                     username: localStorage.getItem('nemesis_user') || '—',
                     email: localStorage.getItem('nemesis_email') || '—',
+                    role: localStorage.getItem('nemesis_role') || 'free',
                     createdAt: null
                 };
                 showAccount(userData);
@@ -646,6 +678,7 @@
             const userData = {
                 username: localStorage.getItem('nemesis_user') || '—',
                 email: localStorage.getItem('nemesis_email') || '—',
+                role: localStorage.getItem('nemesis_role') || 'free',
                 createdAt: null
             };
             showAccount(userData);
