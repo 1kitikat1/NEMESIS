@@ -104,10 +104,14 @@
             min-height: calc(100vh - 150px);
             position: relative;
             z-index: 5;
+            flex-direction: column;
         }
+
+        /* ===== ГЛАВНАЯ ===== */
         .content {
             max-width: 700px;
             text-align: center;
+            margin-bottom: 60px;
         }
         .content h1 {
             font-size: 48px;
@@ -151,18 +155,148 @@
             font-size: 12px;
             margin-top: 10px;
         }
+
+        /* ===== ТАРИФЫ ===== */
+        .pricing-title {
+            font-size: 36px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        .pricing-title span {
+            color: #ba00ff;
+        }
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        .pricing-card {
+            background: rgba(20, 10, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 35px 30px;
+            width: 280px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(186, 0, 255, 0.15);
+        }
+        .pricing-card.free {
+            border-top: 2px solid #555;
+        }
+        .pricing-card.elite {
+            border-top: 3px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        .pricing-card.nemesis {
+            border-top: 3px solid #ba00ff;
+            box-shadow: 0 0 30px rgba(186, 0, 255, 0.15);
+        }
+        .pricing-card .badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #ffd700;
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .pricing-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .pricing-card .price {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .pricing-card .price span {
+            font-size: 14px;
+            color: #888;
+            font-weight: 400;
+        }
+        .pricing-card .price-sub {
+            font-size: 12px;
+            color: #ffd700;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .pricing-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 25px;
+            text-align: left;
+        }
+        .pricing-card ul li {
+            padding: 8px 0;
+            color: #bbb;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .pricing-card ul li:last-child {
+            border-bottom: none;
+        }
+        .pricing-card ul li::before {
+            content: "✔ ";
+            color: #00ff88;
+            font-weight: 700;
+        }
+        .pricing-card .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            width: 100%;
+        }
+        .pricing-card .btn-gray {
+            background: rgba(255,255,255,0.05);
+            color: #888;
+            border: 1px solid #333;
+            cursor: default;
+        }
+        .pricing-card .btn-elite {
+            background: linear-gradient(45deg, #ffd700, #f5a623);
+            color: #000;
+            border: none;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+        .pricing-card .btn-elite:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
+        }
+        .pricing-card .btn-nemesis {
+            background: linear-gradient(45deg, #ba00ff, #7a00cc);
+            color: #fff;
+            border: none;
+            cursor: default;
+        }
+
         .auth-card {
             width: 380px;
             background: rgba(25, 12, 40, 0.6);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-top: 1px solid rgba(186, 0, 255, 0.4);
             border-bottom: 1px solid rgba(0, 255, 180, 0.2);
             border-radius: 16px;
             padding: 40px 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            position: relative;
             margin: 0 auto;
         }
         .auth-card h2 {
@@ -297,6 +431,7 @@
             background: rgba(255, 0, 55, 0.2);
             border-color: #ff4455;
         }
+
         @media (max-width: 900px) {
             header { padding: 20px 4%; }
             .container { padding: 40px 4%; }
@@ -304,6 +439,8 @@
             nav { flex-wrap: wrap; justify-content: center; }
             nav a { font-size: 12px; margin: 0 8px; }
             .content h1 { font-size: 32px; }
+            .pricing-container { flex-direction: column; align-items: center; }
+            .pricing-card { width: 100%; max-width: 320px; }
         }
     </style>
 </head>
@@ -325,19 +462,64 @@
     </header>
 
     <div class="container">
-        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
         <div class="content" id="page-home">
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
             <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
             
-            <div style="margin-top: 30px;">
-                <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР</a>
-                <div class="download-note">Скачивание доступно без регистрации</div>
+            <a href="NemesisSteam.exe" class="btn-download" download>📥 СКАЧАТЬ ЛАУНЧЕР</a>
+            <div class="download-note">Скачивание доступно без регистрации</div>
+        </div>
+
+        <!-- ===== ТАРИФЫ ===== -->
+        <h2 class="pricing-title">ВЫБЕРИ <span>ТАРИФ</span></h2>
+        <div class="pricing-container">
+            <!-- FREE -->
+            <div class="pricing-card free">
+                <h3>FREE</h3>
+                <div class="price">0 ₽</div>
+                <ul>
+                    <li>Базовая оптимизация</li>
+                    <li>DEV Консоль</li>
+                    <li>Библиотека игр</li>
+                    <li>История игр</li>
+                </ul>
+                <button class="btn btn-gray">Текущий тариф</button>
+            </div>
+
+         <!-- ELITE -->
+<div class="pricing-card elite">
+    <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
+    <h3>⭐ NEMESIS ELITE</h3>
+    <div class="price">199 ₽ <span>НАВСЕГДА</span></div>
+    <div class="price-sub">Один раз и навсегда!</div>
+    <ul>
+        <li>Ультимативная оптимизация FPS</li>
+        <li>Приоритетная поддержка</li>
+        <li>Доступ ко всем будущим функциям</li>
+        <li>Имя в списке ELITE</li>
+        <li>Эксклюзивный статус в лаунчере</li>
+    </ul>
+    <a href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
+        ⚡ КУПИТЬ ЗА 199 ₽
+    </a>
+</div>
+            <!-- NEMESIS -->
+            <div class="pricing-card nemesis">
+                <h3>NEMESIS</h3>
+                <div class="price">Эксклюзив</div>
+                <ul>
+                    <li>Всё, что есть в ELITE</li>
+                    <li>Эксклюзивный доступ</li>
+                    <li>Имя в истории проекта</li>
+                    <li>Только для избранных</li>
+                </ul>
+                <button class="btn btn-nemesis">Только для Nemesis</button>
             </div>
         </div>
 
-        <!-- ФОРМА ВХОДА/РЕГИСТРАЦИИ -->
+        <!-- ===== ФОРМА ВХОДА/РЕГИСТРАЦИИ ===== -->
         <div class="auth-card hidden" id="auth-card">
             <div id="auth-form-container">
                 <h2 id="form-title">ВХОД</h2>
