@@ -107,7 +107,6 @@
             flex-direction: column;
         }
 
-        /* ===== ГЛАВНАЯ ===== */
         .content {
             max-width: 700px;
             text-align: center;
@@ -156,7 +155,6 @@
             margin-top: 10px;
         }
 
-        /* ===== ТАРИФЫ ===== */
         .pricing-title {
             font-size: 36px;
             font-weight: 800;
@@ -193,18 +191,18 @@
             border-top: 2px solid #555;
         }
         .pricing-card.elite {
-            border-top: 3px solid #ffd700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+            border-top: 3px solid #00ffcc;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
         }
         .pricing-card.nemesis {
-            border-top: 3px solid #ba00ff;
-            box-shadow: 0 0 30px rgba(186, 0, 255, 0.15);
+            border-top: 3px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
         }
         .pricing-card .badge {
             position: absolute;
             top: -12px;
             right: 20px;
-            background: #ffd700;
+            background: #00ffcc;
             color: #000;
             font-size: 10px;
             font-weight: 800;
@@ -231,7 +229,7 @@
         }
         .pricing-card .price-sub {
             font-size: 12px;
-            color: #ffd700;
+            color: #00ffcc;
             font-weight: 600;
             margin-bottom: 20px;
         }
@@ -271,20 +269,23 @@
             cursor: default;
         }
         .pricing-card .btn-elite {
-            background: linear-gradient(45deg, #ffd700, #f5a623);
+            background: linear-gradient(45deg, #00ffcc, #00ccaa);
             color: #000;
             border: none;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
         }
         .pricing-card .btn-elite:hover {
             transform: scale(1.03);
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 50px rgba(0, 255, 200, 0.4);
         }
         .pricing-card .btn-nemesis {
-            background: linear-gradient(45deg, #ba00ff, #7a00cc);
-            color: #fff;
+            background: linear-gradient(45deg, #ffd700, #f5a623);
+            color: #000;
             border: none;
             cursor: default;
+        }
+        .btn-elite-hidden {
+            display: none !important;
         }
 
         .auth-card {
@@ -407,7 +408,7 @@
             color: #ffd700 !important;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
-        .role-pro {
+        .role-elite {
             color: #00ffcc !important;
             text-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
         }
@@ -488,23 +489,24 @@
                 <button class="btn btn-gray">Текущий тариф</button>
             </div>
 
-         <!-- ELITE -->
-<div class="pricing-card elite">
-    <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
-    <h3>⭐ NEMESIS ELITE</h3>
-    <div class="price">199 ₽ <span>НАВСЕГДА</span></div>
-    <div class="price-sub">Один раз и навсегда!</div>
-    <ul>
-        <li>Ультимативная оптимизация FPS</li>
-        <li>Приоритетная поддержка</li>
-        <li>Доступ ко всем будущим функциям</li>
-        <li>Имя в списке ELITE</li>
-        <li>Эксклюзивный статус в лаунчере</li>
-    </ul>
-    <a href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
-        ⚡ КУПИТЬ ЗА 199 ₽
-    </a>
-</div>
+            <!-- ELITE -->
+            <div class="pricing-card elite">
+                <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
+                <h3>⭐ NEMESIS ELITE</h3>
+                <div class="price">199 ₽ <span>НАВСЕГДА</span></div>
+                <div class="price-sub">Один раз и навсегда!</div>
+                <ul>
+                    <li>Ультимативная оптимизация FPS</li>
+                    <li>Приоритетная поддержка</li>
+                    <li>Доступ ко всем будущим функциям</li>
+                    <li>Имя в списке ELITE</li>
+                    <li>Эксклюзивный статус в лаунчере</li>
+                </ul>
+                <a id="btn-buy-elite" href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
+                    ⚡ КУПИТЬ ЗА 199 ₽
+                </a>
+            </div>
+
             <!-- NEMESIS -->
             <div class="pricing-card nemesis">
                 <h3>NEMESIS</h3>
@@ -623,6 +625,7 @@
         const navHome = document.getElementById('nav-home');
         const navLogin = document.getElementById('nav-login');
         const navAccount = document.getElementById('nav-account');
+        const btnBuyElite = document.getElementById('btn-buy-elite');
 
         function showPage(page) {
             pageHome.classList.add('hidden');
@@ -666,6 +669,13 @@
             
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
             document.getElementById('acc-status').textContent = 'Активен';
+
+            // ===== СКРЫВАЕМ КНОПКУ ПОКУПКИ ДЛЯ ELITE И NEMESIS =====
+            if (role === 'elite' || role === 'nemesis') {
+                btnBuyElite.classList.add('btn-elite-hidden');
+            } else {
+                btnBuyElite.classList.remove('btn-elite-hidden');
+            }
         }
 
         async function updateUI(user) {
@@ -701,6 +711,8 @@
                 localStorage.removeItem('nemesis_email');
                 localStorage.removeItem('nemesis_role');
                 localStorage.removeItem('nemesis_logged');
+                // Показываем кнопку покупки для неавторизованных
+                btnBuyElite.classList.remove('btn-elite-hidden');
             }
         }
 
