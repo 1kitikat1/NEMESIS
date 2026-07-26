@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- ===== ОСНОВНЫЕ SEO ТЕГИ ===== -->
     <title>NEMESIS STEAM BOOSTER — оптимизация FPS для игр на Windows</title>
-<!-- ===== SEO ТЕГИ ===== -->
-<title>NEMESIS STEAM BOOSTER — оптимизация FPS для игр на Windows</title>
-<meta name="description" content="Скачать NEMESIS Steam Booster бесплатно. Ультимативная оптимизация FPS, очистка RAM, приоритетная поддержка. Повысь FPS в играх до +40%. Купить ELITE статус навсегда за 199 ₽.">
-<meta name="keywords" content="NEMESIS, Steam Booster, оптимизация FPS, лаунчер Steam, ELITE статус, повышение FPS, очистка RAM, игровой бустер, оптимизация Windows, Steam лаунчер">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Nemesis Team">
-<meta name="language" content="Russian">
-<meta name="revisit-after" content="7 days">
-<meta name="yandex-verification" content="c736e915e9d6c40c" />
-<meta name="google-site-verification" content="oTWOyp9_luVFoeuG1RlSSGH8b5B5T8CHB6sRn3SlSdc" />
+    <meta name="description" content="Скачать NEMESIS Steam Booster бесплатно. Ультимативная оптимизация FPS, очистка RAM, приоритетная поддержка. Повысь FPS в играх до +40%.">
+    <meta name="keywords" content="NEMESIS, Steam Booster, оптимизация FPS, лаунчер Steam, ELITE статус, повышение FPS, очистка RAM, игровой бустер, оптимизация Windows, Steam лаунчер">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Nemesis Team">
+    <meta name="language" content="Russian">
+    <meta name="revisit-after" content="7 days">
     <style>
         * {
             margin: 0;
@@ -138,31 +133,53 @@
             line-height: 1.8;
             margin-bottom: 10px;
         }
+
+        .download-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
         .btn-download {
             display: inline-flex;
             align-items: center;
-            padding: 14px 40px;
-            background: rgba(186, 0, 255, 0.15);
+            gap: 12px;
+            padding: 16px 45px;
+            background: linear-gradient(135deg, rgba(186, 0, 255, 0.2), rgba(0, 200, 255, 0.1));
             border: 2px solid #ba00ff;
             color: white;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(186, 0, 255, 0.15);
-            transition: 0.3s;
-            margin-top: 20px;
+            box-shadow: 0 0 30px rgba(186, 0, 255, 0.15);
+            transition: all 0.3s ease;
         }
         .btn-download:hover {
-            background: #ba00ff;
-            box-shadow: 0 0 35px rgba(186, 0, 255, 0.4);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #ba00ff, #6a00cc);
+            box-shadow: 0 0 50px rgba(186, 0, 255, 0.5);
+            transform: translateY(-3px) scale(1.02);
+        }
+        .btn-download .btn-icon {
+            font-size: 22px;
+        }
+        .btn-download .btn-text {
+            font-size: 15px;
+            letter-spacing: 0.5px;
         }
         .download-note {
             color: #777;
             font-size: 12px;
-            margin-top: 10px;
+            margin-top: 5px;
+        }
+        .download-note a {
+            color: #ba00ff;
+            text-decoration: none;
+        }
+        .download-note a:hover {
+            text-decoration: underline;
         }
 
         .pricing-title {
@@ -283,6 +300,7 @@
             color: #000;
             border: none;
             box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
+            cursor: pointer;
         }
         .pricing-card .btn-elite:hover {
             transform: scale(1.03);
@@ -478,18 +496,20 @@
             <h1>NEMESIS <span>STEAM</span> BOOSTER</h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
             <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
-           <div class="download-area">
-    <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/fps/NemesisSteam.exe" 
-       class="btn-download" 
-       target="_blank">
-        <span class="btn-icon">⚡</span>
-        <span class="btn-text">СКАЧАТЬ ;3</span>
-    </a>
-    <div class="download-note">
-        <a href="https://t.me/Nemesissup" target="_blank">📞 Поддержка</a> •
-        <a href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank">⭐ Купить ELITE</a>
-    </div>
-</div>
+
+            <div class="download-area">
+                <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/fps/NemesisSteam.exe" 
+                   class="btn-download" 
+                   target="_blank">
+                    <span class="btn-icon">⚡</span>
+                    <span class="btn-text">СКАЧАТЬ :3</span>
+                </a>
+                <div class="download-note">
+                    <a href="https://t.me/Nemesissup" target="_blank">📞 Поддержка</a>
+                </div>
+            </div>
+        </div>
+
         <!-- ===== ТАРИФЫ ===== -->
         <h2 class="pricing-title">ВЫБЕРИ <span>ТАРИФ</span></h2>
         <div class="pricing-container">
@@ -687,7 +707,6 @@
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
             document.getElementById('acc-status').textContent = 'Активен';
 
-            // ===== СКРЫВАЕМ КНОПКУ ПОКУПКИ ДЛЯ ELITE И NEMESIS =====
             if (role === 'elite' || role === 'nemesis') {
                 btnBuyElite.classList.add('btn-elite-hidden');
             } else {
@@ -728,7 +747,6 @@
                 localStorage.removeItem('nemesis_email');
                 localStorage.removeItem('nemesis_role');
                 localStorage.removeItem('nemesis_logged');
-                // Показываем кнопку покупки для неавторизованных
                 btnBuyElite.classList.remove('btn-elite-hidden');
             }
         }
