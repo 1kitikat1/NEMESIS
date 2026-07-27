@@ -1,93 +1,154 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEMESIS STEAM — оптимизация FPS для игр на Windows</title>
-    <meta name="description" content="Скачать NEMESIS Steam бесплатно. Ультимативная оптимизация FPS, очистка RAM, приоритетная поддержка. Повысь FPS в играх до +40%.">
-    <meta name="keywords" content="NEMESIS, Steam , оптимизация FPS, лаунчер Steam, ELITE статус, повышение FPS, очистка RAM, игровой бустер, оптимизация Windows, Steam лаунчер">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Nemesis Team">
-    <meta name="language" content="Russian">
-    <meta name="revisit-after" content="7 days">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nemesis steam :3 </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
+        /* ----- БАЗА ----- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            user-select: none;
         }
 
         body {
-            background: #0b0b12;
-            color: #ffffff;
-            overflow-x: hidden;
+            background: #07070d;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
             min-height: 100vh;
-            background-image: radial-gradient(ellipse at 50% 0%, #16161f 0%, #0a0a0f 100%);
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .bg-glow {
+        /* ----- ЗВЁЗДЫ (партикли) ----- */
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
             position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 0.9; transform: scale(1.2); }
+        }
+
+        /* ----- ГЛОУ ----- */
+        .glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-1 {
+            width: 700px;
+            height: 700px;
+            background: rgba(108, 99, 255, 0.08);
+            top: -20%;
+            left: -15%;
+        }
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 215, 0, 0.05);
+            bottom: -20%;
+            right: -15%;
+        }
+        .glow-3 {
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
-            top: -10%;
-            right: -10%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .bg-glow-2 {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(108, 99, 255, 0.05) 0%, rgba(0,0,0,0) 70%);
-            bottom: -5%;
-            left: -5%;
-            z-index: 0;
-            pointer-events: none;
+            background: rgba(108, 99, 255, 0.06);
+            top: 30%;
+            left: 55%;
         }
 
-        /* ===== ХЕДЕР ===== */
+        /* ----- АНИМАЦИЯ ПОЯВЛЕНИЯ ----- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+            animation: fadeUp 0.7s ease forwards;
+            opacity: 0;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.4s; }
+        .delay-4 { animation-delay: 0.55s; }
+
+        /* ----- ХЕДЕР (ликвид-гласс) ----- */
         header {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
             position: relative;
             z-index: 10;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            margin-top: 16px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+        }
+        header:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
-        .logo-block {
+        .logo {
             display: flex;
             align-items: center;
             gap: 12px;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: -0.5px;
         }
-
-        .logo-img {
-            width: 38px;
-            height: 38px;
+        .logo span {
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo img {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             object-fit: cover;
         }
 
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #ffffff;
-        }
-        .logo-text span {
-            color: #6c63ff;
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 28px;
         }
 
         nav {
             display: flex;
+            gap: 28px;
             align-items: center;
-            gap: 25px;
         }
         nav a {
             color: #8888aa;
@@ -96,596 +157,656 @@
             font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
+            letter-spacing: 0.3px;
+            position: relative;
         }
-        nav a:hover {
-            color: #6c63ff;
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #6c63ff;
+            transition: width 0.3s ease;
         }
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: #fff; }
         nav a.active {
             color: #6c63ff;
+            font-weight: 600;
         }
-
+        nav a.active::after { width: 100%; }
         .nav-user {
-            color: #6c63ff !important;
-            font-weight: 600 !important;
-            background: rgba(108, 99, 255, 0.1);
+            background: rgba(108, 99, 255, 0.10);
+            padding: 6px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(108, 99, 255, 0.10);
+        }
+        .nav-user::after { display: none !important; }
+
+        /* ----- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (ликвид-гласс) ----- */
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+        }
+        .lang-btn {
             padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(108, 99, 255, 0.15);
+            border: none;
+            border-radius: 30px;
+            background: transparent;
+            color: #8888aa;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .lang-btn:hover {
+            color: #fff;
+        }
+        .lang-btn.active {
+            background: rgba(108, 99, 255, 0.15);
+            color: #6c63ff;
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.05);
         }
 
-        /* ===== КОНТЕЙНЕР ===== */
+        /* ----- КОНТЕЙНЕР ----- */
         .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 8%;
-            min-height: calc(100vh - 150px);
+            width: 100%;
+            max-width: 1280px;
+            padding: 40px 40px 80px;
             position: relative;
             z-index: 5;
-            flex-direction: column;
-        }
-
-        /* ===== ГЛАВНЫЙ БЛОК ===== */
-        .content {
-            max-width: 700px;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .content h1 {
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-        .content h1 span {
-            color: #6c63ff;
-        }
-
-        .content p {
-            color: #8888aa;
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 10px;
-        }
-
-        /* ===== КНОПКА СКАЧИВАНИЯ (СТЕКЛЯННАЯ) ===== */
-        .download-area {
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            margin-top: 20px;
         }
 
+        /* ----- ГЕРОЙ ----- */
+        .hero {
+            text-align: center;
+            max-width: 740px;
+            margin-bottom: 70px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 18px;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(108, 99, 255, 0.15);
+        }
+        .hero p {
+            color: #8888aa;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 4px;
+        }
+        .hero .sub {
+            color: #555566;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* ----- КНОПКА СКАЧИВАНИЯ ----- */
         .btn-download {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 16px 45px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            gap: 14px;
+            padding: 18px 52px;
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(108, 99, 255, 0.05));
+            border: 1px solid rgba(108, 99, 255, 0.15);
+            border-radius: 60px;
+            color: #fff;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             text-decoration: none;
-            border-radius: 12px;
-            cursor: pointer;
             backdrop-filter: blur(8px);
             transition: all 0.3s ease;
+            margin-top: 24px;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
-
+        .btn-download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+        .btn-download:hover::before { left: 100%; }
         .btn-download:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            transform: translateY(-3px);
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(108, 99, 255, 0.3);
+            box-shadow: 0 16px 48px rgba(108, 99, 255, 0.15);
         }
+        .btn-download .icon { font-size: 20px; }
 
-        .btn-download .btn-icon { font-size: 22px; }
-        .btn-download .btn-text { font-size: 15px; letter-spacing: 0.3px; }
-
-        .download-note {
-            color: #555566;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-        .download-note a {
-            color: #6c63ff;
-            text-decoration: none;
-        }
-        .download-note a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== ТАРИФЫ ===== */
-        .pricing-title {
-            font-size: 36px;
+        /* ----- ЗАГОЛОВОК ТАРИФОВ ----- */
+        .section-title {
+            font-size: 40px;
             font-weight: 800;
             text-align: center;
-            margin-bottom: 40px;
-            color: #fff;
-            letter-spacing: -1px;
+            margin: 20px 0 50px;
+            letter-spacing: -1.5px;
         }
-        .pricing-title span {
-            color: #6c63ff;
+        .section-title .gradient {
+            background: linear-gradient(135deg, #6c63ff, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .pricing-container {
+        /* ----- СЕТКА ТАРИФОВ ----- */
+        .pricing-grid {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
-            margin-bottom: 60px;
+            width: 100%;
+            margin-bottom: 70px;
         }
 
-        /* ===== КАРТОЧКА (СТЕКЛЯННАЯ) ===== */
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 35px 30px;
+        /* ----- КАРТОЧКА (стекло + анимация) ----- */
+        .card {
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 36px 30px 30px;
             width: 280px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
-        .pricing-card:hover {
-            transform: translateY(-5px);
+        .card:hover {
+            transform: translateY(-12px) scale(1.01);
             border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
         }
 
-        .pricing-card.free {
-            border-top: 2px solid rgba(255, 255, 255, 0.08);
-        }
-        .pricing-card.elite {
+        .card.free { border-top: 2px solid rgba(255, 255, 255, 0.06); }
+        .card.elite {
             border-top: 2px solid #6c63ff;
-            box-shadow: 0 0 40px rgba(108, 99, 255, 0.08);
+            box-shadow: 0 8px 40px rgba(108, 99, 255, 0.06);
         }
-        .pricing-card.nemesis {
+        .card.elite:hover {
+            box-shadow: 0 24px 64px rgba(108, 99, 255, 0.10);
+        }
+        .card.nemesis {
             border-top: 2px solid #ffd700;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.08);
+            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.04);
+        }
+        .card.nemesis:hover {
+            box-shadow: 0 24px 64px rgba(255, 215, 0, 0.08);
         }
 
-        .pricing-card .badge {
+        .card .badge {
             position: absolute;
             top: -12px;
-            right: 20px;
-            background: #6c63ff;
+            right: 18px;
+            background: linear-gradient(135deg, #6c63ff, #8b7aff);
             color: #fff;
             font-size: 10px;
             font-weight: 700;
-            padding: 4px 14px;
-            border-radius: 20px;
+            padding: 4px 18px;
+            border-radius: 40px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.25);
         }
 
-        .pricing-card h3 {
+        .card .icon-big {
+            font-size: 36px;
+            margin-bottom: 6px;
+        }
+        .card h3 {
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
+            margin-bottom: 6px;
         }
-
-        .pricing-card .price {
-            font-size: 32px;
+        .card .price {
+            font-size: 36px;
             font-weight: 800;
-            color: #fff;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
-        .pricing-card .price span {
+        .card .price small {
             font-size: 14px;
             color: #8888aa;
             font-weight: 400;
         }
-
-        .pricing-card .price-sub {
+        .card .price-sub {
             font-size: 12px;
             color: #6c63ff;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
         }
 
-        .pricing-card ul {
+        .card ul {
             list-style: none;
-            padding: 0;
-            margin: 20px 0 25px;
+            width: 100%;
             text-align: left;
+            margin: 16px 0 24px;
         }
-
-        .pricing-card ul li {
+        .card ul li {
             padding: 8px 0;
             color: #aaaacc;
             font-size: 13px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .pricing-card ul li:last-child {
-            border-bottom: none;
-        }
-        .pricing-card ul li::before {
-            content: "✦ ";
+        .card ul li::before {
+            content: "✦";
             color: #6c63ff;
             font-weight: 700;
+            font-size: 12px;
+            opacity: 0.8;
         }
+        .card ul li:last-child { border-bottom: none; }
 
-        .pricing-card .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
+        .card .btn {
             width: 100%;
+            padding: 13px 0;
+            border-radius: 60px;
+            font-weight: 600;
             font-size: 13px;
-        }
-
-        .pricing-card .btn-gray {
-            background: rgba(255, 255, 255, 0.06);
-            color: #8888aa;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: none;
             cursor: default;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
-
-        .pricing-card .btn-elite {
-            background: rgba(108, 99, 255, 0.15);
-            color: #ffffff;
-            border: 1px solid rgba(108, 99, 255, 0.2);
+        .btn-gray {
+            background: rgba(255, 255, 255, 0.03);
+            color: #8888aa;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .btn-elite {
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(108, 99, 255, 0.05));
+            color: #fff;
+            border: 1px solid rgba(108, 99, 255, 0.15);
             cursor: pointer;
         }
-        .pricing-card .btn-elite:hover {
-            background: rgba(108, 99, 255, 0.25);
-            transform: scale(1.02);
+        .btn-elite:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.15);
+            border-color: rgba(108, 99, 255, 0.3);
         }
-
-        .pricing-card .btn-nemesis {
-            background: rgba(255, 215, 0, 0.12);
+        .btn-nemesis {
+            background: rgba(255, 215, 0, 0.06);
             color: #ffd700;
-            border: 1px solid rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.08);
             cursor: default;
         }
+        .btn-elite-hidden { display: none !important; }
 
-        .btn-elite-hidden {
-            display: none !important;
-        }
-
-        /* ===== ФОРМА ВХОДА ===== */
-        .auth-card {
-            width: 380px;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        /* ----- ФОРМА / АККАУНТ (стекло) ----- */
+        .auth-wrapper {
+            width: 100%;
+            max-width: 420px;
             margin: 0 auto;
         }
 
-        .auth-card h2 {
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-            color: #fff;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 44px 36px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .auth-card .sub-title {
+        .glass-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .glass-card .sub {
+            text-align: center;
             font-size: 11px;
             color: #8888aa;
-            text-align: center;
+            letter-spacing: 1.5px;
             font-weight: 500;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
+            text-transform: uppercase;
         }
 
         .input-group {
-            position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
-
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            color: white;
+            padding: 15px 18px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            color: #fff;
             font-size: 14px;
             outline: none;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
-
         .input-group input:focus {
             border-color: #6c63ff;
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.06);
         }
-
         .input-group input::placeholder {
             color: #555566;
+            font-weight: 400;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 12px;
-            background: rgba(108, 99, 255, 0.1);
-            border: 1px solid #6c63ff;
-            color: white;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(108, 99, 255, 0.04));
+            border: 1px solid rgba(108, 99, 255, 0.15);
+            border-radius: 60px;
+            color: #fff;
             font-weight: 600;
-            font-size: 13px;
-            border-radius: 10px;
+            font-size: 14px;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
+            transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
         }
-
         .btn-submit:hover {
-            background: rgba(108, 99, 255, 0.2);
-            box-shadow: 0 0 30px rgba(108, 99, 255, 0.15);
+            background: rgba(108, 99, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.08);
+            transform: scale(1.01);
         }
 
         .toggle-mode {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 18px;
             color: #8888aa;
-            font-size: 12px;
+            font-size: 13px;
         }
-
         .toggle-mode span {
             color: #6c63ff;
             cursor: pointer;
             font-weight: 600;
+            transition: 0.2s;
         }
-        .toggle-mode span:hover {
-            text-decoration: underline;
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        .toggle-mode span:hover { text-shadow: 0 0 20px rgba(108, 99, 255, 0.2); }
 
         #auth-status {
-            margin-top: 15px;
+            margin-top: 16px;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
+            min-height: 22px;
             color: #8888aa;
-            min-height: 20px;
         }
 
-        /* ===== АККАУНТ ===== */
-        .account-info {
-            display: none;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .account-info.active {
-            display: flex;
-        }
+        .hidden { display: none !important; }
 
+        /* ----- ИНФО АККАУНТА ----- */
         .account-info .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-
-        .account-info .info-label {
+        .account-info .info-row:last-child { border-bottom: none; }
+        .account-info .label {
             color: #8888aa;
             font-size: 13px;
+            font-weight: 500;
         }
-        .account-info .info-value {
-            color: #fff;
+        .account-info .value {
             font-weight: 600;
             font-size: 13px;
         }
-        .account-info .info-value.highlight {
-            color: #6c63ff;
-        }
-
-        .role-nemesis {
-            color: #ffd700 !important;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
-        .role-elite {
-            color: #6c63ff !important;
-            text-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
-        }
-        .role-free {
-            color: #8888aa !important;
-        }
+        .account-info .value.highlight { color: #6c63ff; }
+        .role-free { color: #8888aa; }
+        .role-elite { color: #6c63ff; }
+        .role-nemesis { color: #ffd700; }
 
         .btn-logout {
             width: 100%;
-            padding: 12px;
-            background: rgba(255, 0, 55, 0.08);
-            border: 1px solid rgba(255, 0, 55, 0.2);
+            padding: 13px;
+            background: rgba(255, 0, 55, 0.05);
+            border: 1px solid rgba(255, 0, 55, 0.08);
+            border-radius: 60px;
             color: #ff4455;
             font-weight: 600;
             font-size: 13px;
-            border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
+            transition: all 0.3s ease;
+            margin-top: 18px;
             font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
         }
-
         .btn-logout:hover {
-            background: rgba(255, 0, 55, 0.15);
-            border-color: rgba(255, 0, 55, 0.3);
+            background: rgba(255, 0, 55, 0.10);
+            border-color: rgba(255, 0, 55, 0.15);
         }
 
-        /* ===== АДАПТИВ ===== */
+        /* ----- АДАПТИВ ----- */
         @media (max-width: 900px) {
-            header { padding: 20px 4%; }
-            .container { padding: 40px 4%; }
-            .auth-card { width: 100%; max-width: 380px; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            nav a { font-size: 12px; }
-            .content h1 { font-size: 32px; }
-            .pricing-container { flex-direction: column; align-items: center; }
-            .pricing-card { width: 100%; max-width: 320px; }
+            header { padding: 14px 20px; flex-wrap: wrap; gap: 12px; border-radius: 16px; margin: 12px 12px 0; }
+            .header-right { flex-wrap: wrap; justify-content: center; gap: 16px; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 14px; }
+            .container { padding: 20px 20px 60px; }
+            .hero h1 { font-size: 36px; }
+            .section-title { font-size: 28px; }
+            .pricing-grid { flex-direction: column; align-items: center; }
+            .card { width: 100%; max-width: 340px; }
+            .auth-wrapper { max-width: 100%; }
+            .glass-card { padding: 32px 24px; }
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 12px 16px; }
+            .hero h1 { font-size: 28px; }
+            .btn-download { padding: 14px 28px; font-size: 14px; }
+            .lang-btn { padding: 4px 10px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-    <div class="bg-glow-2"></div>
+    <!-- ЗВЁЗДЫ -->
+    <div id="stars"></div>
 
-    <header>
-        <div class="logo-block">
-            <img src="logo.png" alt="NEMESIS" class="logo-img">
-            <div class="logo-text">NEMESIS <span>STEAM</span></div>
+    <!-- ГЛОУ -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <!-- ХЕДЕР (ликвид-гласс) -->
+    <header class="animate-in">
+        <div class="logo">
+            <img src="logo.png" alt="NEMESIS" />
+            NEMESIS <span>STEAM</span>
         </div>
-        <nav>
-            <a class="active" id="nav-home">ГЛАВНАЯ</a>
-            <a id="nav-login">ВХОД</a>
-            <a id="nav-account" class="hidden nav-user">АККАУНТ</a>
-        </nav>
+        <div class="header-right">
+            <nav>
+                <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
+                <a id="nav-login" data-key="nav_login">ВХОД</a>
+                <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
+            </nav>
+
+            <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+        </div>
     </header>
 
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
     <div class="container">
-        <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
-        <div class="content" id="page-home">
-            <h1>NEMESIS <span>STEAM</span></h1>
-            <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
-            <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
 
-            <div class="download-area">
-                <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/fps/NemesisSteam.exe" 
-                   class="btn-download" 
-                   target="_blank">
-                    <span class="btn-icon">⬇</span>
-                    <span class="btn-text">СКАЧАТЬ ЛАУНЧЕР</span>
+        <!-- ГЛАВНАЯ -->
+        <div id="page-home">
+            <div class="hero animate-in">
+                <h1>NEMESIS <span class="gradient">STEAM</span></h1>
+                <p data-key="hero_desc1">Приватный комплекс утилит для Windows и лаунчера Steam.</p>
+                <p data-key="hero_desc2">Оптимизация ОЗУ и  максимальный FPS.</p>
+                <p class="sub" data-key="hero_sub">⚡ Повысь FPS до +40% уже сегодня</p>
+                <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/fps/NemesisSteam.exe"
+                   class="btn-download" target="_blank">
+                    <span class="icon">⬇</span> <span data-key="download_btn">Скачать</span>
                 </a>
-                <div class="download-note">
-                    <a href="https://t.me/Nemesissup" target="_blank">📞 Поддержка</a>
+                <div style="margin-top:16px; font-size:12px; color:#555566;">
+                    <a href="https://t.me/Nemesissup" target="_blank" style="color:#6c63ff; text-decoration:none;">📞 <span data-key="support">Поддержка</span></a>
                 </div>
             </div>
         </div>
 
-        <!-- ===== ТАРИФЫ ===== -->
-        <h2 class="pricing-title">ВЫБЕРИ <span>ТАРИФ</span></h2>
-        <div class="pricing-container">
+        <!-- ТАРИФЫ -->
+        <h2 class="section-title animate-in delay-1"><span data-key="pricing_title">ВЫБЕРИ ТАРИФ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
+        <div class="pricing-grid">
+
             <!-- FREE -->
-            <div class="pricing-card free">
-                <h3>FREE</h3>
+            <div class="card free animate-in delay-2">
+                <div class="icon-big">🆓</div>
+                <h3 data-key="plan_free">FREE</h3>
                 <div class="price">0 ₽</div>
                 <ul>
-                    <li>Базовая оптимизация</li>
-                    <li>DEV Консоль</li>
-                    <li>Библиотека игр</li>
-                    <li>История игр</li>
+                    <li data-key="free_opt1">Базовая оптимизация</li>
+                    <li data-key="free_opt2">DEV Консоль</li>
+                    <li data-key="free_opt3">Библиотека игр</li>
+                    <li data-key="free_opt4">История игр</li>
                 </ul>
-                <button class="btn btn-gray">Текущий тариф</button>
+                <div class="btn btn-gray" data-key="current_plan">Текущий тариф</div>
             </div>
 
             <!-- ELITE -->
-            <div class="pricing-card elite">
-                <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
-                <h3>⭐ NEMESIS ELITE</h3>
-                <div class="price">199 ₽ <span>НАВСЕГДА</span></div>
-                <div class="price-sub">Один раз и навсегда!</div>
+            <div class="card elite animate-in delay-3">
+                <div class="badge" data-key="badge_popular">🔥 ПОПУЛЯРНЫЙ</div>
+                <div class="icon-big">⭐</div>
+                <h3 data-key="plan_elite">NEMESIS ELITE</h3>
+                <div class="price">199 ₽ <small data-key="forever">НАВСЕГДА</small></div>
+                <div class="price-sub" data-key="one_time">Один раз и навсегда!</div>
                 <ul>
-                    <li>Ультимативная оптимизация FPS</li>
-                    <li>Приоритетная поддержка</li>
-                    <li>Доступ ко всем будущим функциям</li>
-                    <li>Имя в списке ELITE</li>
-                    <li>Эксклюзивный статус в лаунчере</li>
+                    <li data-key="elite_opt1">Ультимативная оптимизация FPS</li>
+                    <li data-key="elite_opt2">Приоритетная поддержка</li>
+                    <li data-key="elite_opt3">Доступ ко всем будущим функциям</li>
+                    <li data-key="elite_opt4">Имя в списке ELITE</li>
+                    <li data-key="elite_opt5">Эксклюзивный статус в лаунчере</li>
                 </ul>
                 <a id="btn-buy-elite" href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
-                    ⚡ КУПИТЬ ЗА 199 ₽
+                    ⚡ <span data-key="buy_elite">КУПИТЬ ЗА 199 ₽</span>
                 </a>
             </div>
 
             <!-- NEMESIS -->
-            <div class="pricing-card nemesis">
-                <h3>NEMESIS</h3>
-                <div class="price">Эксклюзив</div>
+            <div class="card nemesis animate-in delay-4">
+                <div class="icon-big">👑</div>
+                <h3 data-key="plan_nemesis">NEMESIS</h3>
+                <div class="price" data-key="exclusive">Эксклюзив</div>
                 <ul>
-                    <li>Всё, что есть в ELITE</li>
-                    <li>Эксклюзивный доступ</li>
-                    <li>Имя в истории проекта</li>
-                    <li>Только для избранных</li>
+                    <li data-key="nemesis_opt1">Всё, что есть в ELITE</li>
+                    <li data-key="nemesis_opt2">Эксклюзивный доступ</li>
+                    <li data-key="nemesis_opt3">Имя в истории проекта</li>
+                    <li data-key="nemesis_opt4">Только для избранных</li>
                 </ul>
-                <button class="btn btn-nemesis">Только для Nemesis</button>
+                <div class="btn btn-nemesis" data-key="for_nemesis">Только для разработчиков</div>
             </div>
         </div>
 
-        <!-- ===== ФОРМА ВХОДА/РЕГИСТРАЦИИ ===== -->
-        <div class="auth-card hidden" id="auth-card">
-            <div id="auth-form-container">
-                <h2 id="form-title">ВХОД</h2>
-                <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+        <!-- ФОРМА ВХОДА / АККАУНТ -->
+        <div class="auth-wrapper">
+            <div class="glass-card hidden animate-in" id="auth-card">
 
-                <form id="auth-form" onsubmit="handleAuth(event)">
-                    <div id="reg-fields" class="hidden">
-                        <div class="input-group">
-                            <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off">
+                <!-- ФОРМА -->
+                <div id="auth-form-container">
+                    <h2 id="form-title" data-key="login_title">ВХОД</h2>
+                    <div class="sub" id="form-subtitle" data-key="login_sub">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+
+                    <form id="auth-form" onsubmit="handleAuth(event)">
+                        <div id="reg-fields" class="hidden">
+                            <div class="input-group">
+                                <input type="text" id="reg-username" data-key="username_placeholder" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
+                            </div>
                         </div>
+
+                        <div class="input-group">
+                            <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="auth-pass" data-key="password_placeholder" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
+                        </div>
+
+                        <div id="reg-pass-repeat" class="input-group hidden">
+                            <input type="password" id="auth-pass-repeat" data-key="repeat_password" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="auth-btn" data-key="login_btn">ВОЙТИ</button>
+                    </form>
+
+                    <div class="toggle-mode">
+                        <span id="toggle-link" data-key="toggle_register">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+                    </div>
+                    <div id="auth-status"></div>
+                </div>
+
+                <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
+                <div class="account-info hidden" id="account-info">
+                    <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;" data-key="account_title">👤 АККАУНТ</h2>
+                    <div class="sub" style="text-align:center; margin-bottom:24px;" data-key="account_sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
+
+                    <div class="info-row">
+                        <span class="label" data-key="acc_username">Имя пользователя</span>
+                        <span class="value highlight" id="acc-username">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Email</span>
+                        <span class="value" id="acc-email">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label" data-key="acc_role">Роль</span>
+                        <span class="value" id="acc-role">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label" data-key="acc_date">Дата регистрации</span>
+                        <span class="value" id="acc-date">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label" data-key="acc_status_label">Статус</span>
+                        <span class="value" style="color:#6c63ff;" id="acc-status" data-key="acc_status_active">Активен</span>
                     </div>
 
-                    <div class="input-group">
-                        <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email">
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password">
-                    </div>
-
-                    <div id="reg-pass-repeat" class="input-group hidden">
-                        <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password">
-                    </div>
-
-                    <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
-                </form>
-
-                <div class="toggle-mode">
-                    <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+                    <button class="btn-logout" id="btn-logout" data-key="logout_btn">ВЫЙТИ</button>
                 </div>
-
-                <div id="auth-status"></div>
-            </div>
-
-            <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
-            <div class="account-info" id="account-info">
-                <h2 style="font-size:20px; font-weight:700; text-align:center; margin-bottom:5px; color:#fff;">👤 АККАУНТ</h2>
-                <div class="sub-title" style="text-align:center; font-size:11px; color:#8888aa; margin-bottom:20px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-
-                <div class="info-row">
-                    <span class="info-label">Имя пользователя</span>
-                    <span class="info-value highlight" id="acc-username">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Email</span>
-                    <span class="info-value" id="acc-email">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Роль</span>
-                    <span class="info-value" id="acc-role">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Дата регистрации</span>
-                    <span class="info-value" id="acc-date">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Статус</span>
-                    <span class="info-value" style="color:#6c63ff;" id="acc-status">Активен</span>
-                </div>
-
-                <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
             </div>
         </div>
     </div>
 
+    <!-- FIREBASE -->
     <script type="importmap">
         {
             "imports": {
@@ -697,10 +818,12 @@
     </script>
 
     <script type="module">
+        // ----- ИМПОРТЫ FIREBASE -----
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
         import { getDatabase, ref, set, get } from "firebase/database";
 
+        // ----- КОНФИГ FIREBASE -----
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
             authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -716,7 +839,7 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        let isLoginMode = true;
+        // ----- ЭЛЕМЕНТЫ -----
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
         const accountInfo = document.getElementById('account-info');
@@ -727,6 +850,9 @@
         const navAccount = document.getElementById('nav-account');
         const btnBuyElite = document.getElementById('btn-buy-elite');
 
+        let isLoginMode = true;
+
+        // ----- ПОКАЗ СТРАНИЦ -----
         function showPage(page) {
             pageHome.classList.add('hidden');
             authCard.classList.add('hidden');
@@ -744,31 +870,31 @@
                 authCard.classList.remove('hidden');
                 navAccount.classList.add('active');
                 authFormContainer.style.display = 'none';
-                accountInfo.classList.add('active');
+                accountInfo.classList.remove('hidden');
             }
         }
 
         function showAuthForm() {
             authFormContainer.style.display = 'block';
-            accountInfo.classList.remove('active');
+            accountInfo.classList.add('hidden');
             showPage('auth');
         }
 
         function showAccount(userData) {
             authFormContainer.style.display = 'none';
-            accountInfo.classList.add('active');
+            accountInfo.classList.remove('hidden');
             showPage('account');
 
             document.getElementById('acc-username').textContent = userData.username || '—';
             document.getElementById('acc-email').textContent = userData.email || '—';
 
-            const roleElement = document.getElementById('acc-role');
+            const roleEl = document.getElementById('acc-role');
             const role = userData.role || 'free';
-            roleElement.textContent = role.toUpperCase();
-            roleElement.className = 'info-value role-' + role;
+            roleEl.textContent = role.toUpperCase();
+            roleEl.className = 'value role-' + role;
 
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
-            document.getElementById('acc-status').textContent = 'Активен';
+            document.getElementById('acc-status').textContent = getTranslation('acc_status_active');
 
             if (role === 'elite' || role === 'nemesis') {
                 btnBuyElite.classList.add('btn-elite-hidden');
@@ -777,11 +903,11 @@
             }
         }
 
+        // ----- ОБНОВЛЕНИЕ UI -----
         async function updateUI(user) {
             if (user) {
                 try {
-                    const userRef = ref(db, `users/${user.uid}`);
-                    const snapshot = await get(userRef);
+                    const snapshot = await get(ref(db, `users/${user.uid}`));
                     const data = snapshot.exists() ? snapshot.val() : {};
 
                     const userData = {
@@ -814,46 +940,221 @@
             }
         }
 
-        document.getElementById('toggle-link').addEventListener('click', function() {
-            isLoginMode = !isLoginMode;
+        // ----- ЗВЁЗДЫ (партикли) -----
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 120; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 2 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
 
-            const title = document.getElementById('form-title');
-            const subtitle = document.getElementById('form-subtitle');
-            const btn = document.getElementById('auth-btn');
-            const link = this;
-            const regFields = document.getElementById('reg-fields');
-            const regPassRepeat = document.getElementById('reg-pass-repeat');
-            const emailField = document.getElementById('auth-email');
+        // ----- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -----
+        const translations = {
+            ru: {
+                nav_home: 'ГЛАВНАЯ',
+                nav_login: 'ВХОД',
+                nav_account: 'АККАУНТ',
+                hero_desc1: 'Приватный комплекс утилит для Windows и лаунчера Steam.',
+                hero_desc2: 'Оптимизация ОЗУ, обход инпут-лага и максимальный FPS.',
+                hero_sub: '⚡ Повысь FPS до +40% уже сегодня',
+                download_btn: 'СКАЧАТЬ ЛАУНЧЕР',
+                support: 'Поддержка',
+                pricing_title: 'ВЫБЕРИ',
+                pricing_highlight: 'ТАРИФ',
+                plan_free: 'FREE',
+                free_opt1: 'Базовая оптимизация',
+                free_opt2: 'DEV Консоль',
+                free_opt3: 'Библиотека игр',
+                free_opt4: 'История игр',
+                current_plan: 'Текущий тариф',
+                badge_popular: '🔥 ПОПУЛЯРНЫЙ',
+                plan_elite: 'NEMESIS ELITE',
+                forever: 'НАВСЕГДА',
+                one_time: 'Один раз и навсегда!',
+                elite_opt1: 'Ультимативная оптимизация FPS',
+                elite_opt2: 'Приоритетная поддержка',
+                elite_opt3: 'Доступ ко всем будущим функциям',
+                elite_opt4: 'Имя в списке ELITE',
+                elite_opt5: 'Эксклюзивный статус в лаунчере',
+                buy_elite: 'КУПИТЬ ЗА 199 ₽',
+                plan_nemesis: 'NEMESIS',
+                exclusive: 'Эксклюзив',
+                nemesis_opt1: 'Всё, что есть в ELITE',
+                nemesis_opt2: 'Эксклюзивный доступ',
+                nemesis_opt3: 'Имя в истории проекта',
+                nemesis_opt4: 'Только для избранных',
+                for_nemesis: 'Только для Nemesis',
+                login_title: 'ВХОД',
+                login_sub: 'ВОЙДИТЕ В СВОЙ АККАУНТ',
+                username_placeholder: 'ИМЯ ПОЛЬЗОВАТЕЛЯ',
+                password_placeholder: 'ПАРОЛЬ',
+                repeat_password: 'ПОВТОРИТЕ ПАРОЛЬ',
+                login_btn: 'ВОЙТИ',
+                toggle_register: 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ',
+                toggle_login: 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ',
+                account_title: '👤 АККАУНТ',
+                account_sub: 'ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ',
+                acc_username: 'Имя пользователя',
+                acc_role: 'Роль',
+                acc_date: 'Дата регистрации',
+                acc_status_label: 'Статус',
+                acc_status_active: 'Активен',
+                logout_btn: 'ВЫЙТИ',
+                register_title: 'РЕГИСТРАЦИЯ',
+                register_sub: 'СОЗДАЙТЕ НОВЫЙ АККАУНТ',
+                register_btn: 'ЗАРЕГИСТРИРОВАТЬСЯ',
+                auth_processing: '⏳ Обработка...',
+                auth_error_username: '❌ Имя пользователя не менее 3 символов!',
+                auth_error_password: '❌ Пароль не менее 6 символов!',
+                auth_error_match: '❌ Пароли не совпадают!',
+                auth_error_email: '❌ Email уже используется.',
+                auth_error_invalid: '❌ Некорректный email.',
+                auth_error_notfound: '❌ Пользователь не найден.',
+                auth_error_wrongpass: '❌ Неверный пароль.',
+                auth_error_weak: '❌ Слабый пароль (мин. 6 символов).',
+                auth_default_error: '❌ Ошибка! ',
+                logout_success: 'Вы вышли из аккаунта!'
+            },
+            en: {
+                nav_home: 'HOME',
+                nav_login: 'LOGIN',
+                nav_account: 'ACCOUNT',
+                hero_desc1: 'Private utility suite for Windows and Steam launcher.',
+                hero_desc2: 'RAM optimization, network lag bypass and maximum FPS.',
+                hero_sub: '⚡ Boost FPS up to +40% today',
+                download_btn: 'DOWNLOAD LAUNCHER',
+                support: 'Support',
+                pricing_title: 'CHOOSE',
+                pricing_highlight: 'PLAN',
+                plan_free: 'FREE',
+                free_opt1: 'Basic optimization',
+                free_opt2: 'DEV Console',
+                free_opt3: 'Game library',
+                free_opt4: 'Game history',
+                current_plan: 'Current plan',
+                badge_popular: '🔥 POPULAR',
+                plan_elite: 'NEMESIS ELITE',
+                forever: 'FOREVER',
+                one_time: 'One time payment!',
+                elite_opt1: 'Ultimate FPS optimization',
+                elite_opt2: 'Priority support',
+                elite_opt3: 'Access to all future features',
+                elite_opt4: 'Name in ELITE list',
+                elite_opt5: 'Exclusive launcher status',
+                buy_elite: 'BUY FOR 199 ₽',
+                plan_nemesis: 'NEMESIS',
+                exclusive: 'Exclusive',
+                nemesis_opt1: 'Everything in ELITE',
+                nemesis_opt2: 'Exclusive access',
+                nemesis_opt3: 'Name in project history',
+                nemesis_opt4: 'For selected only',
+                for_nemesis: 'Only for Nemesis',
+                login_title: 'LOGIN',
+                login_sub: 'LOGIN TO YOUR ACCOUNT',
+                username_placeholder: 'USERNAME',
+                password_placeholder: 'PASSWORD',
+                repeat_password: 'REPEAT PASSWORD',
+                login_btn: 'LOGIN',
+                toggle_register: "DON'T HAVE AN ACCOUNT? REGISTER",
+                toggle_login: 'ALREADY HAVE AN ACCOUNT? LOGIN',
+                account_title: '👤 ACCOUNT',
+                account_sub: 'USER INFORMATION',
+                acc_username: 'Username',
+                acc_role: 'Role',
+                acc_date: 'Registration date',
+                acc_status_label: 'Status',
+                acc_status_active: 'Active',
+                logout_btn: 'LOGOUT',
+                register_title: 'REGISTER',
+                register_sub: 'CREATE A NEW ACCOUNT',
+                register_btn: 'REGISTER',
+                auth_processing: '⏳ Processing...',
+                auth_error_username: '❌ Username must be at least 3 characters!',
+                auth_error_password: '❌ Password must be at least 6 characters!',
+                auth_error_match: '❌ Passwords do not match!',
+                auth_error_email: '❌ Email already in use.',
+                auth_error_invalid: '❌ Invalid email.',
+                auth_error_notfound: '❌ User not found.',
+                auth_error_wrongpass: '❌ Wrong password.',
+                auth_error_weak: '❌ Weak password (min 6 characters).',
+                auth_default_error: '❌ Error! ',
+                logout_success: 'You have been logged out!'
+            }
+        };
 
-            if (isLoginMode) {
-                title.textContent = 'ВХОД';
-                subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
-                btn.textContent = 'ВОЙТИ';
-                link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
-                regFields.classList.add('hidden');
-                regPassRepeat.classList.add('hidden');
-                emailField.placeholder = 'EMAIL';
-            } else {
-                title.textContent = 'РЕГИСТРАЦИЯ';
-                subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
-                btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
-                link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
-                regFields.classList.remove('hidden');
-                regPassRepeat.classList.remove('hidden');
-                emailField.placeholder = 'EMAIL (для входа)';
+        let currentLang = localStorage.getItem('nemesis_lang') || 'ru';
+
+        function getTranslation(key) {
+            return translations[currentLang]?.[key] || key;
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('nemesis_lang', lang);
+
+            // Обновляем все элементы с data-key
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                const translation = getTranslation(key);
+                if (translation && translation !== key) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translation;
+                    } else {
+                        el.textContent = translation;
+                    }
+                }
+            });
+
+            // Обновляем кнопки переключения
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Обновляем статус в аккаунте
+            const statusEl = document.getElementById('acc-status');
+            if (statusEl && statusEl.textContent) {
+                statusEl.textContent = getTranslation('acc_status_active');
             }
 
-            statusDiv.textContent = '';
-            statusDiv.style.color = '#8888aa';
+            // Обновляем заголовок формы в зависимости от режима
+            if (isLoginMode) {
+                document.getElementById('form-title').textContent = getTranslation('login_title');
+                document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
+                document.getElementById('auth-btn').textContent = getTranslation('login_btn');
+            } else {
+                document.getElementById('form-title').textContent = getTranslation('register_title');
+                document.getElementById('form-subtitle').textContent = getTranslation('register_sub');
+                document.getElementById('auth-btn').textContent = getTranslation('register_btn');
+            }
+        }
+
+        // Обработчики переключения языка
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                updateLanguage(btn.dataset.lang);
+            });
         });
 
+        // Инициализация языка
+        updateLanguage(currentLang);
+
+        // ----- ОБРАБОТКА ФОРМЫ -----
         window.handleAuth = async function(event) {
             event.preventDefault();
 
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-pass').value;
 
-            statusDiv.textContent = '⏳ Обработка...';
+            statusDiv.textContent = getTranslation('auth_processing');
             statusDiv.style.color = '#8888aa';
 
             try {
@@ -867,19 +1168,17 @@
                     const passwordRepeat = document.getElementById('auth-pass-repeat').value;
 
                     if (!username || username.length < 3) {
-                        statusDiv.textContent = '❌ Имя пользователя должно быть не менее 3 символов!';
+                        statusDiv.textContent = getTranslation('auth_error_username');
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
-
                     if (password.length < 6) {
-                        statusDiv.textContent = '❌ Пароль должен быть не менее 6 символов!';
+                        statusDiv.textContent = getTranslation('auth_error_password');
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
-
                     if (password !== passwordRepeat) {
-                        statusDiv.textContent = '❌ Пароли не совпадают!';
+                        statusDiv.textContent = getTranslation('auth_error_match');
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
@@ -902,48 +1201,68 @@
 
             } catch (error) {
                 console.error('Ошибка:', error);
-
-                let errorMessage = '❌ Ошибка! ';
+                let msg = getTranslation('auth_default_error');
                 switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMessage += 'Этот email уже используется.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage += 'Некорректный email.';
-                        break;
-                    case 'auth/user-not-found':
-                        errorMessage += 'Пользователь не найден.';
-                        break;
-                    case 'auth/wrong-password':
-                        errorMessage += 'Неверный пароль.';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage += 'Слишком слабый пароль (минимум 6 символов).';
-                        break;
-                    default:
-                        errorMessage += error.message;
+                    case 'auth/email-already-in-use': msg += getTranslation('auth_error_email'); break;
+                    case 'auth/invalid-email': msg += getTranslation('auth_error_invalid'); break;
+                    case 'auth/user-not-found': msg += getTranslation('auth_error_notfound'); break;
+                    case 'auth/wrong-password': msg += getTranslation('auth_error_wrongpass'); break;
+                    case 'auth/weak-password': msg += getTranslation('auth_error_weak'); break;
+                    default: msg += error.message;
                 }
-
-                statusDiv.textContent = errorMessage;
+                statusDiv.textContent = msg;
                 statusDiv.style.color = '#ff4444';
             }
         };
 
+        // ----- ПЕРЕКЛЮЧЕНИЕ ВХОД/РЕГИСТРАЦИЯ -----
+        document.getElementById('toggle-link').addEventListener('click', function() {
+            isLoginMode = !isLoginMode;
+
+            const title = document.getElementById('form-title');
+            const subtitle = document.getElementById('form-subtitle');
+            const btn = document.getElementById('auth-btn');
+            const link = this;
+            const regFields = document.getElementById('reg-fields');
+            const regPassRepeat = document.getElementById('reg-pass-repeat');
+            const emailField = document.getElementById('auth-email');
+
+            if (isLoginMode) {
+                title.textContent = getTranslation('login_title');
+                subtitle.textContent = getTranslation('login_sub');
+                btn.textContent = getTranslation('login_btn');
+                link.textContent = getTranslation('toggle_register');
+                regFields.classList.add('hidden');
+                regPassRepeat.classList.add('hidden');
+                emailField.placeholder = 'EMAIL';
+            } else {
+                title.textContent = getTranslation('register_title');
+                subtitle.textContent = getTranslation('register_sub');
+                btn.textContent = getTranslation('register_btn');
+                link.textContent = getTranslation('toggle_login');
+                regFields.classList.remove('hidden');
+                regPassRepeat.classList.remove('hidden');
+                emailField.placeholder = 'EMAIL (для входа)';
+            }
+
+            statusDiv.textContent = '';
+            statusDiv.style.color = '#8888aa';
+        });
+
+        // ----- ВЫХОД -----
         document.getElementById('btn-logout').addEventListener('click', async function() {
             try {
                 await signOut(auth);
                 await updateUI(null);
-                showCustomToast('Вы вышли из аккаунта!');
+                showToast(getTranslation('logout_success'));
             } catch (error) {
                 console.error('Ошибка выхода:', error);
             }
         });
 
-        navHome.addEventListener('click', function() {
-            showPage('home');
-        });
-
-        navLogin.addEventListener('click', function() {
+        // ----- НАВИГАЦИЯ -----
+        navHome.addEventListener('click', () => showPage('home'));
+        navLogin.addEventListener('click', () => {
             if (auth.currentUser) {
                 const userData = {
                     username: localStorage.getItem('nemesis_user') || '—',
@@ -954,10 +1273,10 @@
                 showAccount(userData);
             } else {
                 isLoginMode = true;
-                document.getElementById('form-title').textContent = 'ВХОД';
-                document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
-                document.getElementById('auth-btn').textContent = 'ВОЙТИ';
-                document.getElementById('toggle-link').textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                document.getElementById('form-title').textContent = getTranslation('login_title');
+                document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
+                document.getElementById('auth-btn').textContent = getTranslation('login_btn');
+                document.getElementById('toggle-link').textContent = getTranslation('toggle_register');
                 document.getElementById('reg-fields').classList.add('hidden');
                 document.getElementById('reg-pass-repeat').classList.add('hidden');
                 document.getElementById('auth-email').placeholder = 'EMAIL';
@@ -965,8 +1284,7 @@
                 showAuthForm();
             }
         });
-
-        navAccount.addEventListener('click', function() {
+        navAccount.addEventListener('click', () => {
             const userData = {
                 username: localStorage.getItem('nemesis_user') || '—',
                 email: localStorage.getItem('nemesis_email') || '—',
@@ -976,39 +1294,40 @@
             showAccount(userData);
         });
 
+        // ----- СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ -----
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                console.log('👤 Пользователь авторизован');
                 await updateUI(user);
             } else {
-                console.log('👤 Пользователь не авторизован');
                 await updateUI(null);
             }
         });
 
-        function showCustomToast(message) {
+        // ----- ТОСТ -----
+        function showToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-                background: rgba(11, 11, 18, 0.95); color: white; padding: 12px 30px;
-                border-radius: 12px; border: 1px solid rgba(108, 99, 255, 0.2);
+                background: rgba(11,11,18,0.95); color: #fff; padding: 14px 36px;
+                border-radius: 60px; border: 1px solid rgba(108,99,255,0.15);
                 font-size: 14px; font-weight: 600; z-index: 9999;
                 backdrop-filter: blur(12px);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-                animation: fadeInUp 0.3s ease;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+                animation: fadeUp 0.3s ease;
             `;
             toast.textContent = message;
             document.body.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.5s';
+                toast.style.transition = 'opacity 0.4s';
                 setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
 
+        // Добавляем анимацию для тоста
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes fadeInUp {
+            @keyframes fadeUp {
                 from { opacity: 0; transform: translateX(-50%) translateY(20px); }
                 to { opacity: 1; transform: translateX(-50%) translateY(0); }
             }
