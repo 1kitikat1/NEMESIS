@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nemesis steam :3 </title>
+    <title>NEMESIS STEAM — как Expensive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         /* ----- БАЗА ----- */
@@ -20,6 +20,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            padding-top: 80px; /* отступ под фиксированный хедер */
         }
 
         /* ----- ЗВЁЗДЫ (партикли) ----- */
@@ -90,23 +91,24 @@
         .delay-3 { animation-delay: 0.4s; }
         .delay-4 { animation-delay: 0.55s; }
 
-        /* ----- ХЕДЕР (ликвид-гласс) ----- */
+        /* ----- ХЕДЕР (фиксированный, ликвид-гласс) ----- */
         header {
-            width: 100%;
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
             max-width: 1280px;
-            margin: 0 auto;
-            padding: 16px 40px;
+            padding: 14px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 10;
+            z-index: 100;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px) saturate(1.4);
             -webkit-backdrop-filter: blur(20px) saturate(1.4);
             border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 20px;
-            margin-top: 16px;
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2),
                         inset 0 1px 0 rgba(255, 255, 255, 0.04);
             transition: all 0.3s ease;
@@ -122,8 +124,9 @@
             align-items: center;
             gap: 12px;
             font-weight: 800;
-            font-size: 22px;
+            font-size: 20px;
             letter-spacing: -0.5px;
+            flex-shrink: 0;
         }
         .logo span {
             background: linear-gradient(135deg, #6c63ff, #a78bfa);
@@ -132,8 +135,8 @@
             background-clip: text;
         }
         .logo img {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.06);
             object-fit: cover;
@@ -142,23 +145,26 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 28px;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         nav {
             display: flex;
-            gap: 28px;
+            gap: 24px;
             align-items: center;
         }
         nav a {
             color: #8888aa;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
             letter-spacing: 0.3px;
             position: relative;
+            white-space: nowrap;
         }
         nav a::after {
             content: '';
@@ -179,7 +185,7 @@
         nav a.active::after { width: 100%; }
         .nav-user {
             background: rgba(108, 99, 255, 0.10);
-            padding: 6px 20px;
+            padding: 6px 18px;
             border-radius: 40px;
             border: 1px solid rgba(108, 99, 255, 0.10);
         }
@@ -194,14 +200,15 @@
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(8px);
+            flex-shrink: 0;
         }
         .lang-btn {
-            padding: 6px 14px;
+            padding: 5px 12px;
             border: none;
             border-radius: 30px;
             background: transparent;
             color: #8888aa;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -615,9 +622,19 @@
 
         /* ----- АДАПТИВ ----- */
         @media (max-width: 900px) {
-            header { padding: 14px 20px; flex-wrap: wrap; gap: 12px; border-radius: 16px; margin: 12px 12px 0; }
-            .header-right { flex-wrap: wrap; justify-content: center; gap: 16px; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 14px; }
+            body { padding-top: 72px; }
+            header {
+                padding: 12px 18px;
+                border-radius: 16px;
+                top: 12px;
+                width: calc(100% - 24px);
+            }
+            .logo { font-size: 17px; }
+            .logo img { width: 30px; height: 30px; }
+            .header-right { gap: 12px; }
+            nav { gap: 14px; }
+            nav a { font-size: 12px; }
+            .lang-btn { font-size: 10px; padding: 4px 10px; }
             .container { padding: 20px 20px 60px; }
             .hero h1 { font-size: 36px; }
             .section-title { font-size: 28px; }
@@ -627,11 +644,27 @@
             .glass-card { padding: 32px 24px; }
         }
 
-        @media (max-width: 480px) {
-            header { padding: 12px 16px; }
+        @media (max-width: 600px) {
+            body { padding-top: 66px; }
+            header {
+                padding: 10px 14px;
+                border-radius: 14px;
+                top: 10px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .logo { font-size: 15px; gap: 8px; }
+            .logo img { width: 26px; height: 26px; }
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            nav { gap: 10px; flex-wrap: wrap; }
+            nav a { font-size: 11px; }
+            .lang-switcher { gap: 2px; }
+            .lang-btn { font-size: 9px; padding: 3px 8px; }
             .hero h1 { font-size: 28px; }
             .btn-download { padding: 14px 28px; font-size: 14px; }
-            .lang-btn { padding: 4px 10px; font-size: 11px; }
         }
     </style>
 </head>
@@ -645,7 +678,7 @@
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
 
-    <!-- ХЕДЕР (ликвид-гласс) -->
+    <!-- ХЕДЕР (фиксированный, ликвид-гласс) -->
     <header class="animate-in">
         <div class="logo">
             <img src="logo.png" alt="NEMESIS" />
@@ -674,11 +707,11 @@
             <div class="hero animate-in">
                 <h1>NEMESIS <span class="gradient">STEAM</span></h1>
                 <p data-key="hero_desc1">Приватный комплекс утилит для Windows и лаунчера Steam.</p>
-                <p data-key="hero_desc2">Оптимизация ОЗУ и  максимальный FPS.</p>
+                <p data-key="hero_desc2">Оптимизация ОЗУ и максимальный FPS в играх.</p>
                 <p class="sub" data-key="hero_sub">⚡ Повысь FPS до +40% уже сегодня</p>
                 <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/fps/NemesisSteam.exe"
                    class="btn-download" target="_blank">
-                    <span class="icon">⬇</span> <span data-key="download_btn">Скачать</span>
+                    <span class="icon">⬇</span> <span data-key="download_btn">СКАЧАТЬ ЛАУНЧЕР</span>
                 </a>
                 <div style="margin-top:16px; font-size:12px; color:#555566;">
                     <a href="https://t.me/Nemesissup" target="_blank" style="color:#6c63ff; text-decoration:none;">📞 <span data-key="support">Поддержка</span></a>
@@ -687,7 +720,7 @@
         </div>
 
         <!-- ТАРИФЫ -->
-        <h2 class="section-title animate-in delay-1"><span data-key="pricing_title">ВЫБЕРИ ТАРИФ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
+        <h2 class="section-title animate-in delay-1"><span data-key="pricing_title">ВЫБЕРИ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
         <div class="pricing-grid">
 
             <!-- FREE -->
@@ -734,7 +767,7 @@
                     <li data-key="nemesis_opt3">Имя в истории проекта</li>
                     <li data-key="nemesis_opt4">Только для избранных</li>
                 </ul>
-                <div class="btn btn-nemesis" data-key="for_nemesis">Только для разработчиков</div>
+                <div class="btn btn-nemesis" data-key="for_nemesis">Только для Nemesis</div>
             </div>
         </div>
 
@@ -964,7 +997,7 @@
                 nav_login: 'ВХОД',
                 nav_account: 'АККАУНТ',
                 hero_desc1: 'Приватный комплекс утилит для Windows и лаунчера Steam.',
-                hero_desc2: 'Оптимизация ОЗУ  и максимальный FPS.',
+                hero_desc2: 'Оптимизация ОЗУ и максимальный FPS в играх.',
                 hero_sub: '⚡ Повысь FPS до +40% уже сегодня',
                 download_btn: 'СКАЧАТЬ ЛАУНЧЕР',
                 support: 'Поддержка',
@@ -1029,7 +1062,7 @@
                 nav_login: 'LOGIN',
                 nav_account: 'ACCOUNT',
                 hero_desc1: 'Private utility suite for Windows and Steam launcher.',
-                hero_desc2: 'RAM optimization and maximum FPS.',
+                hero_desc2: 'RAM optimization and maximum FPS in games.',
                 hero_sub: '⚡ Boost FPS up to +40% today',
                 download_btn: 'DOWNLOAD LAUNCHER',
                 support: 'Support',
