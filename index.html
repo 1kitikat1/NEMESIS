@@ -13,14 +13,20 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            min-height: 100vh;
+        }
+
         body {
             background: #07070d;
             font-family: 'Inter', sans-serif;
             color: #fff;
-            min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            padding-top: 80px; /* отступ под фиксированный хедер */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
         }
 
         /* ----- ЗВЁЗДЫ (партикли) ----- */
@@ -191,7 +197,7 @@
         }
         .nav-user::after { display: none !important; }
 
-        /* ----- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (ликвид-гласс) ----- */
+        /* ----- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ ----- */
         .lang-switcher {
             display: flex;
             gap: 4px;
@@ -224,24 +230,24 @@
             box-shadow: 0 0 20px rgba(108, 99, 255, 0.05);
         }
 
-        /* ----- КОНТЕЙНЕР ----- */
+        /* ----- КОНТЕЙНЕР (ЦЕНТРИРОВАННЫЙ) ----- */
         .container {
             width: 100%;
             max-width: 1280px;
-            padding: 40px 40px 80px;
+            padding: 20px 40px 80px;
             position: relative;
             z-index: 5;
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* ----- ГЕРОЙ ----- */
+        /* ----- ГЕРОЙ (ЦЕНТР) ----- */
         .hero {
             text-align: center;
             max-width: 740px;
-            margin-bottom: 70px;
+            margin: 0 auto 70px;
+            width: 100%;
         }
         .hero h1 {
             font-size: 56px;
@@ -307,13 +313,14 @@
         }
         .btn-download .icon { font-size: 20px; }
 
-        /* ----- ЗАГОЛОВОК ТАРИФОВ ----- */
+        /* ----- ЗАГОЛОВОК ТАРИФОВ (ЦЕНТР) ----- */
         .section-title {
             font-size: 40px;
             font-weight: 800;
             text-align: center;
-            margin: 20px 0 50px;
+            margin: 20px auto 50px;
             letter-spacing: -1.5px;
+            width: 100%;
         }
         .section-title .gradient {
             background: linear-gradient(135deg, #6c63ff, #c084fc);
@@ -322,17 +329,17 @@
             background-clip: text;
         }
 
-        /* ----- СЕТКА ТАРИФОВ ----- */
+        /* ----- СЕТКА ТАРИФОВ (ЦЕНТР) ----- */
         .pricing-grid {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
             width: 100%;
-            margin-bottom: 70px;
+            margin: 0 auto 70px;
         }
 
-        /* ----- КАРТОЧКА (стекло + анимация) ----- */
+        /* ----- КАРТОЧКИ ----- */
         .card {
             background: rgba(255, 255, 255, 0.025);
             backdrop-filter: blur(20px);
@@ -476,7 +483,7 @@
         }
         .btn-elite-hidden { display: none !important; }
 
-        /* ----- ФОРМА / АККАУНТ (стекло) ----- */
+        /* ----- ФОРМА / АККАУНТ (ЦЕНТР) ----- */
         .auth-wrapper {
             width: 100%;
             max-width: 420px;
@@ -635,10 +642,11 @@
             nav { gap: 14px; }
             nav a { font-size: 12px; }
             .lang-btn { font-size: 10px; padding: 4px 10px; }
-            .container { padding: 20px 20px 60px; }
+            .container { padding: 16px 20px 60px; }
+            .hero { margin-bottom: 50px; }
             .hero h1 { font-size: 36px; }
-            .section-title { font-size: 28px; }
-            .pricing-grid { flex-direction: column; align-items: center; }
+            .section-title { font-size: 28px; margin: 10px auto 40px; }
+            .pricing-grid { flex-direction: column; align-items: center; gap: 20px; margin-bottom: 50px; }
             .card { width: 100%; max-width: 340px; }
             .auth-wrapper { max-width: 100%; }
             .glass-card { padding: 32px 24px; }
@@ -663,8 +671,13 @@
             nav a { font-size: 11px; }
             .lang-switcher { gap: 2px; }
             .lang-btn { font-size: 9px; padding: 3px 8px; }
+            .container { padding: 12px 14px 50px; }
             .hero h1 { font-size: 28px; }
+            .hero { margin-bottom: 40px; }
             .btn-download { padding: 14px 28px; font-size: 14px; }
+            .section-title { font-size: 24px; margin: 10px auto 30px; }
+            .pricing-grid { gap: 16px; margin-bottom: 40px; }
+            .card { padding: 28px 20px 24px; }
         }
     </style>
 </head>
@@ -678,7 +691,7 @@
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
 
-    <!-- ХЕДЕР (фиксированный, ликвид-гласс) -->
+    <!-- ХЕДЕР (фиксированный) -->
     <header class="animate-in">
         <div class="logo">
             <img src="logo.png" alt="NEMESIS" />
@@ -690,8 +703,6 @@
                 <a id="nav-login" data-key="nav_login">ВХОД</a>
                 <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
             </nav>
-
-            <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
             <div class="lang-switcher">
                 <button class="lang-btn active" data-lang="ru">RU</button>
                 <button class="lang-btn" data-lang="en">EN</button>
@@ -699,11 +710,11 @@
         </div>
     </header>
 
-    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР (ВСЁ ПО ЦЕНТРУ) -->
     <div class="container">
 
         <!-- ГЛАВНАЯ -->
-        <div id="page-home">
+        <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
             <div class="hero animate-in">
                 <h1>NEMESIS <span class="gradient">STEAM</span></h1>
                 <p data-key="hero_desc1">Приватный комплекс утилит для Windows и лаунчера Steam.</p>
@@ -723,7 +734,6 @@
         <h2 class="section-title animate-in delay-1"><span data-key="pricing_title">ВЫБЕРИ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
         <div class="pricing-grid">
 
-            <!-- FREE -->
             <div class="card free animate-in delay-2">
                 <div class="icon-big">🆓</div>
                 <h3 data-key="plan_free">FREE</h3>
@@ -737,7 +747,6 @@
                 <div class="btn btn-gray" data-key="current_plan">Текущий тариф</div>
             </div>
 
-            <!-- ELITE -->
             <div class="card elite animate-in delay-3">
                 <div class="badge" data-key="badge_popular">🔥 ПОПУЛЯРНЫЙ</div>
                 <div class="icon-big">⭐</div>
@@ -756,7 +765,6 @@
                 </a>
             </div>
 
-            <!-- NEMESIS -->
             <div class="card nemesis animate-in delay-4">
                 <div class="icon-big">👑</div>
                 <h3 data-key="plan_nemesis">NEMESIS</h3>
@@ -775,7 +783,6 @@
         <div class="auth-wrapper">
             <div class="glass-card hidden animate-in" id="auth-card">
 
-                <!-- ФОРМА -->
                 <div id="auth-form-container">
                     <h2 id="form-title" data-key="login_title">ВХОД</h2>
                     <div class="sub" id="form-subtitle" data-key="login_sub">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
@@ -807,7 +814,6 @@
                     <div id="auth-status"></div>
                 </div>
 
-                <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
                 <div class="account-info hidden" id="account-info">
                     <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;" data-key="account_title">👤 АККАУНТ</h2>
                     <div class="sub" style="text-align:center; margin-bottom:24px;" data-key="account_sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
@@ -851,12 +857,10 @@
     </script>
 
     <script type="module">
-        // ----- ИМПОРТЫ FIREBASE -----
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
         import { getDatabase, ref, set, get } from "firebase/database";
 
-        // ----- КОНФИГ FIREBASE -----
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
             authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -872,7 +876,6 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // ----- ЭЛЕМЕНТЫ -----
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
         const accountInfo = document.getElementById('account-info');
@@ -885,25 +888,19 @@
 
         let isLoginMode = true;
 
-        // ----- ПОКАЗ СТРАНИЦ -----
         function showPage(page) {
-            pageHome.classList.add('hidden');
-            authCard.classList.add('hidden');
-            navHome.classList.remove('active');
-            navLogin.classList.remove('active');
-            navAccount.classList.remove('active');
+            pageHome.style.display = (page === 'home') ? 'flex' : 'none';
+            authCard.classList.toggle('hidden', page !== 'auth' && page !== 'account');
+            navHome.classList.toggle('active', page === 'home');
+            navLogin.classList.toggle('active', page === 'auth');
+            navAccount.classList.toggle('active', page === 'account');
 
-            if (page === 'home') {
-                pageHome.classList.remove('hidden');
-                navHome.classList.add('active');
-            } else if (page === 'auth') {
-                authCard.classList.remove('hidden');
-                navLogin.classList.add('active');
-            } else if (page === 'account') {
-                authCard.classList.remove('hidden');
-                navAccount.classList.add('active');
+            if (page === 'account') {
                 authFormContainer.style.display = 'none';
                 accountInfo.classList.remove('hidden');
+            } else if (page === 'auth') {
+                authFormContainer.style.display = 'block';
+                accountInfo.classList.add('hidden');
             }
         }
 
@@ -936,7 +933,6 @@
             }
         }
 
-        // ----- ОБНОВЛЕНИЕ UI -----
         async function updateUI(user) {
             if (user) {
                 try {
@@ -973,7 +969,6 @@
             }
         }
 
-        // ----- ЗВЁЗДЫ (партикли) -----
         function createStars() {
             const container = document.getElementById('stars');
             for (let i = 0; i < 120; i++) {
@@ -990,7 +985,6 @@
         }
         createStars();
 
-        // ----- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -----
         const translations = {
             ru: {
                 nav_home: 'ГЛАВНАЯ',
@@ -1134,7 +1128,6 @@
             currentLang = lang;
             localStorage.setItem('nemesis_lang', lang);
 
-            // Обновляем все элементы с data-key
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 const translation = getTranslation(key);
@@ -1147,18 +1140,15 @@
                 }
             });
 
-            // Обновляем кнопки переключения
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
 
-            // Обновляем статус в аккаунте
             const statusEl = document.getElementById('acc-status');
             if (statusEl && statusEl.textContent) {
                 statusEl.textContent = getTranslation('acc_status_active');
             }
 
-            // Обновляем заголовок формы в зависимости от режима
             if (isLoginMode) {
                 document.getElementById('form-title').textContent = getTranslation('login_title');
                 document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
@@ -1170,17 +1160,14 @@
             }
         }
 
-        // Обработчики переключения языка
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 updateLanguage(btn.dataset.lang);
             });
         });
 
-        // Инициализация языка
         updateLanguage(currentLang);
 
-        // ----- ОБРАБОТКА ФОРМЫ -----
         window.handleAuth = async function(event) {
             event.preventDefault();
 
@@ -1248,7 +1235,6 @@
             }
         };
 
-        // ----- ПЕРЕКЛЮЧЕНИЕ ВХОД/РЕГИСТРАЦИЯ -----
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
 
@@ -1282,7 +1268,6 @@
             statusDiv.style.color = '#8888aa';
         });
 
-        // ----- ВЫХОД -----
         document.getElementById('btn-logout').addEventListener('click', async function() {
             try {
                 await signOut(auth);
@@ -1293,7 +1278,6 @@
             }
         });
 
-        // ----- НАВИГАЦИЯ -----
         navHome.addEventListener('click', () => showPage('home'));
         navLogin.addEventListener('click', () => {
             if (auth.currentUser) {
@@ -1327,7 +1311,6 @@
             showAccount(userData);
         });
 
-        // ----- СЛЕЖЕНИЕ ЗА СОСТОЯНИЕМ АВТОРИЗАЦИИ -----
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 await updateUI(user);
@@ -1336,7 +1319,6 @@
             }
         });
 
-        // ----- ТОСТ -----
         function showToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = `
@@ -1357,7 +1339,6 @@
             }, 3000);
         }
 
-        // Добавляем анимацию для тоста
         const style = document.createElement('style');
         style.textContent = `
             @keyframes fadeUp {
