@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nemesis steam :3</title>
+    <title>NEMESIS STEAM :3</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         /* ----- БАЗА ----- */
@@ -147,13 +147,18 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             object-fit: cover;
         }
+        .logo .smile {
+            color: #6c63ff;
+            -webkit-text-fill-color: #6c63ff;
+            font-size: 22px;
+        }
 
-        .header-right {
+        .header-center {
             display: flex;
             align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
+            gap: 30px;
+            flex: 1;
+            justify-content: center;
         }
 
         nav {
@@ -678,10 +683,18 @@
                 border-radius: 16px;
                 top: 12px;
                 width: calc(100% - 24px);
+                flex-wrap: wrap;
+                gap: 10px;
             }
             .logo { font-size: 17px; }
             .logo img { width: 30px; height: 30px; }
-            .header-right { gap: 12px; }
+            .header-center {
+                gap: 15px;
+                flex-wrap: wrap;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
             nav { gap: 14px; }
             nav a { font-size: 12px; }
             .lang-btn { font-size: 10px; padding: 4px 10px; }
@@ -715,11 +728,13 @@
             }
             .logo { font-size: 15px; gap: 8px; }
             .logo img { width: 26px; height: 26px; }
-            .header-right {
+            .header-center {
+                gap: 10px;
                 width: 100%;
-                justify-content: space-between;
+                justify-content: center;
+                flex-wrap: wrap;
             }
-            nav { gap: 10px; flex-wrap: wrap; }
+            nav { gap: 10px; flex-wrap: wrap; justify-content: center; }
             nav a { font-size: 11px; }
             .lang-switcher { gap: 2px; }
             .lang-btn { font-size: 9px; padding: 3px 8px; }
@@ -753,9 +768,9 @@
     <header class="animate-in">
         <div class="logo">
             <img src="logo.png" alt="NEMESIS" />
-            NEMESIS <span>STEAM</span>
+            NEMESIS <span>STEAM</span> <span class="smile">:3</span>
         </div>
-        <div class="header-right">
+        <div class="header-center">
             <nav>
                 <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
                 <a id="nav-login" data-key="nav_login">ВХОД</a>
@@ -774,7 +789,7 @@
         <!-- ГЛАВНАЯ -->
         <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
             <div class="hero animate-in">
-                <h1>NEMESIS <span class="gradient">STEAM</span></h1>
+                <h1>NEMESIS <span class="gradient">STEAM</span> :3</h1>
                 <p data-key="hero_desc1">Приватный комплекс утилит для Windows и лаунчера Steam.</p>
                 <p data-key="hero_desc2">Оптимизация ОЗУ и максимальный FPS в играх.</p>
                 <p class="sub" data-key="hero_sub">⚡ Повысь FPS до +40% уже сегодня</p>
