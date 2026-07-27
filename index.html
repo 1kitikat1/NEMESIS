@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEMESIS STEAM :3</title>
+    
+    <!-- META-ДАННЫЕ -->
+    <title>NEMESIS STEAM :3 — Оптимизация FPS и ОЗУ для игр</title>
+    <meta name="description" content="NEMESIS STEAM :3 — приватный комплекс утилит для оптимизации Windows и Steam. Повысь FPS до +40%, оптимизируй ОЗУ и получи максимальную производительность в играх." />
+    <meta name="keywords" content="NEMESIS, STEAM, оптимизация FPS, оптимизация ОЗУ, повышение FPS, Steam оптимизация, игровой бустер" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="NEMESIS STEAM" />
+    <meta name="yandex-verification" content="c736e915e9d6c40c" />
+    <meta name="theme-color" content="#07070d" />
+    <link rel="canonical" href="https://nemesis.klipp.su/" />
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         /* ----- БАЗА ----- */
@@ -98,86 +108,23 @@
         .delay-4 { animation-delay: 0.55s; }
 
         /* ============================================================
-           ХЕДЕР — стеклянный, с GRID-центрированием (финальный фикс)
+           ХЕДЕР — как в первом коде (простой, без центрирования)
            ============================================================ */
         header {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 1300px;
-            padding: 0;
-            z-index: 100;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(24px) saturate(1.6);
-            -webkit-backdrop-filter: blur(24px) saturate(1.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                0 0 80px rgba(108, 99, 255, 0.03),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(
-                circle at 30% 50%,
-                rgba(108, 99, 255, 0.04) 0%,
-                transparent 60%
-            );
-            pointer-events: none;
-            transition: all 0.6s ease;
-        }
-        header:hover::before {
-            transform: scale(1.1);
-            opacity: 0.6;
-        }
-
-        header::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            border-radius: 23px;
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.02) 0%,
-                rgba(108, 99, 255, 0.02) 50%,
-                rgba(255, 255, 255, 0.01) 100%
-            );
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        header:hover {
-            border-color: rgba(108, 99, 255, 0.15);
-            box-shadow: 
-                0 24px 80px rgba(0, 0, 0, 0.5),
-                0 0 100px rgba(108, 99, 255, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        /* ----- GRID-РАЗМЕТКА (фикс центрирования) ----- */
-        .header-content {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr; /* лево / центр / право — равные доли */
+            width: 100%;
+            max-width: 1280px;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            padding: 14px 32px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            margin-top: 10px;
         }
 
-        /* ----- ЛЕВАЯ КОЛОНКА (логотип) ----- */
+        /* ----- ЛОГОТИП (как во втором коде) ----- */
         .logo {
             display: flex;
             align-items: center;
@@ -185,9 +132,9 @@
             font-weight: 800;
             font-size: 21px;
             letter-spacing: -0.5px;
+            flex-shrink: 0;
             text-decoration: none;
             color: #fff;
-            justify-self: start; /* прижат к левому краю колонки */
         }
 
         .logo-icon {
@@ -233,15 +180,14 @@
             margin-left: 2px;
         }
 
-        /* ----- ЦЕНТРАЛЬНАЯ КОЛОНКА (навигация + язык) ----- */
-        .header-center {
+        /* ----- ПРАВАЯ ЧАСТЬ (как во втором коде) ----- */
+        .header-right {
             display: flex;
             align-items: center;
-            gap: 28px;
-            justify-self: center; /* строго по центру колонки → по центру хедера */
+            gap: 20px;
+            flex-shrink: 0;
         }
 
-        /* НАВИГАЦИЯ */
         nav {
             display: flex;
             gap: 6px;
@@ -323,12 +269,12 @@
             box-shadow: 0 0 20px rgba(108, 99, 255, 0.04);
         }
 
-        /* ----- ПРАВАЯ КОЛОНКА (профиль) ----- */
+        /* ----- ПРОФИЛЬ (как во втором коде) ----- */
         .header-profile {
             display: flex;
             align-items: center;
             gap: 12px;
-            justify-self: end; /* прижат к правому краю колонки */
+            flex-shrink: 0;
         }
         .profile-btn {
             display: flex;
@@ -793,111 +739,27 @@
             transition: opacity 0.4s ease;
         }
 
-        /* ============================================================
-           АДАПТИВ (сохраняем грид до планшета)
-           ============================================================ */
-        @media (max-width: 1024px) {
-            .header-content {
-                gap: 14px;
-                padding: 12px 20px;
-            }
-            .header-center {
-                gap: 16px;
-            }
-            nav a {
-                font-size: 12px;
-                padding: 6px 14px;
-            }
+        /* ----- АДАПТИВ ----- */
+        @media (max-width: 900px) {
+            header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 10px; }
+            .header-right { flex-wrap: wrap; justify-content: center; gap: 12px; }
+            .container { padding: 20px 20px 60px; }
+            .hero h1 { font-size: 36px; }
+            .section-title { font-size: 28px; }
+            .pricing-grid { flex-direction: column; align-items: center; }
+            .card { width: 100%; max-width: 340px; }
+            .auth-wrapper { max-width: 100%; }
+            .logo { font-size: 17px; }
+            .logo-icon { width: 34px; height: 34px; font-size: 17px; }
         }
 
-        @media (max-width: 850px) {
-            /* На планшетах переключаемся на flex с переносом */
-            .header-content {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                padding: 12px 18px;
-            }
-            .logo {
-                flex: 0 0 auto;
-                font-size: 17px;
-            }
-            .logo-icon {
-                width: 34px;
-                height: 34px;
-                font-size: 17px;
-            }
-            .header-center {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-            .header-profile {
-                flex: 0 0 auto;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body { padding-top: 66px; }
-            header { 
-                top: 10px; 
-                width: calc(100% - 16px);
-                border-radius: 18px;
-            }
-            .header-content { 
-                padding: 10px 14px;
-                flex-direction: column;
-                align-items: center;
-                gap: 8px;
-            }
-            .logo { 
-                font-size: 15px; 
-                gap: 10px;
-            }
-            .logo-icon { width: 30px; height: 30px; font-size: 15px; }
-            .header-center {
-                flex-direction: column;
-                gap: 8px;
-                width: 100%;
-            }
-            nav { 
-                gap: 3px; 
-                padding: 3px;
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            nav a { 
-                font-size: 11px; 
-                padding: 5px 12px;
-            }
-            .lang-switcher { 
-                align-self: center;
-            }
-            .lang-btn { font-size: 9px; padding: 3px 8px; }
-            .header-profile {
-                align-self: center;
-            }
-            .profile-btn { 
-                padding: 6px 14px 6px 10px;
-                font-size: 12px;
-            }
-            .container { padding: 12px 14px 50px; }
+        @media (max-width: 480px) {
             .hero h1 { font-size: 28px; }
-            .hero { margin-bottom: 40px; }
-            .btn-download { 
-                padding: 14px 28px; 
-                font-size: 14px;
-                width: 100%;
-                justify-content: center;
-            }
-            .section-title { font-size: 24px; margin: 10px auto 30px; }
-            .pricing-grid { gap: 16px; margin-bottom: 40px; }
-            .card { padding: 28px 20px 24px; max-width: 100%; }
-            .glass-card { padding: 24px 16px; }
+            .btn-download { padding: 14px 28px; font-size: 14px; }
+            .logo { font-size: 15px; }
+            .logo-icon { width: 30px; height: 30px; font-size: 15px; }
+            nav a { font-size: 11px; padding: 5px 10px; }
         }
     </style>
 </head>
@@ -911,33 +773,29 @@
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
 
-    <!-- ХЕДЕР с GRID-центрированием -->
+    <!-- ХЕДЕР (как в первом коде) -->
     <header class="animate-in">
-        <div class="header-content">
-            <!-- Левая колонка: логотип -->
-            <a href="#" class="logo">
-                <div class="logo-icon">N</div>
-                <div class="logo-text">
-                    <span class="nemesis">NEMESIS</span>
-                    <span class="steam">STEAM</span>
-                    <span class="smile">:3</span>
-                </div>
-            </a>
-
-            <!-- Центральная колонка: навигация + язык -->
-            <div class="header-center">
-                <nav>
-                    <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
-                    <a id="nav-login" data-key="nav_login">ВХОД</a>
-                    <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
-                </nav>
-                <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="ru">RU</button>
-                    <button class="lang-btn" data-lang="en">EN</button>
-                </div>
+        <!-- Логотип (как во втором коде) -->
+        <a href="#" class="logo">
+            <div class="logo-icon">N</div>
+            <div class="logo-text">
+                <span class="nemesis">NEMESIS</span>
+                <span class="steam">STEAM</span>
+                <span class="smile">:3</span>
             </div>
+        </a>
 
-            <!-- Правая колонка: профиль -->
+        <!-- Правая часть (как во втором коде) -->
+        <div class="header-right">
+            <nav>
+                <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
+                <a id="nav-login" data-key="nav_login">ВХОД</a>
+                <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
+            </nav>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
             <div class="header-profile">
                 <a href="#" class="profile-btn" id="profile-btn">
                     <span class="profile-avatar">👤</span>
