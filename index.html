@@ -3,32 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEMESIS STEAM BOOSTER — оптимизация FPS для игр на Windows</title>
+    <title>NEMESIS STEAM — оптимизация FPS для игр на Windows</title>
     <meta name="description" content="Скачать NEMESIS Steam Booster бесплатно. Ультимативная оптимизация FPS, очистка RAM, приоритетная поддержка. Повысь FPS в играх до +40%.">
     <meta name="keywords" content="NEMESIS, Steam Booster, оптимизация FPS, лаунчер Steam, ELITE статус, повышение FPS, очистка RAM, игровой бустер, оптимизация Windows, Steam лаунчер">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Nemesis Team">
     <meta name="language" content="Russian">
     <meta name="revisit-after" content="7 days">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             user-select: none;
         }
+
         body {
-            background: linear-gradient(135deg, #0a050f 0%, #1e0a30 100%);
+            background: #0b0b12;
             color: #ffffff;
             overflow-x: hidden;
             min-height: 100vh;
+            background-image: radial-gradient(ellipse at 50% 0%, #16161f 0%, #0a0a0f 100%);
         }
+
         .bg-glow {
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(186, 0, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
             top: -10%;
             right: -10%;
             z-index: 0;
@@ -38,12 +42,14 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(0, 255, 180, 0.1) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.05) 0%, rgba(0,0,0,0) 70%);
             bottom: -5%;
             left: -5%;
             z-index: 0;
             pointer-events: none;
         }
+
+        /* ===== ХЕДЕР ===== */
         header {
             display: flex;
             justify-content: space-between;
@@ -52,55 +58,62 @@
             position: relative;
             z-index: 10;
         }
+
         .logo-block {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .logo-img {
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            border: 2px solid #ba00ff;
-            box-shadow: 0 0 15px rgba(186, 0, 255, 0.6);
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.15);
             object-fit: cover;
         }
+
         .logo-text {
             font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, #ffffff, #ba00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
         }
+        .logo-text span {
+            color: #6c63ff;
+        }
+
         nav {
             display: flex;
             align-items: center;
             gap: 25px;
         }
         nav a {
-            color: #aaaaaa;
+            color: #8888aa;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
         }
         nav a:hover {
-            color: #ba00ff;
+            color: #6c63ff;
         }
         nav a.active {
-            color: #ba00ff;
-            text-shadow: 0 0 10px rgba(186, 0, 255, 0.5);
+            color: #6c63ff;
         }
+
         .nav-user {
-            color: #ba00ff !important;
-            font-weight: 700 !important;
-            background: rgba(186, 0, 255, 0.15);
+            color: #6c63ff !important;
+            font-weight: 600 !important;
+            background: rgba(108, 99, 255, 0.1);
             padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(186, 0, 255, 0.3);
+            border: 1px solid rgba(108, 99, 255, 0.15);
         }
+
+        /* ===== КОНТЕЙНЕР ===== */
         .container {
             display: flex;
             justify-content: center;
@@ -112,28 +125,32 @@
             flex-direction: column;
         }
 
+        /* ===== ГЛАВНЫЙ БЛОК ===== */
         .content {
             max-width: 700px;
             text-align: center;
             margin-bottom: 60px;
         }
+
         .content h1 {
             font-size: 48px;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
+            letter-spacing: -1px;
         }
         .content h1 span {
-            color: #ba00ff;
-            text-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
+            color: #6c63ff;
         }
+
         .content p {
-            color: #b3b3b3;
+            color: #8888aa;
             font-size: 16px;
             line-height: 1.8;
             margin-bottom: 10px;
         }
 
+        /* ===== КНОПКА СКАЧИВАНИЯ (СТЕКЛЯННАЯ) ===== */
         .download-area {
             display: flex;
             flex-direction: column;
@@ -141,57 +158,60 @@
             gap: 12px;
             margin-top: 20px;
         }
+
         .btn-download {
             display: inline-flex;
             align-items: center;
             gap: 12px;
             padding: 16px 45px;
-            background: linear-gradient(135deg, rgba(186, 0, 255, 0.2), rgba(0, 200, 255, 0.1));
-            border: 2px solid #ba00ff;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 16px;
             text-decoration: none;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(186, 0, 255, 0.15);
+            backdrop-filter: blur(8px);
             transition: all 0.3s ease;
         }
+
         .btn-download:hover {
-            background: linear-gradient(135deg, #ba00ff, #6a00cc);
-            box-shadow: 0 0 50px rgba(186, 0, 255, 0.5);
-            transform: translateY(-3px) scale(1.02);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
         }
-        .btn-download .btn-icon {
-            font-size: 22px;
-        }
-        .btn-download .btn-text {
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
+
+        .btn-download .btn-icon { font-size: 22px; }
+        .btn-download .btn-text { font-size: 15px; letter-spacing: 0.3px; }
+
         .download-note {
-            color: #777;
+            color: #555566;
             font-size: 12px;
             margin-top: 5px;
         }
         .download-note a {
-            color: #ba00ff;
+            color: #6c63ff;
             text-decoration: none;
         }
         .download-note a:hover {
             text-decoration: underline;
         }
 
+        /* ===== ТАРИФЫ ===== */
         .pricing-title {
             font-size: 36px;
             font-weight: 800;
             text-align: center;
             margin-bottom: 40px;
             color: #fff;
+            letter-spacing: -1px;
         }
         .pricing-title span {
-            color: #ba00ff;
+            color: #6c63ff;
         }
+
         .pricing-container {
             display: flex;
             justify-content: center;
@@ -199,50 +219,61 @@
             flex-wrap: wrap;
             margin-bottom: 60px;
         }
+
+        /* ===== КАРТОЧКА (СТЕКЛЯННАЯ) ===== */
         .pricing-card {
-            background: rgba(20, 10, 30, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 16px;
             padding: 35px 30px;
             width: 280px;
             text-align: center;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
+
         .pricing-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(186, 0, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
         }
+
         .pricing-card.free {
-            border-top: 2px solid #555;
+            border-top: 2px solid rgba(255, 255, 255, 0.08);
         }
         .pricing-card.elite {
-            border-top: 3px solid #00ffcc;
-            box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
+            border-top: 2px solid #6c63ff;
+            box-shadow: 0 0 40px rgba(108, 99, 255, 0.08);
         }
         .pricing-card.nemesis {
-            border-top: 3px solid #ffd700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+            border-top: 2px solid #ffd700;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.08);
         }
+
         .pricing-card .badge {
             position: absolute;
             top: -12px;
             right: 20px;
-            background: #00ffcc;
-            color: #000;
+            background: #6c63ff;
+            color: #fff;
             font-size: 10px;
-            font-weight: 800;
+            font-weight: 700;
             padding: 4px 14px;
             border-radius: 20px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+
         .pricing-card h3 {
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 10px;
             color: #fff;
         }
+
         .pricing-card .price {
             font-size: 32px;
             font-weight: 800;
@@ -251,161 +282,186 @@
         }
         .pricing-card .price span {
             font-size: 14px;
-            color: #888;
+            color: #8888aa;
             font-weight: 400;
         }
+
         .pricing-card .price-sub {
             font-size: 12px;
-            color: #00ffcc;
+            color: #6c63ff;
             font-weight: 600;
             margin-bottom: 20px;
         }
+
         .pricing-card ul {
             list-style: none;
             padding: 0;
             margin: 20px 0 25px;
             text-align: left;
         }
+
         .pricing-card ul li {
             padding: 8px 0;
-            color: #bbb;
+            color: #aaaacc;
             font-size: 13px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
         .pricing-card ul li:last-child {
             border-bottom: none;
         }
         .pricing-card ul li::before {
-            content: "✔ ";
-            color: #00ff88;
+            content: "✦ ";
+            color: #6c63ff;
             font-weight: 700;
         }
+
         .pricing-card .btn {
             display: inline-block;
             padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: 700;
+            border-radius: 10px;
+            font-weight: 600;
             text-decoration: none;
             transition: 0.3s;
             width: 100%;
+            font-size: 13px;
         }
+
         .pricing-card .btn-gray {
-            background: rgba(255,255,255,0.05);
-            color: #888;
-            border: 1px solid #333;
+            background: rgba(255, 255, 255, 0.06);
+            color: #8888aa;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             cursor: default;
         }
+
         .pricing-card .btn-elite {
-            background: linear-gradient(45deg, #00ffcc, #00ccaa);
-            color: #000;
-            border: none;
-            box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
+            background: rgba(108, 99, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(108, 99, 255, 0.2);
             cursor: pointer;
         }
         .pricing-card .btn-elite:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 50px rgba(0, 255, 200, 0.4);
+            background: rgba(108, 99, 255, 0.25);
+            transform: scale(1.02);
         }
+
         .pricing-card .btn-nemesis {
-            background: linear-gradient(45deg, #ffd700, #f5a623);
-            color: #000;
-            border: none;
+            background: rgba(255, 215, 0, 0.12);
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.15);
             cursor: default;
         }
+
         .btn-elite-hidden {
             display: none !important;
         }
 
+        /* ===== ФОРМА ВХОДА ===== */
         .auth-card {
             width: 380px;
-            background: rgba(25, 12, 40, 0.6);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-top: 1px solid rgba(186, 0, 255, 0.4);
-            border-bottom: 1px solid rgba(0, 255, 180, 0.2);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 16px;
             padding: 40px 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             margin: 0 auto;
         }
+
         .auth-card h2 {
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 700;
             text-align: center;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.5px;
             margin-bottom: 8px;
+            color: #fff;
         }
+
         .auth-card .sub-title {
             font-size: 11px;
-            color: #777777;
+            color: #8888aa;
             text-align: center;
-            font-weight: bold;
+            font-weight: 500;
             letter-spacing: 1px;
             margin-bottom: 30px;
         }
+
         .input-group {
             position: relative;
             margin-bottom: 15px;
         }
+
         .input-group input {
             width: 100%;
             padding: 12px 15px;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
+            border-radius: 10px;
             color: white;
             font-size: 14px;
             outline: none;
             transition: 0.3s;
+            font-family: 'Inter', sans-serif;
         }
+
         .input-group input:focus {
-            border-color: #ba00ff;
-            box-shadow: 0 0 10px rgba(186, 0, 255, 0.2);
+            border-color: #6c63ff;
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.1);
         }
+
         .input-group input::placeholder {
-            color: #666;
+            color: #555566;
         }
+
         .btn-submit {
             width: 100%;
             padding: 12px;
-            background: rgba(186, 0, 255, 0.1);
-            border: 1px solid #ba00ff;
+            background: rgba(108, 99, 255, 0.1);
+            border: 1px solid #6c63ff;
             color: white;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 13px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.3s;
             margin-top: 10px;
+            font-family: 'Inter', sans-serif;
         }
+
         .btn-submit:hover {
-            background: #ba00ff;
-            box-shadow: 0 0 20px rgba(186, 0, 255, 0.4);
+            background: rgba(108, 99, 255, 0.2);
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.15);
         }
+
         .toggle-mode {
             text-align: center;
             margin-top: 15px;
-            color: #888;
+            color: #8888aa;
             font-size: 12px;
         }
+
         .toggle-mode span {
-            color: #ba00ff;
+            color: #6c63ff;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
         }
         .toggle-mode span:hover {
             text-decoration: underline;
         }
+
         .hidden {
             display: none !important;
         }
+
         #auth-status {
             margin-top: 15px;
             text-align: center;
             font-size: 12px;
-            color: #888;
+            color: #8888aa;
             min-height: 20px;
         }
+
+        /* ===== АККАУНТ ===== */
         .account-info {
             display: none;
             flex-direction: column;
@@ -414,14 +470,16 @@
         .account-info.active {
             display: flex;
         }
+
         .account-info .info-row {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .account-info .info-label {
-            color: #888;
+            color: #8888aa;
             font-size: 13px;
         }
         .account-info .info-value {
@@ -430,43 +488,48 @@
             font-size: 13px;
         }
         .account-info .info-value.highlight {
-            color: #ba00ff;
+            color: #6c63ff;
         }
+
         .role-nemesis {
             color: #ffd700 !important;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
         .role-elite {
-            color: #00ffcc !important;
-            text-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+            color: #6c63ff !important;
+            text-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
         }
         .role-free {
-            color: #888 !important;
+            color: #8888aa !important;
         }
+
         .btn-logout {
             width: 100%;
             padding: 12px;
-            background: rgba(255, 0, 55, 0.1);
-            border: 1px solid rgba(255, 0, 55, 0.3);
+            background: rgba(255, 0, 55, 0.08);
+            border: 1px solid rgba(255, 0, 55, 0.2);
             color: #ff4455;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 13px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.3s;
             margin-top: 10px;
-        }
-        .btn-logout:hover {
-            background: rgba(255, 0, 55, 0.2);
-            border-color: #ff4455;
+            font-family: 'Inter', sans-serif;
         }
 
+        .btn-logout:hover {
+            background: rgba(255, 0, 55, 0.15);
+            border-color: rgba(255, 0, 55, 0.3);
+        }
+
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 900px) {
             header { padding: 20px 4%; }
             .container { padding: 40px 4%; }
             .auth-card { width: 100%; max-width: 380px; }
-            nav { flex-wrap: wrap; justify-content: center; }
-            nav a { font-size: 12px; margin: 0 8px; }
+            nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            nav a { font-size: 12px; }
             .content h1 { font-size: 32px; }
             .pricing-container { flex-direction: column; align-items: center; }
             .pricing-card { width: 100%; max-width: 320px; }
@@ -481,7 +544,7 @@
     <header>
         <div class="logo-block">
             <img src="logo.png" alt="NEMESIS" class="logo-img">
-            <div class="logo-text">NEMESIS</div>
+            <div class="logo-text">NEMESIS <span>STEAM</span></div>
         </div>
         <nav>
             <a class="active" id="nav-home">ГЛАВНАЯ</a>
@@ -495,14 +558,14 @@
         <div class="content" id="page-home">
             <h1>NEMESIS <span>STEAM</span></h1>
             <p>Приватный комплекс утилит для Windows и лаунчера Steam.</p>
-           
+            <p>Оптимизация ОЗУ, обход инпут-лага сети и максимальный FPS в играх.</p>
 
             <div class="download-area">
                 <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/fps/NemesisSteam.exe" 
                    class="btn-download" 
                    target="_blank">
-                    <span class="btn-icon">⚡</span>
-                    <span class="btn-text">СКАЧАТЬ :3</span>
+                    <span class="btn-icon">⬇</span>
+                    <span class="btn-text">СКАЧАТЬ ЛАУНЧЕР</span>
                 </a>
                 <div class="download-note">
                     <a href="https://t.me/Nemesissup" target="_blank">📞 Поддержка</a>
@@ -563,40 +626,40 @@
             <div id="auth-form-container">
                 <h2 id="form-title">ВХОД</h2>
                 <div class="sub-title" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
-                
+
                 <form id="auth-form" onsubmit="handleAuth(event)">
                     <div id="reg-fields" class="hidden">
                         <div class="input-group">
                             <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off">
                         </div>
                     </div>
-                    
+
                     <div class="input-group">
                         <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email">
                     </div>
                     <div class="input-group">
                         <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password">
                     </div>
-                    
+
                     <div id="reg-pass-repeat" class="input-group hidden">
                         <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password">
                     </div>
-                    
+
                     <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
                 </form>
-                
+
                 <div class="toggle-mode">
                     <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
                 </div>
-                
+
                 <div id="auth-status"></div>
             </div>
 
             <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
             <div class="account-info" id="account-info">
-                <h2 style="font-size:20px; font-weight:800; text-align:center; margin-bottom:5px;">👤 АККАУНТ</h2>
-                <div class="sub-title" style="text-align:center; font-size:11px; color:#777; margin-bottom:20px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-                
+                <h2 style="font-size:20px; font-weight:700; text-align:center; margin-bottom:5px; color:#fff;">👤 АККАУНТ</h2>
+                <div class="sub-title" style="text-align:center; font-size:11px; color:#8888aa; margin-bottom:20px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
+
                 <div class="info-row">
                     <span class="info-label">Имя пользователя</span>
                     <span class="info-value highlight" id="acc-username">—</span>
@@ -615,9 +678,9 @@
                 </div>
                 <div class="info-row">
                     <span class="info-label">Статус</span>
-                    <span class="info-value" style="color:#00ff88;" id="acc-status">Активен</span>
+                    <span class="info-value" style="color:#6c63ff;" id="acc-status">Активен</span>
                 </div>
-                
+
                 <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
             </div>
         </div>
@@ -670,7 +733,7 @@
             navHome.classList.remove('active');
             navLogin.classList.remove('active');
             navAccount.classList.remove('active');
-            
+
             if (page === 'home') {
                 pageHome.classList.remove('hidden');
                 navHome.classList.add('active');
@@ -695,15 +758,15 @@
             authFormContainer.style.display = 'none';
             accountInfo.classList.add('active');
             showPage('account');
-            
+
             document.getElementById('acc-username').textContent = userData.username || '—';
             document.getElementById('acc-email').textContent = userData.email || '—';
-            
+
             const roleElement = document.getElementById('acc-role');
             const role = userData.role || 'free';
             roleElement.textContent = role.toUpperCase();
             roleElement.className = 'info-value role-' + role;
-            
+
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
             document.getElementById('acc-status').textContent = 'Активен';
 
@@ -720,14 +783,14 @@
                     const userRef = ref(db, `users/${user.uid}`);
                     const snapshot = await get(userRef);
                     const data = snapshot.exists() ? snapshot.val() : {};
-                    
+
                     const userData = {
                         username: data.username || user.displayName || user.email.split('@')[0],
                         email: user.email,
                         role: data.role || 'free',
                         createdAt: data.createdAt || null
                     };
-                    
+
                     showAccount(userData);
                     navLogin.classList.add('hidden');
                     navAccount.classList.remove('hidden');
@@ -735,7 +798,7 @@
                     localStorage.setItem('nemesis_email', userData.email);
                     localStorage.setItem('nemesis_role', userData.role);
                     localStorage.setItem('nemesis_logged', 'true');
-                    
+
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
                 }
@@ -753,7 +816,7 @@
 
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
-            
+
             const title = document.getElementById('form-title');
             const subtitle = document.getElementById('form-subtitle');
             const btn = document.getElementById('auth-btn');
@@ -761,7 +824,7 @@
             const regFields = document.getElementById('reg-fields');
             const regPassRepeat = document.getElementById('reg-pass-repeat');
             const emailField = document.getElementById('auth-email');
-            
+
             if (isLoginMode) {
                 title.textContent = 'ВХОД';
                 subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
@@ -779,67 +842,67 @@
                 regPassRepeat.classList.remove('hidden');
                 emailField.placeholder = 'EMAIL (для входа)';
             }
-            
+
             statusDiv.textContent = '';
-            statusDiv.style.color = '#888';
+            statusDiv.style.color = '#8888aa';
         });
 
         window.handleAuth = async function(event) {
             event.preventDefault();
-            
+
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-pass').value;
-            
+
             statusDiv.textContent = '⏳ Обработка...';
-            statusDiv.style.color = '#888';
+            statusDiv.style.color = '#8888aa';
 
             try {
                 if (isLoginMode) {
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     await updateUI(userCredential.user);
                     document.getElementById('auth-form').reset();
-                    
+
                 } else {
                     const username = document.getElementById('reg-username').value.trim();
                     const passwordRepeat = document.getElementById('auth-pass-repeat').value;
-                    
+
                     if (!username || username.length < 3) {
                         statusDiv.textContent = '❌ Имя пользователя должно быть не менее 3 символов!';
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
-                    
+
                     if (password.length < 6) {
                         statusDiv.textContent = '❌ Пароль должен быть не менее 6 символов!';
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
-                    
+
                     if (password !== passwordRepeat) {
                         statusDiv.textContent = '❌ Пароли не совпадают!';
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
-                    
+
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
-                    
+
                     await updateProfile(user, { displayName: username });
-                    
+
                     await set(ref(db, `users/${user.uid}`), {
                         username: username,
                         email: email,
                         role: "free",
                         createdAt: new Date().toISOString()
                     });
-                    
+
                     await updateUI(user);
                     document.getElementById('auth-form').reset();
                 }
-                
+
             } catch (error) {
                 console.error('Ошибка:', error);
-                
+
                 let errorMessage = '❌ Ошибка! ';
                 switch (error.code) {
                     case 'auth/email-already-in-use':
@@ -860,7 +923,7 @@
                     default:
                         errorMessage += error.message;
                 }
-                
+
                 statusDiv.textContent = errorMessage;
                 statusDiv.style.color = '#ff4444';
             }
@@ -927,10 +990,11 @@
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-                background: rgba(25, 15, 40, 0.95); color: white; padding: 12px 30px;
-                border-radius: 10px; border: 1px solid #ba00ff;
+                background: rgba(11, 11, 18, 0.95); color: white; padding: 12px 30px;
+                border-radius: 12px; border: 1px solid rgba(108, 99, 255, 0.2);
                 font-size: 14px; font-weight: 600; z-index: 9999;
-                box-shadow: 0 0 30px rgba(186, 0, 255, 0.3);
+                backdrop-filter: blur(12px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
                 animation: fadeInUp 0.3s ease;
             `;
             toast.textContent = message;
