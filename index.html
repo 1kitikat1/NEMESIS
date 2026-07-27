@@ -97,128 +97,218 @@
         .delay-3 { animation-delay: 0.4s; }
         .delay-4 { animation-delay: 0.55s; }
 
-        /* ----- ХЕДЕР (фиксированный) ----- */
+        /* ============================================================
+           НОВЫЙ ХЕДЕР — стеклянный, с блюром, градиентом и анимацией
+           ============================================================ */
         header {
             position: fixed;
-            top: 16px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 1280px;
-            padding: 14px 32px;
+            width: calc(100% - 40px);
+            max-width: 1300px;
+            padding: 0;
+            z-index: 100;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(24px) saturate(1.6);
+            -webkit-backdrop-filter: blur(24px) saturate(1.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(108, 99, 255, 0.03),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+        }
+
+        /* Анимация свечения при наведении */
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle at 30% 50%,
+                rgba(108, 99, 255, 0.04) 0%,
+                transparent 60%
+            );
+            pointer-events: none;
+            transition: all 0.6s ease;
+        }
+        header:hover::before {
+            transform: scale(1.1);
+            opacity: 0.6;
+        }
+
+        /* Внутренняя обводка */
+        header::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border-radius: 23px;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.02) 0%,
+                rgba(108, 99, 255, 0.02) 50%,
+                rgba(255, 255, 255, 0.01) 100%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header:hover {
+            border-color: rgba(108, 99, 255, 0.15);
+            box-shadow: 
+                0 24px 80px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(108, 99, 255, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px) saturate(1.4);
-            -webkit-backdrop-filter: blur(20px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-            transition: all 0.3s ease;
-        }
-        header:hover {
-            border-color: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            padding: 14px 32px;
+            gap: 20px;
         }
 
+        /* ----- ЛОГОТИП ----- */
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             font-weight: 800;
-            font-size: 20px;
+            font-size: 21px;
             letter-spacing: -0.5px;
             flex-shrink: 0;
+            text-decoration: none;
+            color: #fff;
+            position: relative;
         }
-        .logo span {
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(108, 99, 255, 0.05));
+            border: 1px solid rgba(108, 99, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: #6c63ff;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .logo:hover .logo-icon {
+            transform: rotate(-5deg) scale(1.05);
+            border-color: rgba(108, 99, 255, 0.2);
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.05);
+        }
+
+        .logo-text {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .logo-text .nemesis {
             background: linear-gradient(135deg, #6c63ff, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .logo img {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            object-fit: cover;
+        .logo-text .steam {
+            color: #8899bb;
         }
-        .logo .smile {
+        .logo-text .smile {
             color: #6c63ff;
             -webkit-text-fill-color: #6c63ff;
-            font-size: 22px;
+            font-size: 20px;
+            margin-left: 2px;
         }
 
+        /* ----- ЦЕНТР (навигация + язык) ----- */
         .header-center {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 28px;
             flex: 1;
             justify-content: center;
         }
 
+        /* НАВИГАЦИЯ */
         nav {
             display: flex;
-            gap: 24px;
+            gap: 6px;
             align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
         nav a {
-            color: #8888aa;
+            color: #8899bb;
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
             letter-spacing: 0.3px;
+            padding: 8px 18px;
+            border-radius: 10px;
             position: relative;
             white-space: nowrap;
         }
-        nav a::after {
+        nav a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        nav a.active {
+            color: #fff;
+            background: rgba(108, 99, 255, 0.15);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.05);
+        }
+        nav a.active::after {
             content: '';
             position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
             height: 2px;
             background: #6c63ff;
-            transition: width 0.3s ease;
+            border-radius: 2px;
         }
-        nav a:hover::after { width: 100%; }
-        nav a:hover { color: #fff; }
-        nav a.active {
-            color: #6c63ff;
-            font-weight: 600;
-        }
-        nav a.active::after { width: 100%; }
         .nav-user {
-            background: rgba(108, 99, 255, 0.10);
-            padding: 6px 18px;
-            border-radius: 40px;
-            border: 1px solid rgba(108, 99, 255, 0.10);
+            background: rgba(108, 99, 255, 0.10) !important;
+            border: 1px solid rgba(108, 99, 255, 0.08);
         }
         .nav-user::after { display: none !important; }
 
-        /* ----- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ ----- */
+        /* ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ */
         .lang-switcher {
             display: flex;
             gap: 4px;
             background: rgba(255, 255, 255, 0.04);
             padding: 4px;
-            border-radius: 40px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(8px);
             flex-shrink: 0;
         }
         .lang-btn {
-            padding: 5px 12px;
+            padding: 6px 14px;
             border: none;
-            border-radius: 30px;
+            border-radius: 8px;
             background: transparent;
-            color: #8888aa;
+            color: #8899bb;
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
@@ -232,7 +322,55 @@
         .lang-btn.active {
             background: rgba(108, 99, 255, 0.15);
             color: #6c63ff;
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.05);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.04);
+        }
+
+        /* ----- КНОПКА ПРОФИЛЯ (справа) ----- */
+        .header-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px 8px 12px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #8899bb;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .profile-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .profile-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
         }
 
         /* ----- КОНТЕЙНЕР (ЦЕНТРИРОВАННЫЙ) ----- */
@@ -676,27 +814,31 @@
         }
 
         /* ----- АДАПТИВ ----- */
-        @media (max-width: 900px) {
-            body { padding-top: 72px; }
-            header {
-                padding: 12px 18px;
-                border-radius: 16px;
-                top: 12px;
-                width: calc(100% - 24px);
+        @media (max-width: 1024px) {
+            .header-content {
                 flex-wrap: wrap;
-                gap: 10px;
+                gap: 12px;
             }
-            .logo { font-size: 17px; }
-            .logo img { width: 30px; height: 30px; }
             .header-center {
-                gap: 15px;
-                flex-wrap: wrap;
                 order: 3;
                 width: 100%;
                 justify-content: center;
+                flex-wrap: wrap;
             }
-            nav { gap: 14px; }
-            nav a { font-size: 12px; }
+            .header-profile {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 900px) {
+            body { padding-top: 72px; }
+            header { top: 12px; width: calc(100% - 24px); }
+            .header-content { padding: 12px 18px; }
+            .logo { font-size: 17px; }
+            .logo-icon { width: 34px; height: 34px; font-size: 17px; }
+            .header-center { gap: 14px; }
+            nav { gap: 4px; padding: 3px; }
+            nav a { font-size: 12px; padding: 6px 14px; }
             .lang-btn { font-size: 10px; padding: 4px 10px; }
             .container { padding: 16px 20px 60px; }
             .hero { margin-bottom: 50px; }
@@ -719,25 +861,50 @@
 
         @media (max-width: 600px) {
             body { padding-top: 66px; }
-            header {
-                padding: 10px 14px;
-                border-radius: 14px;
-                top: 10px;
-                flex-wrap: wrap;
-                gap: 8px;
+            header { 
+                top: 10px; 
+                width: calc(100% - 16px);
+                border-radius: 18px;
             }
-            .logo { font-size: 15px; gap: 8px; }
-            .logo img { width: 26px; height: 26px; }
-            .header-center {
+            .header-content { 
+                padding: 10px 14px;
+                flex-direction: column;
+                align-items: stretch;
                 gap: 10px;
+            }
+            .logo { 
+                font-size: 15px; 
+                gap: 10px;
+                justify-content: center;
+            }
+            .logo-icon { width: 30px; height: 30px; font-size: 15px; }
+            .header-center {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+            nav { 
+                gap: 3px; 
+                padding: 3px;
                 width: 100%;
                 justify-content: center;
                 flex-wrap: wrap;
             }
-            nav { gap: 10px; flex-wrap: wrap; justify-content: center; }
-            nav a { font-size: 11px; }
-            .lang-switcher { gap: 2px; }
+            nav a { 
+                font-size: 11px; 
+                padding: 5px 12px;
+            }
+            .lang-switcher { 
+                align-self: center;
+            }
             .lang-btn { font-size: 9px; padding: 3px 8px; }
+            .header-profile {
+                align-self: center;
+            }
+            .profile-btn { 
+                padding: 6px 14px 6px 10px;
+                font-size: 12px;
+            }
             .container { padding: 12px 14px 50px; }
             .hero h1 { font-size: 28px; }
             .hero { margin-bottom: 40px; }
@@ -764,21 +931,41 @@
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
 
-    <!-- ХЕДЕР (фиксированный) -->
+    <!-- ============================================================
+         НОВЫЙ ХЕДЕР — стеклянный, с блюром, градиентом и анимацией
+         ============================================================ -->
     <header class="animate-in">
-        <div class="logo">
-            <img src="logo.png" alt="NEMESIS" />
-            NEMESIS <span>STEAM</span> <span class="smile">:3</span>
-        </div>
-        <div class="header-center">
-            <nav>
-                <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
-                <a id="nav-login" data-key="nav_login">ВХОД</a>
-                <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
-            </nav>
-            <div class="lang-switcher">
-                <button class="lang-btn active" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
+        <div class="header-content">
+            <!-- Логотип -->
+            <a href="#" class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">
+                    <span class="nemesis">NEMESIS</span>
+                    <span class="steam">STEAM</span>
+                    <span class="smile">:3</span>
+                </div>
+            </a>
+
+            <!-- Центр: навигация + язык -->
+            <div class="header-center">
+                <nav>
+                    <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
+                    <a id="nav-login" data-key="nav_login">ВХОД</a>
+                    <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
+                </nav>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+
+            <!-- Профиль справа -->
+            <div class="header-profile">
+                <a href="#" class="profile-btn" id="profile-btn">
+                    <span class="profile-avatar">👤</span>
+                    <span data-key="profile_login">Войти</span>
+                    <span class="profile-dot"></span>
+                </a>
             </div>
         </div>
     </header>
@@ -958,6 +1145,7 @@
         const navLogin = document.getElementById('nav-login');
         const navAccount = document.getElementById('nav-account');
         const btnBuyElite = document.getElementById('btn-buy-elite');
+        const profileBtn = document.getElementById('profile-btn');
 
         let isLoginMode = true;
 
@@ -1004,6 +1192,25 @@
             } else {
                 btnBuyElite.classList.remove('btn-elite-hidden');
             }
+
+            // Обновляем кнопку профиля
+            updateProfileBtn(userData.username);
+        }
+
+        function updateProfileBtn(username) {
+            if (username && username !== '—') {
+                profileBtn.innerHTML = `
+                    <span class="profile-avatar">${username.charAt(0).toUpperCase()}</span>
+                    <span>${username}</span>
+                    <span class="profile-dot"></span>
+                `;
+            } else {
+                profileBtn.innerHTML = `
+                    <span class="profile-avatar">👤</span>
+                    <span data-key="profile_login">Войти</span>
+                    <span class="profile-dot"></span>
+                `;
+            }
         }
 
         async function updateUI(user) {
@@ -1039,6 +1246,7 @@
                 localStorage.removeItem('nemesis_role');
                 localStorage.removeItem('nemesis_logged');
                 btnBuyElite.classList.remove('btn-elite-hidden');
+                updateProfileBtn(null);
             }
         }
 
@@ -1063,6 +1271,7 @@
                 nav_home: 'ГЛАВНАЯ',
                 nav_login: 'ВХОД',
                 nav_account: 'АККАУНТ',
+                profile_login: 'Войти',
                 hero_desc1: 'Приватный комплекс утилит для Windows и лаунчера Steam.',
                 hero_desc2: 'Оптимизация ОЗУ и максимальный FPS в играх.',
                 hero_sub: '⚡ Повысь FPS до +40% уже сегодня',
@@ -1128,6 +1337,7 @@
                 nav_home: 'HOME',
                 nav_login: 'LOGIN',
                 nav_account: 'ACCOUNT',
+                profile_login: 'Login',
                 hero_desc1: 'Private utility suite for Windows and Steam launcher.',
                 hero_desc2: 'RAM optimization and maximum FPS in games.',
                 hero_sub: '⚡ Boost FPS up to +40% today',
@@ -1382,6 +1592,31 @@
                 createdAt: null
             };
             showAccount(userData);
+        });
+
+        // Клик по кнопке профиля
+        profileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (auth.currentUser) {
+                const userData = {
+                    username: localStorage.getItem('nemesis_user') || '—',
+                    email: localStorage.getItem('nemesis_email') || '—',
+                    role: localStorage.getItem('nemesis_role') || 'free',
+                    createdAt: null
+                };
+                showAccount(userData);
+            } else {
+                isLoginMode = true;
+                document.getElementById('form-title').textContent = getTranslation('login_title');
+                document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
+                document.getElementById('auth-btn').textContent = getTranslation('login_btn');
+                document.getElementById('toggle-link').textContent = getTranslation('toggle_register');
+                document.getElementById('reg-fields').classList.add('hidden');
+                document.getElementById('reg-pass-repeat').classList.add('hidden');
+                document.getElementById('auth-email').placeholder = 'EMAIL';
+                statusDiv.textContent = '';
+                showAuthForm();
+            }
         });
 
         onAuthStateChanged(auth, async (user) => {
