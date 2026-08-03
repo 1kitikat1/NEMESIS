@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#07070d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== ОСНОВНЫЕ СТИЛИ ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #07070d;
@@ -19,7 +18,6 @@
             align-items: center;
             padding: 20px;
         }
-
         #stars {
             position: fixed;
             top: 0;
@@ -42,14 +40,12 @@
             0% { opacity: 0.2; transform: scale(0.8); }
             100% { opacity: 0.9; transform: scale(1.2); }
         }
-
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             position: relative;
             z-index: 5;
         }
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -105,7 +101,6 @@
             padding: 44px 36px;
             box-shadow: 0 8px 40px rgba(0,0,0,0.3);
         }
-
         .card h2 {
             font-size: 24px;
             font-weight: 700;
@@ -206,25 +201,102 @@
         .role-ai_max { color: #ffd700; }
         .role-nemesis { color: #ffd700; }
 
-        .btn-logout {
-            width: 100%;
-            padding: 13px;
-            background: rgba(255,0,55,0.05);
-            border: 1px solid rgba(255,0,55,0.08);
-            border-radius: 60px;
-            color: #ff4455;
-            font-weight: 600;
-            font-size: 13px;
+        /* ===== АДМИН-ПАНЕЛЬ (только для nemesis) ===== */
+        .admin-panel {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid rgba(255,215,0,0.15);
+            display: none;
+        }
+        .admin-panel.show {
+            display: block;
+        }
+        .admin-panel h3 {
+            font-size: 18px;
+            color: #ffd700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-panel h3 .badge {
+            font-size: 11px;
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .admin-btn {
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            color: #fff;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 18px;
             font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            transition: all 0.3s ease;
             text-align: center;
         }
-        .btn-logout:hover {
-            background: rgba(255,0,55,0.10);
-            border-color: rgba(255,0,55,0.15);
+        .admin-btn:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-2px);
         }
+        .admin-btn .icon { font-size: 24px; display: block; margin-bottom: 4px; }
+        .admin-btn .label { font-weight: 500; }
+        .admin-btn .sub-label { font-size: 11px; color: #8888aa; }
+        .admin-btn.gold {
+            border-color: rgba(255,215,0,0.2);
+            background: rgba(255,215,0,0.05);
+        }
+        .admin-btn.gold:hover {
+            background: rgba(255,215,0,0.1);
+            border-color: rgba(255,215,0,0.3);
+        }
+        .admin-btn.danger {
+            border-color: rgba(255,68,68,0.2);
+            background: rgba(255,68,68,0.05);
+        }
+        .admin-btn.danger:hover {
+            background: rgba(255,68,68,0.1);
+            border-color: rgba(255,68,68,0.3);
+        }
+
+        .admin-output {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            font-size: 13px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Monaco', monospace;
+            color: #8888aa;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .admin-output .key-item {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            justify-content: space-between;
+        }
+        .admin-output .key-item .plan-tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(108,99,255,0.15);
+            color: #6c63ff;
+        }
+        .admin-output .key-item .plan-tag.elite { background: rgba(108,99,255,0.15); color: #6c63ff; }
+        .admin-output .key-item .plan-tag.ai_basic { background: rgba(108,99,255,0.15); color: #6c63ff; }
+        .admin-output .key-item .plan-tag.ai_max { background: rgba(255,215,0,0.15); color: #ffd700; }
 
         /* ===== АКТИВАЦИЯ КЛЮЧА ===== */
         .key-section {
@@ -302,6 +374,7 @@
             .header .logo { font-size: 17px; }
             .card { padding: 30px 20px; }
             .key-input-group { flex-direction: column; }
+            .admin-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -310,7 +383,6 @@
     <div id="stars"></div>
 
     <div class="container">
-        <!-- ХЕДЕР -->
         <div class="header">
             <a href="/" class="logo">
                 <div class="icon">N</div>
@@ -382,6 +454,36 @@
                     </div>
                     <div class="key-status" id="key-status"></div>
                 </div>
+
+                <!-- АДМИН-ПАНЕЛЬ (только для nemesis) -->
+                <div class="admin-panel" id="admin-panel">
+                    <h3>👑 АДМИН-ПАНЕЛЬ <span class="badge">NEMESIS</span></h3>
+                    <div class="admin-grid">
+                        <button class="admin-btn gold" onclick="generateKeys(10, 'ai_basic')">
+                            <span class="icon">🧠</span>
+                            <span class="label">+ 10 AI+</span>
+                            <span class="sub-label">Ключей</span>
+                        </button>
+                        <button class="admin-btn gold" onclick="generateKeys(5, 'elite')">
+                            <span class="icon">⚡</span>
+                            <span class="label">+ 5 ELITE</span>
+                            <span class="sub-label">Ключей</span>
+                        </button>
+                        <button class="admin-btn gold" onclick="generateKeys(3, 'ai_max')">
+                            <span class="icon">🚀</span>
+                            <span class="label">+ 3 AI MAX</span>
+                            <span class="sub-label">Ключей</span>
+                        </button>
+                        <button class="admin-btn danger" onclick="deleteAllUsedKeys()">
+                            <span class="icon">🗑️</span>
+                            <span class="label">Очистить</span>
+                            <span class="sub-label">Использованные ключи</span>
+                        </button>
+                    </div>
+                    <div class="admin-output" id="admin-output">
+                        <span style="color:#555566;">Нажмите кнопку, чтобы сгенерировать ключи...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -400,7 +502,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get, update } from "firebase/database";
+        import { getDatabase, ref, set, get, update, remove, push } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -419,6 +521,7 @@
 
         let isLoginMode = true;
         let currentUser = null;
+        let currentUserRole = 'free';
 
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
@@ -427,6 +530,8 @@
         const accEmail = document.getElementById('acc-email');
         const accRole = document.getElementById('acc-role');
         const accDate = document.getElementById('acc-date');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminOutput = document.getElementById('admin-output');
 
         // ===== ТОСТ =====
         function showToast(message) {
@@ -439,6 +544,98 @@
                 setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
+
+        // ===== ГЕНЕРАЦИЯ КЛЮЧА =====
+        function generateKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let key = '';
+            for (let i = 0; i < 12; i++) {
+                if (i > 0 && i % 4 === 0) key += '-';
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return key;
+        }
+
+        // ===== ГЕНЕРАЦИЯ КЛЮЧЕЙ (ГЛОБАЛЬНАЯ) =====
+        window.generateKeys = async function(count, plan) {
+            if (!currentUser || currentUserRole !== 'nemesis') {
+                showToast('❌ Доступно только для NEMESIS');
+                return;
+            }
+
+            adminOutput.innerHTML = '⏳ Генерация ключей...';
+            const keys = [];
+            
+            for (let i = 0; i < count; i++) {
+                const key = generateKey();
+                keys.push(key);
+                await set(ref(db, `keys/${key}`), {
+                    plan: plan,
+                    used: false,
+                    createdAt: new Date().toISOString(),
+                    usedBy: null,
+                    usedAt: null
+                });
+            }
+
+            const planLabels = {
+                'elite': '⚡ ELITE',
+                'ai_basic': '🧠 AI+',
+                'ai_max': '🚀 AI MAX'
+            };
+
+            adminOutput.innerHTML = `
+                ✅ Сгенерировано ${count} ключей для ${planLabels[plan]}:\n\n
+                ${keys.map(k => `🔑 ${k}`).join('\n')}\n\n
+                📋 Скопируйте и загрузите в FunPay
+            `;
+            
+            showToast(`✅ ${count} ключей ${planLabels[plan]} создано!`);
+        };
+
+        // ===== УДАЛЕНИЕ ИСПОЛЬЗОВАННЫХ КЛЮЧЕЙ =====
+        window.deleteAllUsedKeys = async function() {
+            if (!currentUser || currentUserRole !== 'nemesis') {
+                showToast('❌ Доступно только для NEMESIS');
+                return;
+            }
+
+            if (!confirm('🗑️ Удалить все использованные ключи?')) return;
+
+            adminOutput.innerHTML = '⏳ Поиск использованных ключей...';
+            
+            try {
+                const snapshot = await get(ref(db, 'keys'));
+                if (!snapshot.exists()) {
+                    adminOutput.innerHTML = '📭 Нет ключей в базе';
+                    return;
+                }
+
+                const keysData = snapshot.val();
+                const usedKeys = Object.keys(keysData).filter(key => keysData[key].used === true);
+                
+                if (usedKeys.length === 0) {
+                    adminOutput.innerHTML = '📭 Нет использованных ключей для удаления';
+                    return;
+                }
+
+                // Удаляем ключи
+                for (const key of usedKeys) {
+                    await remove(ref(db, `keys/${key}`));
+                }
+
+                adminOutput.innerHTML = `
+                    ✅ Удалено ${usedKeys.length} использованных ключей:\n
+                    ${usedKeys.map(k => `🗑️ ${k}`).join('\n')}
+                `;
+                showToast(`✅ Удалено ${usedKeys.length} использованных ключей`);
+                
+            } catch (error) {
+                console.error('Ошибка удаления:', error);
+                adminOutput.innerHTML = `❌ Ошибка: ${error.message}`;
+                showToast('❌ Ошибка при удалении ключей');
+            }
+        };
 
         // ===== АКТИВАЦИЯ КЛЮЧА =====
         window.activateKeyFromAccount = function() {
@@ -502,15 +699,13 @@
                     newRole = plan;
                 }
                 
+                // Обновляем роль пользователя
                 await update(ref(db, `users/${currentUser.uid}`), {
                     role: newRole
                 });
                 
-                await update(ref(db, `keys/${key}`), {
-                    used: true,
-                    usedBy: currentUser.uid,
-                    usedAt: new Date().toISOString()
-                });
+                // УДАЛЯЕМ КЛЮЧ ИЗ БАЗЫ ПОСЛЕ ИСПОЛЬЗОВАНИЯ
+                await remove(ref(db, `keys/${key}`));
                 
                 const roleLabels = {
                     'free': '🆓 FREE',
@@ -527,6 +722,11 @@
                 const roleDisplay = roleLabels[newRole] || newRole.toUpperCase();
                 accRole.textContent = roleDisplay;
                 accRole.className = 'value role-' + newRole;
+                
+                // Обновляем админ-панель
+                if (newRole === 'nemesis') {
+                    adminPanel.classList.add('show');
+                }
                 
                 showToast(`🎉 Добро пожаловать в ${roleDisplay}!`);
                 
@@ -556,6 +756,7 @@
                         data = userData;
                     }
 
+                    currentUserRole = data.role || 'free';
                     accUsername.textContent = data.username || user.displayName || user.email.split('@')[0];
                     accEmail.textContent = user.email;
 
@@ -575,13 +776,23 @@
                     authFormContainer.style.display = 'none';
                     accountInfo.classList.remove('hidden');
 
+                    // Показываем админ-панель только для nemesis
+                    if (role === 'nemesis') {
+                        adminPanel.classList.add('show');
+                        adminOutput.innerHTML = '👑 Добро пожаловать в админ-панель NEMESIS!\nИспользуйте кнопки для генерации ключей.';
+                    } else {
+                        adminPanel.classList.remove('show');
+                    }
+
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
                 currentUser = null;
+                currentUserRole = 'free';
                 authFormContainer.style.display = 'block';
                 accountInfo.classList.add('hidden');
+                adminPanel.classList.remove('show');
                 statusDiv.textContent = '';
                 document.getElementById('key-status').textContent = '';
             }
@@ -724,7 +935,8 @@
         createStars();
 
         console.log('📋 Страница аккаунта NEMESIS :3');
-        console.log('🔑 Система активации ключей активна!');
+        console.log('👑 Админ-панель доступна для роли nemesis');
+        console.log('🔑 Ключи удаляются после использования');
     </script>
 </body>
 </html>
