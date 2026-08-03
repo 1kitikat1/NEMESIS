@@ -3,43 +3,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- META-ДАННЫЕ -->
-    <title>NEMESIS STEAM :3 — Оптимизация FPS и ОЗУ для игр</title>
-    <meta name="description" content="NEMESIS STEAM :3 — приватный комплекс утилит для оптимизации Windows и Steam. Повысь FPS до +40%, оптимизируй ОЗУ и получи максимальную производительность в играх." />
-    <meta name="keywords" content="NEMESIS, STEAM, оптимизация FPS, оптимизация ОЗУ, повышение FPS, Steam оптимизация" />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="NEMESIS STEAM" />
-    <meta name="yandex-verification" content="c736e915e9d6c40c" />
+    <title>NEMESIS — Экосистема продуктов</title>
+    <meta name="description" content="NEMESIS — экосистема продуктов для оптимизации, игр и искусственного интеллекта" />
     <meta name="theme-color" content="#07070d" />
-    <link rel="canonical" href="https://nemesis.klipp.su/" />
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
-        /* ----- БАЗА ----- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            min-height: 100vh;
-        }
-
+        /* ===== БАЗА ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { min-height: 100vh; }
         body {
             background: #07070d;
             font-family: 'Inter', sans-serif;
             color: #fff;
             overflow-x: hidden;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-top: 80px;
         }
 
-        /* ----- ЗВЁЗДЫ ----- */
+        /* ===== ЗВЁЗДЫ ===== */
         #stars {
             position: fixed;
             top: 0;
@@ -63,7 +46,7 @@
             100% { opacity: 0.9; transform: scale(1.2); }
         }
 
-        /* ----- ГЛОУ ----- */
+        /* ===== ГЛОУ ===== */
         .glow {
             position: fixed;
             border-radius: 50%;
@@ -93,7 +76,7 @@
             left: 55%;
         }
 
-        /* ----- АНИМАЦИЯ ----- */
+        /* ===== АНИМАЦИЯ ===== */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -107,9 +90,7 @@
         .delay-3 { animation-delay: 0.4s; }
         .delay-4 { animation-delay: 0.55s; }
 
-        /* ============================================================
-           ХЕДЕР — как в первом коде (простой, без центрирования)
-           ============================================================ */
+        /* ===== ХЕДЕР ===== */
         header {
             width: 100%;
             max-width: 1280px;
@@ -124,7 +105,6 @@
             margin-top: 10px;
         }
 
-        /* ----- ЛОГОТИП (как во втором коде) ----- */
         .logo {
             display: flex;
             align-items: center;
@@ -136,88 +116,60 @@
             text-decoration: none;
             color: #fff;
         }
-
         .logo-icon {
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            background: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(108, 99, 255, 0.05));
-            border: 1px solid rgba(108, 99, 255, 0.1);
+            background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(108,99,255,0.05));
+            border: 1px solid rgba(108,99,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
             font-weight: 800;
             color: #6c63ff;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
         }
-        .logo:hover .logo-icon {
-            transform: rotate(-5deg) scale(1.05);
-            border-color: rgba(108, 99, 255, 0.2);
-            box-shadow: 0 0 30px rgba(108, 99, 255, 0.05);
-        }
-
-        .logo-text {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            white-space: nowrap;
-        }
+        .logo:hover .logo-icon { transform: rotate(-5deg) scale(1.05); }
         .logo-text .nemesis {
             background: linear-gradient(135deg, #6c63ff, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .logo-text .steam {
-            color: #8899bb;
-        }
-        .logo-text .smile {
-            color: #6c63ff;
-            -webkit-text-fill-color: #6c63ff;
-            font-size: 20px;
-            margin-left: 2px;
-        }
+        .logo-text .steam { color: #8899bb; }
+        .logo-text .smile { color: #6c63ff; font-size: 20px; }
 
-        /* ----- ПРАВАЯ ЧАСТЬ (как во втором коде) ----- */
         .header-right {
             display: flex;
             align-items: center;
             gap: 20px;
             flex-shrink: 0;
         }
-
         nav {
             display: flex;
             gap: 6px;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             padding: 4px;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.03);
         }
         nav a {
             color: #8899bb;
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            letter-spacing: 0.3px;
             padding: 8px 18px;
             border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
             position: relative;
-            white-space: nowrap;
         }
-        nav a:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.04);
-        }
+        nav a:hover { color: #fff; background: rgba(255,255,255,0.04); }
         nav a.active {
             color: #fff;
-            background: rgba(108, 99, 255, 0.15);
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.05);
+            background: rgba(108,99,255,0.15);
+            box-shadow: 0 0 20px rgba(108,99,255,0.05);
         }
         nav a.active::after {
             content: '';
@@ -230,22 +182,13 @@
             background: #6c63ff;
             border-radius: 2px;
         }
-        .nav-user {
-            background: rgba(108, 99, 255, 0.10) !important;
-            border: 1px solid rgba(108, 99, 255, 0.08);
-        }
-        .nav-user::after { display: none !important; }
-
-        /* ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ */
         .lang-switcher {
             display: flex;
             gap: 4px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             padding: 4px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.04);
         }
         .lang-btn {
             padding: 6px 14px;
@@ -258,32 +201,21 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
-            letter-spacing: 0.5px;
         }
-        .lang-btn:hover {
-            color: #fff;
-        }
+        .lang-btn:hover { color: #fff; }
         .lang-btn.active {
-            background: rgba(108, 99, 255, 0.15);
+            background: rgba(108,99,255,0.15);
             color: #6c63ff;
-            box-shadow: 0 0 20px rgba(108, 99, 255, 0.04);
         }
 
-        /* ----- ПРОФИЛЬ (как во втором коде) ----- */
-        .header-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-shrink: 0;
-        }
         .profile-btn {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 8px 16px 8px 12px;
             border-radius: 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
             color: #8899bb;
             font-size: 13px;
             font-weight: 500;
@@ -291,11 +223,10 @@
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
             text-decoration: none;
-            white-space: nowrap;
         }
         .profile-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.08);
             color: #fff;
         }
         .profile-avatar {
@@ -309,7 +240,6 @@
             font-size: 12px;
             font-weight: 700;
             color: #fff;
-            flex-shrink: 0;
         }
         .profile-dot {
             width: 6px;
@@ -317,10 +247,9 @@
             border-radius: 50%;
             background: #22c55e;
             display: inline-block;
-            flex-shrink: 0;
         }
 
-        /* ----- ОСТАЛЬНЫЕ СТИЛИ (без изменений) ----- */
+        /* ===== КОНТЕЙНЕР ===== */
         .container {
             width: 100%;
             max-width: 1280px;
@@ -332,10 +261,11 @@
             align-items: center;
         }
 
+        /* ===== ГЕРОЙ ===== */
         .hero {
             text-align: center;
             max-width: 740px;
-            margin: 0 auto 70px;
+            margin: 0 auto 50px;
             width: 100%;
         }
         .hero h1 {
@@ -350,7 +280,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 60px rgba(108, 99, 255, 0.15);
         }
         .hero p {
             color: #8888aa;
@@ -364,45 +293,58 @@
             margin-top: 6px;
         }
 
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
+        /* ===== ПРОДУКТЫ ===== */
+        .products-grid {
+            display: flex;
             justify-content: center;
-            gap: 14px;
-            padding: 18px 52px;
-            background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(108, 99, 255, 0.05));
-            border: 1px solid rgba(108, 99, 255, 0.15);
-            border-radius: 60px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 15px;
-            text-decoration: none;
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-            margin: 24px auto 0;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-            width: fit-content;
-        }
-        .btn-download::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+            gap: 30px;
+            flex-wrap: wrap;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.15), transparent);
-            transition: left 0.6s ease;
+            max-width: 700px;
+            margin: 0 auto 60px;
         }
-        .btn-download:hover::before { left: 100%; }
-        .btn-download:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: rgba(108, 99, 255, 0.3);
-            box-shadow: 0 16px 48px rgba(108, 99, 255, 0.15);
+        .product-card {
+            background: rgba(255,255,255,0.025);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 28px;
+            padding: 30px;
+            width: 280px;
+            text-align: center;
+            transition: all 0.35s ease;
+            cursor: pointer;
         }
-        .btn-download .icon { font-size: 20px; }
+        .product-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(108,99,255,0.3);
+            box-shadow: 0 24px 64px rgba(108,99,255,0.1);
+        }
+        .product-card .icon { font-size: 48px; margin-bottom: 12px; }
+        .product-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .product-card p {
+            color: #8888aa;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .product-card .tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(108,99,255,0.15);
+            color: #6c63ff;
+        }
+        .product-card .tag.free { background: rgba(255,255,255,0.05); color: #8888aa; }
+        .product-card .tag.premium { background: rgba(255,215,0,0.1); color: #ffd700; }
 
+        /* ===== ТАРИФЫ ===== */
         .section-title {
             font-size: 40px;
             font-weight: 800;
@@ -430,43 +372,26 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.025);
+            background: rgba(255,255,255,0.025);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 28px;
             padding: 36px 30px 30px;
             width: 280px;
-            min-width: 240px;
             flex: 1 1 240px;
             max-width: 320px;
             text-align: center;
-            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.35s ease;
             position: relative;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .card:hover {
-            transform: translateY(-12px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
-        }
-        .card.free { border-top: 2px solid rgba(255, 255, 255, 0.06); }
-        .card.elite {
-            border-top: 2px solid #6c63ff;
-            box-shadow: 0 8px 40px rgba(108, 99, 255, 0.06);
-        }
-        .card.elite:hover {
-            box-shadow: 0 24px 64px rgba(108, 99, 255, 0.10);
-        }
-        .card.nemesis {
-            border-top: 2px solid #ffd700;
-            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.04);
-        }
-        .card.nemesis:hover {
-            box-shadow: 0 24px 64px rgba(255, 215, 0, 0.08);
+            transform: translateY(-12px);
+            border-color: rgba(255,255,255,0.12);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.45);
         }
         .card .badge {
             position: absolute;
@@ -479,18 +404,10 @@
             padding: 4px 18px;
             border-radius: 40px;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.25);
+            box-shadow: 0 4px 20px rgba(108,99,255,0.25);
         }
-        .card .icon-big {
-            font-size: 36px;
-            margin-bottom: 6px;
-        }
-        .card h3 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
+        .card .icon-big { font-size: 36px; margin-bottom: 6px; }
+        .card h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
         .card .price {
             font-size: 36px;
             font-weight: 800;
@@ -506,7 +423,6 @@
             color: #6c63ff;
             font-weight: 600;
             margin-bottom: 18px;
-            letter-spacing: 0.5px;
         }
         .card ul {
             list-style: none;
@@ -519,7 +435,7 @@
             padding: 8px 0;
             color: #aaaacc;
             font-size: 13px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -530,7 +446,6 @@
             font-weight: 700;
             font-size: 12px;
             opacity: 0.8;
-            flex-shrink: 0;
         }
         .card ul li:last-child { border-bottom: none; }
         .card .btn {
@@ -540,39 +455,36 @@
             font-weight: 600;
             font-size: 13px;
             border: none;
-            cursor: default;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
             text-align: center;
+            cursor: pointer;
         }
         .btn-gray {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             color: #8888aa;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
         }
         .btn-elite {
-            background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(108, 99, 255, 0.05));
+            background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(108,99,255,0.05));
             color: #fff;
-            border: 1px solid rgba(108, 99, 255, 0.15);
-            cursor: pointer;
+            border: 1px solid rgba(108,99,255,0.15);
         }
         .btn-elite:hover {
             transform: scale(1.03);
-            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.15);
-            border-color: rgba(108, 99, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(108,99,255,0.15);
+            border-color: rgba(108,99,255,0.3);
         }
         .btn-nemesis {
-            background: rgba(255, 215, 0, 0.06);
+            background: rgba(255,215,0,0.06);
             color: #ffd700;
-            border: 1px solid rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255,215,0,0.08);
             cursor: default;
         }
         .btn-elite-hidden { display: none !important; }
 
+        /* ===== АВТОРИЗАЦИЯ ===== */
         .auth-wrapper {
             width: 100%;
             max-width: 420px;
@@ -581,13 +493,12 @@
             justify-content: center;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.025);
+            background: rgba(255,255,255,0.025);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             border-radius: 28px;
             padding: 44px 36px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
             width: 100%;
         }
         .glass-card h2 {
@@ -605,14 +516,12 @@
             margin-bottom: 28px;
             text-transform: uppercase;
         }
-        .input-group {
-            margin-bottom: 14px;
-        }
+        .input-group { margin-bottom: 14px; }
         .input-group input {
             width: 100%;
             padding: 15px 18px;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 14px;
             color: #fff;
             font-size: 14px;
@@ -622,17 +531,14 @@
         }
         .input-group input:focus {
             border-color: #6c63ff;
-            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(108,99,255,0.06);
         }
-        .input-group input::placeholder {
-            color: #555566;
-            font-weight: 400;
-        }
+        .input-group input::placeholder { color: #555566; }
         .btn-submit {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, rgba(108, 99, 255, 0.12), rgba(108, 99, 255, 0.04));
-            border: 1px solid rgba(108, 99, 255, 0.15);
+            background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(108,99,255,0.04));
+            border: 1px solid rgba(108,99,255,0.15);
             border-radius: 60px;
             color: #fff;
             font-weight: 600;
@@ -641,12 +547,10 @@
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
             margin-top: 8px;
-            letter-spacing: 0.5px;
-            text-align: center;
         }
         .btn-submit:hover {
-            background: rgba(108, 99, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.08);
+            background: rgba(108,99,255,0.15);
+            box-shadow: 0 8px 32px rgba(108,99,255,0.08);
             transform: scale(1.01);
         }
         .toggle-mode {
@@ -659,9 +563,8 @@
             color: #6c63ff;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.2s;
         }
-        .toggle-mode span:hover { text-shadow: 0 0 20px rgba(108, 99, 255, 0.2); }
+        .toggle-mode span:hover { text-shadow: 0 0 20px rgba(108,99,255,0.2); }
         #auth-status {
             margin-top: 16px;
             text-align: center;
@@ -671,14 +574,11 @@
         }
         .hidden { display: none !important; }
 
-        .account-info {
-            width: 100%;
-        }
         .account-info .info-row {
             display: flex;
             justify-content: space-between;
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
         }
         .account-info .info-row:last-child { border-bottom: none; }
         .account-info .label {
@@ -694,11 +594,12 @@
         .role-free { color: #8888aa; }
         .role-elite { color: #6c63ff; }
         .role-nemesis { color: #ffd700; }
+
         .btn-logout {
             width: 100%;
             padding: 13px;
-            background: rgba(255, 0, 55, 0.05);
-            border: 1px solid rgba(255, 0, 55, 0.08);
+            background: rgba(255,0,55,0.05);
+            border: 1px solid rgba(255,0,55,0.08);
             border-radius: 60px;
             color: #ff4455;
             font-weight: 600;
@@ -707,12 +608,11 @@
             transition: all 0.3s ease;
             margin-top: 18px;
             font-family: 'Inter', sans-serif;
-            letter-spacing: 0.5px;
             text-align: center;
         }
         .btn-logout:hover {
-            background: rgba(255, 0, 55, 0.10);
-            border-color: rgba(255, 0, 55, 0.15);
+            background: rgba(255,0,55,0.10);
+            border-color: rgba(255,0,55,0.15);
         }
 
         .toast {
@@ -720,26 +620,23 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(11, 11, 18, 0.95);
+            background: rgba(11,11,18,0.95);
             color: #fff;
             padding: 14px 36px;
             border-radius: 60px;
-            border: 1px solid rgba(108, 99, 255, 0.15);
+            border: 1px solid rgba(108,99,255,0.15);
             font-size: 14px;
             font-weight: 600;
             z-index: 9999;
             backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
             animation: fadeUp 0.3s ease;
             text-align: center;
             max-width: 90%;
         }
-        .toast.fade-out {
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 
-        /* ----- АДАПТИВ ----- */
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 900px) {
             header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
             nav { flex-wrap: wrap; justify-content: center; gap: 10px; }
@@ -752,11 +649,11 @@
             .auth-wrapper { max-width: 100%; }
             .logo { font-size: 17px; }
             .logo-icon { width: 34px; height: 34px; font-size: 17px; }
+            .products-grid { flex-direction: column; align-items: center; }
+            .product-card { width: 100%; max-width: 340px; }
         }
-
         @media (max-width: 480px) {
             .hero h1 { font-size: 28px; }
-            .btn-download { padding: 14px 28px; font-size: 14px; }
             .logo { font-size: 15px; }
             .logo-icon { width: 30px; height: 30px; font-size: 15px; }
             nav a { font-size: 11px; padding: 5px 10px; }
@@ -773,22 +670,20 @@
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
 
-    <!-- ХЕДЕР (как в первом коде) -->
+    <!-- ХЕДЕР -->
     <header class="animate-in">
-        <!-- Логотип (как во втором коде) -->
         <a href="#" class="logo">
             <div class="logo-icon">N</div>
             <div class="logo-text">
                 <span class="nemesis">NEMESIS</span>
-                <span class="steam">STEAM</span>
-                <span class="smile">:3</span>
+                <span class="smile">⚡</span>
             </div>
         </a>
 
-        <!-- Правая часть (как во втором коде) -->
         <div class="header-right">
             <nav>
                 <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
+                <a id="nav-ai" data-key="nav_ai">ИИ ЧАТ</a>
                 <a id="nav-login" data-key="nav_login">ВХОД</a>
                 <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
             </nav>
@@ -806,122 +701,199 @@
         </div>
     </header>
 
-    <!-- ОСТАЛЬНОЙ КОНТЕНТ -->
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="container">
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
         <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
+            <!-- ГЕРОЙ -->
             <div class="hero animate-in">
-                <h1>NEMESIS <span class="gradient">STEAM</span> :3</h1>
-                <p data-key="hero_desc1">Приватный комплекс утилит для Windows и лаунчера Steam.</p>
-                <p data-key="hero_desc2">Оптимизация ОЗУ и максимальный FPS в играх.</p>
-                <p class="sub" data-key="hero_sub">⚡ Повысь FPS до +40% уже сегодня</p>
-                <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/0.3.0/NemesisSteam.exe"
-                   class="btn-download" target="_blank">
-                    <span class="icon"></span> <span data-key="download_btn">СКАЧАТЬ ЛАУНЧЕР</span>
-                </a>
-                <div style="margin-top:16px; font-size:12px; color:#555566; text-align:center;">
-                    <a href="https://t.me/Nemesissup" target="_blank" style="color:#6c63ff; text-decoration:none;">📞 <span data-key="support">Поддержка</span></a>
+                <h1>NEMESIS <span class="gradient"></span> ⚡</h1>
+                <p data-key="hero_desc1">Экосистема продуктов для оптимизации, игр и искусственного интеллекта.</p>
+                <p data-key="hero_desc2">Nemesis Steam · Nemesis AI</p>
+                <p class="sub" data-key="hero_sub">🚀 Всё в одном месте</p>
+            </div>
+
+            <!-- ПРОДУКТЫ -->
+            <h2 class="section-title animate-in delay-1"><span class="gradient">ПРОДУКТЫ</span></h2>
+            <div class="products-grid animate-in delay-2">
+                <div class="product-card" onclick="location.href='#'">
+                    <div class="icon">🖥️</div>
+                    <h3>Nemesis Steam</h3>
+                    <p>Лаунчер + оптимизация Steam. Повысь FPS до +40%.</p>
+                    <span class="tag">FREE / ELITE</span>
+                </div>
+                <div class="product-card" onclick="location.href='/ai'">
+                    <div class="icon">🤖</div>
+                    <h3>Nemesis AI</h3>
+                    <p>ИИ-помощник для любых задач: чат, код, советы.</p>
+                    <span class="tag premium">AI+ / AI MAX</span>
                 </div>
             </div>
-        </div>
 
-        <h2 class="section-title animate-in delay-1"><span data-key="pricing_title">ВЫБЕРИ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
-        <div class="pricing-grid">
-            <div class="card free animate-in delay-2">
-                <div class="icon-big">🆓</div>
-                <h3 data-key="plan_free">FREE</h3>
-                <div class="price">0 ₽</div>
-                <ul>
-                    <li data-key="free_opt1">Базовая оптимизация</li>
-                    <li data-key="free_opt2">DEV Консоль</li>
-                    <li data-key="free_opt3">Библиотека игр</li>
-                    <li data-key="free_opt4">История игр</li>
-                </ul>
-                <div class="btn btn-gray" data-key="current_plan">Текущий тариф</div>
+            <!-- ТАРИФЫ (ОБЩИЕ) -->
+            <h2 class="section-title animate-in delay-2"><span data-key="pricing_title">ВЫБЕРИ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
+            <div class="pricing-grid">
+                <!-- FREE -->
+                <div class="card free animate-in delay-3">
+                    <div class="icon-big">🆓</div>
+                    <h3 data-key="plan_free">FREE</h3>
+                    <div class="price">0 ₽</div>
+                    <ul>
+                        <li data-key="free_opt1">Steam (база)</li>
+                        <li data-key="free_opt2">Прицел</li>
+                        <li data-key="free_opt3">Утилиты</li>
+                        <li data-key="free_opt4">ИИ (базовый)</li>
+                        <li data-key="free_opt5">Режим кода</li>
+                    </ul>
+                    <div class="btn btn-gray" data-key="current_plan">Текущий тариф</div>
+                </div>
+
+                <!-- ELITE -->
+                <div class="card elite animate-in delay-3">
+                    <div class="badge" data-key="badge_popular">🔥 ПОПУЛЯРНЫЙ</div>
+                    <div class="icon-big">⭐</div>
+                    <h3 data-key="plan_elite">NEMESIS ELITE</h3>
+                    <div class="price">199 ₽</div>
+                    <div class="price-sub" data-key="one_time">Для Steam</div>
+                    <ul>
+                        <li data-key="elite_opt1">Steam (полная)</li>
+                        <li data-key="elite_opt2">Всё из FREE</li>
+                        <li data-key="elite_opt3">Приоритетная поддержка</li>
+                    </ul>
+                    <a id="btn-buy-elite" href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
+                        ⚡ <span data-key="buy_elite">КУПИТЬ ЗА 199 ₽</span>
+                    </a>
+                </div>
+
+                <!-- AI+ -->
+                <div class="card elite animate-in delay-3">
+                    <div class="icon-big">🧠</div>
+                    <h3>AI+</h3>
+                    <div class="price">99 ₽ <small>за 3 мес</small></div>
+                    <div class="price-sub">Только ИИ</div>
+                    <ul>
+                        <li>ИИ (полный)</li>
+                        <li>Экспорт диалогов</li>
+                        <li>Приоритет</li>
+                        <li>Режим кода</li>
+                    </ul>
+                    <a href="#" class="btn btn-elite" onclick="buyAI()">⚡ КУПИТЬ AI+</a>
+                </div>
+
+                <!-- AI MAX -->
+                <div class="card elite animate-in delay-4">
+                    <div class="badge" style="background: linear-gradient(135deg, #ffd700, #ff8c00);">👑 ВСЁ ВКЛЮЧЕНО</div>
+                    <div class="icon-big">🚀</div>
+                    <h3>AI MAX</h3>
+                    <div class="price">299 ₽</div>
+                    <div class="price-sub">Steam + ИИ</div>
+                    <ul>
+                        <li>Steam (полная)</li>
+                        <li>ИИ (полный)</li>
+                        <li>Экспорт диалогов</li>
+                        <li>Приоритет</li>
+                        <li>Всё из ELITE и AI+</li>
+                    </ul>
+                    <a href="#" class="btn btn-elite" onclick="buyAIMax()">⚡ КУПИТЬ AI MAX</a>
+                </div>
+
+                <!-- NEMESIS (скрыт) -->
+                <div class="card nemesis hidden" id="card-nemesis">
+                    <div class="icon-big">👑</div>
+                    <h3>NEMESIS</h3>
+                    <div class="price" data-key="exclusive">Эксклюзив</div>
+                    <ul>
+                        <li>Всё, что есть в AI MAX</li>
+                        <li>Эксклюзивный доступ</li>
+                        <li>Имя в истории проекта</li>
+                    </ul>
+                    <div class="btn btn-nemesis">Только для Nemesis</div>
+                </div>
             </div>
 
-            <div class="card elite animate-in delay-3">
-                <div class="badge" data-key="badge_popular">🔥 ПОПУЛЯРНЫЙ</div>
-                <div class="icon-big">⭐</div>
-                <h3 data-key="plan_elite">NEMESIS ELITE</h3>
-                <div class="price">199 ₽ <small data-key="forever">НАВСЕГДА</small></div>
-                <div class="price-sub" data-key="one_time">Один раз и навсегда!</div>
-                <ul>
-                    <li data-key="elite_opt1">Ультимативная оптимизация FPS</li>
-                    <li data-key="elite_opt2">Приоритетная поддержка</li>
-                    <li data-key="elite_opt3">Доступ ко всем будущим функциям</li>
-                    <li data-key="elite_opt4">Имя в списке ELITE</li>
-                    <li data-key="elite_opt5">Эксклюзивный статус в лаунчере</li>
-                </ul>
-                <a id="btn-buy-elite" href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
-                    ⚡ <span data-key="buy_elite">КУПИТЬ ЗА 199 ₽</span>
-                </a>
-            </div>
-
-            <div class="card nemesis animate-in delay-4">
-                <div class="icon-big">👑</div>
-                <h3 data-key="plan_nemesis">NEMESIS</h3>
-                <div class="price" data-key="exclusive">Эксклюзив</div>
-                <ul>
-                    <li data-key="nemesis_opt1">Всё, что есть в ELITE</li>
-                    <li data-key="nemesis_opt2">Эксклюзивный доступ</li>
-                    <li data-key="nemesis_opt3">Имя в истории проекта</li>
-                    <li data-key="nemesis_opt4">Только для избранных</li>
-                </ul>
-                <div class="btn btn-nemesis" data-key="for_nemesis">Только для Nemesis</div>
-            </div>
-        </div>
-
-        <div class="auth-wrapper">
-            <div class="glass-card hidden animate-in" id="auth-card">
-                <div id="auth-form-container">
-                    <h2 id="form-title" data-key="login_title">ВХОД</h2>
-                    <div class="sub" id="form-subtitle" data-key="login_sub">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
-                    <form id="auth-form" onsubmit="handleAuth(event)">
-                        <div id="reg-fields" class="hidden">
-                            <div class="input-group">
-                                <input type="text" id="reg-username" data-key="username_placeholder" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
+            <!-- АВТОРИЗАЦИЯ -->
+            <div class="auth-wrapper">
+                <div class="glass-card hidden animate-in" id="auth-card">
+                    <div id="auth-form-container">
+                        <h2 id="form-title" data-key="login_title">ВХОД</h2>
+                        <div class="sub" id="form-subtitle" data-key="login_sub">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+                        <form id="auth-form" onsubmit="handleAuth(event)">
+                            <div id="reg-fields" class="hidden">
+                                <div class="input-group">
+                                    <input type="text" id="reg-username" data-key="username_placeholder" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
+                                </div>
                             </div>
+                            <div class="input-group">
+                                <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="auth-pass" data-key="password_placeholder" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
+                            </div>
+                            <div id="reg-pass-repeat" class="input-group hidden">
+                                <input type="password" id="auth-pass-repeat" data-key="repeat_password" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
+                            </div>
+                            <button type="submit" class="btn-submit" id="auth-btn" data-key="login_btn">ВОЙТИ</button>
+                        </form>
+                        <div class="toggle-mode">
+                            <span id="toggle-link" data-key="toggle_register">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
                         </div>
-                        <div class="input-group">
-                            <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
-                        </div>
-                        <div class="input-group">
-                            <input type="password" id="auth-pass" data-key="password_placeholder" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
-                        </div>
-                        <div id="reg-pass-repeat" class="input-group hidden">
-                            <input type="password" id="auth-pass-repeat" data-key="repeat_password" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
-                        </div>
-                        <button type="submit" class="btn-submit" id="auth-btn" data-key="login_btn">ВОЙТИ</button>
-                    </form>
-                    <div class="toggle-mode">
-                        <span id="toggle-link" data-key="toggle_register">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+                        <div id="auth-status"></div>
                     </div>
-                    <div id="auth-status"></div>
+                    <div class="account-info hidden" id="account-info">
+                        <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;" data-key="account_title">👤 АККАУНТ</h2>
+                        <div class="sub" style="text-align:center; margin-bottom:24px;" data-key="account_sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
+                        <div class="info-row">
+                            <span class="label" data-key="acc_username">Имя пользователя</span>
+                            <span class="value highlight" id="acc-username">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Email</span>
+                            <span class="value" id="acc-email">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label" data-key="acc_role">Роль</span>
+                            <span class="value" id="acc-role">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label" data-key="acc_date">Дата регистрации</span>
+                            <span class="value" id="acc-date">—</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label" data-key="acc_status_label">Статус</span>
+                            <span class="value" style="color:#6c63ff;" id="acc-status" data-key="acc_status_active">Активен</span>
+                        </div>
+                        <button class="btn-logout" id="btn-logout" data-key="logout_btn">ВЫЙТИ</button>
+                    </div>
                 </div>
-                <div class="account-info hidden" id="account-info">
-                    <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;" data-key="account_title">👤 АККАУНТ</h2>
-                    <div class="sub" style="text-align:center; margin-bottom:24px;" data-key="account_sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-                    <div class="info-row">
-                        <span class="label" data-key="acc_username">Имя пользователя</span>
-                        <span class="value highlight" id="acc-username">—</span>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА AI ЧАТА -->
+        <div id="page-ai" style="display:none; width:100%; flex-direction:column; align-items:center;">
+            <div style="width:100%; max-width:900px; margin:0 auto;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h2 style="color:#fff; font-size:24px;">🤖 Nemesis AI</h2>
+                    <button onclick="showPage('home')" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; padding:8px 20px; border-radius:10px; cursor:pointer;">← Назад</button>
+                </div>
+                
+                <!-- Список чатов -->
+                <div id="chat-list" style="background:rgba(255,255,255,0.025); border-radius:16px; padding:16px; margin-bottom:16px; max-height:200px; overflow-y:auto;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <span style="color:#8888aa; font-size:13px;">📋 Мои чаты</span>
+                        <button onclick="createNewChat()" style="background:rgba(108,99,255,0.2); border:1px solid rgba(108,99,255,0.3); color:#fff; padding:4px 14px; border-radius:8px; cursor:pointer; font-size:12px;">+ Новый</button>
                     </div>
-                    <div class="info-row">
-                        <span class="label">Email</span>
-                        <span class="value" id="acc-email">—</span>
+                    <div id="chat-list-items"></div>
+                </div>
+
+                <!-- Окно чата -->
+                <div id="chat-window" style="background:rgba(255,255,255,0.025); border-radius:16px; border:1px solid rgba(255,255,255,0.05); height:400px; display:flex; flex-direction:column; overflow:hidden;">
+                    <div id="chat-messages" style="flex:1; padding:16px; overflow-y:auto;">
+                        <div style="text-align:center; color:#555566; padding:40px 0;">Начните новый чат или выберите существующий</div>
                     </div>
-                    <div class="info-row">
-                        <span class="label" data-key="acc_role">Роль</span>
-                        <span class="value" id="acc-role">—</span>
+                    <div style="display:flex; gap:10px; padding:12px; border-top:1px solid rgba(255,255,255,0.05);">
+                        <input id="chat-input" type="text" placeholder="Напиши сообщение..." style="flex:1; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:12px 16px; color:#fff; font-size:14px; outline:none; font-family:'Inter',sans-serif;" onkeydown="if(event.key==='Enter') sendMessage()">
+                        <button onclick="sendMessage()" style="background:rgba(108,99,255,0.2); border:1px solid rgba(108,99,255,0.3); color:#fff; padding:12px 20px; border-radius:12px; cursor:pointer;">📤</button>
                     </div>
-                    <div class="info-row">
-                        <span class="label" data-key="acc_date">Дата регистрации</span>
-                        <span class="value" id="acc-date">—</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label" data-key="acc_status_label">Статус</span>
-                        <span class="value" style="color:#6c63ff;" id="acc-status" data-key="acc_status_active">Активен</span>
-                    </div>
-                    <button class="btn-logout" id="btn-logout" data-key="logout_btn">ВЫЙТИ</button>
                 </div>
             </div>
         </div>
@@ -941,7 +913,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get } from "firebase/database";
+        import { getDatabase, ref, set, get, push, remove, update, onValue } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -958,23 +930,34 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // ===== ПЕРЕМЕННЫЕ =====
+        let currentUser = null;
+        let currentChatId = null;
+        let currentSubscription = 'free';
+
+        // ===== DOM =====
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
         const accountInfo = document.getElementById('account-info');
         const authCard = document.getElementById('auth-card');
         const pageHome = document.getElementById('page-home');
+        const pageAI = document.getElementById('page-ai');
         const navHome = document.getElementById('nav-home');
+        const navAI = document.getElementById('nav-ai');
         const navLogin = document.getElementById('nav-login');
         const navAccount = document.getElementById('nav-account');
-        const btnBuyElite = document.getElementById('btn-buy-elite');
         const profileBtn = document.getElementById('profile-btn');
+        const btnBuyElite = document.getElementById('btn-buy-elite');
 
         let isLoginMode = true;
 
-        function showPage(page) {
+        // ===== ПОКАЗ СТРАНИЦ =====
+        window.showPage = function(page) {
             pageHome.style.display = (page === 'home') ? 'flex' : 'none';
+            pageAI.style.display = (page === 'ai') ? 'flex' : 'none';
             authCard.classList.toggle('hidden', page !== 'auth' && page !== 'account');
             navHome.classList.toggle('active', page === 'home');
+            navAI.classList.toggle('active', page === 'ai');
             navLogin.classList.toggle('active', page === 'auth');
             navAccount.classList.toggle('active', page === 'account');
 
@@ -985,8 +968,30 @@
                 authFormContainer.style.display = 'block';
                 accountInfo.classList.add('hidden');
             }
+            
+            if (page === 'ai' && currentUser) {
+                loadUserChats();
+            }
         }
 
+        // ===== ПОКУПКА =====
+        window.buyAI = function() {
+            if (!currentUser) {
+                showToast('Войдите в аккаунт');
+                return;
+            }
+            window.open('https://www.donationalerts.com/r/nemesis_fps?amount=99', '_blank');
+        }
+        
+        window.buyAIMax = function() {
+            if (!currentUser) {
+                showToast('Войдите в аккаунт');
+                return;
+            }
+            window.open('https://www.donationalerts.com/r/nemesis_fps?amount=299', '_blank');
+        }
+
+        // ===== АВТОРИЗАЦИЯ =====
         function showAuthForm() {
             authFormContainer.style.display = 'block';
             accountInfo.classList.add('hidden');
@@ -1007,7 +1012,7 @@
             roleEl.className = 'value role-' + role;
 
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
-            document.getElementById('acc-status').textContent = getTranslation('acc_status_active');
+            document.getElementById('acc-status').textContent = 'Активен';
 
             if (role === 'elite' || role === 'nemesis') {
                 btnBuyElite.classList.add('btn-elite-hidden');
@@ -1016,6 +1021,7 @@
             }
 
             updateProfileBtn(userData.username);
+            currentSubscription = role;
         }
 
         function updateProfileBtn(username) {
@@ -1028,7 +1034,7 @@
             } else {
                 profileBtn.innerHTML = `
                     <span class="profile-avatar">👤</span>
-                    <span data-key="profile_login">Войти</span>
+                    <span>Войти</span>
                     <span class="profile-dot"></span>
                 `;
             }
@@ -1038,8 +1044,23 @@
             if (user) {
                 try {
                     const snapshot = await get(ref(db, `users/${user.uid}`));
-                    const data = snapshot.exists() ? snapshot.val() : {};
+                    let data = snapshot.exists() ? snapshot.val() : {};
 
+                    if (!data.role) {
+                        const userData = {
+                            username: user.displayName || user.email.split('@')[0],
+                            email: user.email,
+                            role: 'free',
+                            createdAt: new Date().toISOString(),
+                            subscription: { free: { active: true } },
+                            ai_chats: {}
+                        };
+                        await set(ref(db, `users/${user.uid}`), userData);
+                        data = userData;
+                    }
+
+                    currentUser = user;
+                    
                     const userData = {
                         username: data.username || user.displayName || user.email.split('@')[0],
                         email: user.email,
@@ -1054,6 +1075,7 @@
                     localStorage.setItem('nemesis_email', userData.email);
                     localStorage.setItem('nemesis_role', userData.role);
                     localStorage.setItem('nemesis_logged', 'true');
+                    currentSubscription = userData.role;
 
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
@@ -1068,9 +1090,362 @@
                 localStorage.removeItem('nemesis_logged');
                 btnBuyElite.classList.remove('btn-elite-hidden');
                 updateProfileBtn(null);
+                currentUser = null;
+                currentSubscription = 'free';
             }
         }
 
+        // ===== AI ЧАТ =====
+        async function loadUserChats() {
+            if (!currentUser) return;
+            
+            try {
+                const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats`));
+                const data = snapshot.val();
+                const container = document.getElementById('chat-list-items');
+                container.innerHTML = '';
+                
+                if (!data || Object.keys(data).length === 0) {
+                    container.innerHTML = '<div style="color:#555566; text-align:center; padding:12px;">Нет чатов</div>';
+                    return;
+                }
+                
+                const chatIds = Object.keys(data).sort((a, b) => data[b].updated_at?.localeCompare(data[a].updated_at) || 0);
+                
+                chatIds.forEach(id => {
+                    const chat = data[id];
+                    const div = document.createElement('div');
+                    div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-radius:8px; cursor:pointer; transition:0.2s; margin-bottom:4px;';
+                    div.onmouseover = () => div.style.background = 'rgba(108,99,255,0.05)';
+                    div.onmouseout = () => div.style.background = 'transparent';
+                    div.onclick = () => openChat(id);
+                    
+                    const title = document.createElement('span');
+                    title.textContent = chat.title || 'Новый чат';
+                    title.style.color = '#fff';
+                    title.style.fontSize = '13px';
+                    
+                    const count = document.createElement('span');
+                    const msgCount = chat.messages ? Object.keys(chat.messages).length : 0;
+                    count.textContent = `${msgCount} сообщ.`;
+                    count.style.color = '#555566';
+                    count.style.fontSize = '11px';
+                    
+                    div.appendChild(title);
+                    div.appendChild(count);
+                    container.appendChild(div);
+                });
+                
+            } catch (error) {
+                console.error('Ошибка загрузки чатов:', error);
+            }
+        }
+
+        async function openChat(chatId) {
+            if (!currentUser) return;
+            currentChatId = chatId;
+            
+            try {
+                const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats/${chatId}`));
+                const data = snapshot.val();
+                if (!data) return;
+                
+                const container = document.getElementById('chat-messages');
+                container.innerHTML = '';
+                
+                if (data.messages) {
+                    const msgIds = Object.keys(data.messages).sort((a, b) => data.messages[a].timestamp - data.messages[b].timestamp);
+                    msgIds.forEach(id => {
+                        const msg = data.messages[id];
+                        const div = document.createElement('div');
+                        div.style.cssText = `
+                            padding: 10px 16px;
+                            border-radius: 12px;
+                            margin-bottom: 8px;
+                            max-width: 85%;
+                            font-size: 14px;
+                            ${msg.role === 'user' ? 
+                                'background: rgba(108,99,255,0.15); margin-left: auto; color: #fff;' : 
+                                'background: rgba(255,255,255,0.05); color: #ccc;'
+                            }
+                        `;
+                        div.textContent = msg.content;
+                        container.appendChild(div);
+                    });
+                }
+                
+                container.scrollTop = container.scrollHeight;
+                
+            } catch (error) {
+                console.error('Ошибка открытия чата:', error);
+            }
+        }
+
+        window.createNewChat = async function() {
+            if (!currentUser) {
+                showToast('Войдите в аккаунт');
+                return;
+            }
+            
+            try {
+                const chatId = `chat_${Date.now()}`;
+                await set(ref(db, `users/${currentUser.uid}/ai_chats/${chatId}`), {
+                    title: 'Новый чат',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                    messages: {}
+                });
+                await loadUserChats();
+                await openChat(chatId);
+                showToast('Новый чат создан');
+            } catch (error) {
+                console.error('Ошибка создания чата:', error);
+            }
+        }
+
+        window.sendMessage = async function() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !currentUser || !currentChatId) return;
+            input.value = '';
+            
+            try {
+                const msgRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
+                await set(msgRef, {
+                    role: 'user',
+                    content: text,
+                    timestamp: Date.now()
+                });
+                
+                await update(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}`), {
+                    updated_at: new Date().toISOString()
+                });
+                
+                // ВРЕМЕННЫЙ ОТВЕТ (заменить на реальный API)
+                const response = `Я получил ваше сообщение: "${text}". Интеграция с ИИ будет добавлена позже.`;
+                
+                const responseRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
+                await set(responseRef, {
+                    role: 'assistant',
+                    content: response,
+                    timestamp: Date.now()
+                });
+                
+                await openChat(currentChatId);
+                await loadUserChats();
+                
+            } catch (error) {
+                console.error('Ошибка отправки сообщения:', error);
+                showToast('Ошибка отправки');
+            }
+        }
+
+        // ===== ОБРАБОТЧИКИ =====
+        window.handleAuth = async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-pass').value;
+
+            statusDiv.textContent = '⏳ Обработка...';
+            statusDiv.style.color = '#8888aa';
+
+            try {
+                if (isLoginMode) {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    await updateUI(userCredential.user);
+                    document.getElementById('auth-form').reset();
+                } else {
+                    const username = document.getElementById('reg-username').value.trim();
+                    const passwordRepeat = document.getElementById('auth-pass-repeat').value;
+
+                    if (!username || username.length < 3) {
+                        statusDiv.textContent = '❌ Имя пользователя не менее 3 символов!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    if (password.length < 6) {
+                        statusDiv.textContent = '❌ Пароль не менее 6 символов!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    if (password !== passwordRepeat) {
+                        statusDiv.textContent = '❌ Пароли не совпадают!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+
+                    await updateProfile(user, { displayName: username });
+
+                    await set(ref(db, `users/${user.uid}`), {
+                        username: username,
+                        email: email,
+                        role: "free",
+                        createdAt: new Date().toISOString(),
+                        subscription: { free: { active: true } },
+                        ai_chats: {}
+                    });
+
+                    await updateUI(user);
+                    document.getElementById('auth-form').reset();
+                    showToast('Аккаунт создан!');
+                }
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                let msg = '❌ Ошибка! ';
+                switch (error.code) {
+                    case 'auth/email-already-in-use': msg += 'Email уже используется.'; break;
+                    case 'auth/invalid-email': msg += 'Некорректный email.'; break;
+                    case 'auth/user-not-found': msg += 'Пользователь не найден.'; break;
+                    case 'auth/wrong-password': msg += 'Неверный пароль.'; break;
+                    case 'auth/weak-password': msg += 'Слабый пароль (мин. 6 символов).'; break;
+                    default: msg += error.message;
+                }
+                statusDiv.textContent = msg;
+                statusDiv.style.color = '#ff4444';
+            }
+        };
+
+        document.getElementById('toggle-link').addEventListener('click', function() {
+            isLoginMode = !isLoginMode;
+
+            const title = document.getElementById('form-title');
+            const subtitle = document.getElementById('form-subtitle');
+            const btn = document.getElementById('auth-btn');
+            const link = this;
+            const regFields = document.getElementById('reg-fields');
+            const regPassRepeat = document.getElementById('reg-pass-repeat');
+            const emailField = document.getElementById('auth-email');
+
+            if (isLoginMode) {
+                title.textContent = 'ВХОД';
+                subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
+                btn.textContent = 'ВОЙТИ';
+                link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                regFields.classList.add('hidden');
+                regPassRepeat.classList.add('hidden');
+                emailField.placeholder = 'EMAIL';
+            } else {
+                title.textContent = 'РЕГИСТРАЦИЯ';
+                subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
+                btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
+                link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
+                regFields.classList.remove('hidden');
+                regPassRepeat.classList.remove('hidden');
+                emailField.placeholder = 'EMAIL (для входа)';
+            }
+
+            statusDiv.textContent = '';
+            statusDiv.style.color = '#8888aa';
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', async function() {
+            try {
+                await signOut(auth);
+                await updateUI(null);
+                showToast('Вы вышли из аккаунта!');
+                showPage('home');
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
+            }
+        });
+
+        // ===== НАВИГАЦИЯ =====
+        navHome.addEventListener('click', () => showPage('home'));
+        
+        navAI.addEventListener('click', () => {
+            if (!currentUser) {
+                showToast('Войдите в аккаунт');
+                showAuthForm();
+                return;
+            }
+            showPage('ai');
+            loadUserChats();
+        });
+        
+        navLogin.addEventListener('click', () => {
+            if (currentUser) {
+                const userData = {
+                    username: localStorage.getItem('nemesis_user') || '—',
+                    email: localStorage.getItem('nemesis_email') || '—',
+                    role: localStorage.getItem('nemesis_role') || 'free',
+                    createdAt: null
+                };
+                showAccount(userData);
+            } else {
+                isLoginMode = true;
+                document.getElementById('form-title').textContent = 'ВХОД';
+                document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
+                document.getElementById('auth-btn').textContent = 'ВОЙТИ';
+                document.getElementById('toggle-link').textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                document.getElementById('reg-fields').classList.add('hidden');
+                document.getElementById('reg-pass-repeat').classList.add('hidden');
+                document.getElementById('auth-email').placeholder = 'EMAIL';
+                statusDiv.textContent = '';
+                showAuthForm();
+            }
+        });
+        
+        navAccount.addEventListener('click', () => {
+            const userData = {
+                username: localStorage.getItem('nemesis_user') || '—',
+                email: localStorage.getItem('nemesis_email') || '—',
+                role: localStorage.getItem('nemesis_role') || 'free',
+                createdAt: null
+            };
+            showAccount(userData);
+        });
+
+        profileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentUser) {
+                const userData = {
+                    username: localStorage.getItem('nemesis_user') || '—',
+                    email: localStorage.getItem('nemesis_email') || '—',
+                    role: localStorage.getItem('nemesis_role') || 'free',
+                    createdAt: null
+                };
+                showAccount(userData);
+            } else {
+                isLoginMode = true;
+                document.getElementById('form-title').textContent = 'ВХОД';
+                document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
+                document.getElementById('auth-btn').textContent = 'ВОЙТИ';
+                document.getElementById('toggle-link').textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                document.getElementById('reg-fields').classList.add('hidden');
+                document.getElementById('reg-pass-repeat').classList.add('hidden');
+                document.getElementById('auth-email').placeholder = 'EMAIL';
+                statusDiv.textContent = '';
+                showAuthForm();
+            }
+        });
+
+        // ===== СОСТОЯНИЕ АВТОРИЗАЦИИ =====
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                await updateUI(user);
+            } else {
+                await updateUI(null);
+            }
+        });
+
+        // ===== TOAST =====
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // ===== ЗВЁЗДЫ =====
         function createStars() {
             const container = document.getElementById('stars');
             for (let i = 0; i < 120; i++) {
@@ -1087,42 +1462,33 @@
         }
         createStars();
 
+        // ===== ПЕРЕВОД =====
         const translations = {
             ru: {
                 nav_home: 'ГЛАВНАЯ',
+                nav_ai: 'ИИ ЧАТ',
                 nav_login: 'ВХОД',
                 nav_account: 'АККАУНТ',
                 profile_login: 'Войти',
-                hero_desc1: 'Приватный комплекс утилит для Windows и лаунчера Steam.',
-                hero_desc2: 'Оптимизация ОЗУ и максимальный FPS в играх.',
-                hero_sub: '⚡ Повысь FPS до +40% уже сегодня',
-                download_btn: 'СКАЧАТЬ ЛАУНЧЕР',
-                support: 'Поддержка',
+                hero_desc1: 'Экосистема продуктов для оптимизации, игр и искусственного интеллекта.',
+                hero_desc2: 'Nemesis Steam · Nemesis AI',
+                hero_sub: '🚀 Всё в одном месте',
                 pricing_title: 'ВЫБЕРИ',
                 pricing_highlight: 'ТАРИФ',
                 plan_free: 'FREE',
-                free_opt1: 'Базовая оптимизация',
-                free_opt2: 'DEV Консоль',
-                free_opt3: 'Библиотека игр',
-                free_opt4: 'История игр',
+                free_opt1: 'Steam (база)',
+                free_opt2: 'Прицел',
+                free_opt3: 'Утилиты',
+                free_opt4: 'ИИ (базовый)',
+                free_opt5: 'Режим кода',
                 current_plan: 'Текущий тариф',
                 badge_popular: '🔥 ПОПУЛЯРНЫЙ',
                 plan_elite: 'NEMESIS ELITE',
-                forever: 'НАВСЕГДА',
-                one_time: 'Один раз и навсегда!',
-                elite_opt1: 'Ультимативная оптимизация FPS',
-                elite_opt2: 'Приоритетная поддержка',
-                elite_opt3: 'Доступ ко всем будущим функциям',
-                elite_opt4: 'Имя в списке ELITE',
-                elite_opt5: 'Эксклюзивный статус в лаунчере',
+                one_time: 'Для Steam',
+                elite_opt1: 'Steam (полная)',
+                elite_opt2: 'Всё из FREE',
+                elite_opt3: 'Приоритетная поддержка',
                 buy_elite: 'КУПИТЬ ЗА 199 ₽',
-                plan_nemesis: 'NEMESIS',
-                exclusive: 'Эксклюзив',
-                nemesis_opt1: 'Всё, что есть в ELITE',
-                nemesis_opt2: 'Эксклюзивный доступ',
-                nemesis_opt3: 'Имя в истории проекта',
-                nemesis_opt4: 'Только для избранных',
-                for_nemesis: 'Только для Nemesis',
                 login_title: 'ВХОД',
                 login_sub: 'ВОЙДИТЕ В СВОЙ АККАУНТ',
                 username_placeholder: 'ИМЯ ПОЛЬЗОВАТЕЛЯ',
@@ -1156,39 +1522,29 @@
             },
             en: {
                 nav_home: 'HOME',
+                nav_ai: 'AI CHAT',
                 nav_login: 'LOGIN',
                 nav_account: 'ACCOUNT',
                 profile_login: 'Login',
-                hero_desc1: 'Private utility suite for Windows and Steam launcher.',
-                hero_desc2: 'RAM optimization and maximum FPS in games.',
-                hero_sub: '⚡ Boost FPS up to +40% today',
-                download_btn: 'DOWNLOAD LAUNCHER',
-                support: 'Support',
+                hero_desc1: 'Ecosystem of products for optimization, games and artificial intelligence.',
+                hero_desc2: 'Nemesis Steam · Nemesis AI',
+                hero_sub: '🚀 Everything in one place',
                 pricing_title: 'CHOOSE',
                 pricing_highlight: 'PLAN',
                 plan_free: 'FREE',
-                free_opt1: 'Basic optimization',
-                free_opt2: 'DEV Console',
-                free_opt3: 'Game library',
-                free_opt4: 'Game history',
+                free_opt1: 'Steam (basic)',
+                free_opt2: 'Crosshair',
+                free_opt3: 'Utilities',
+                free_opt4: 'AI (basic)',
+                free_opt5: 'Code mode',
                 current_plan: 'Current plan',
                 badge_popular: '🔥 POPULAR',
                 plan_elite: 'NEMESIS ELITE',
-                forever: 'FOREVER',
-                one_time: 'One time payment!',
-                elite_opt1: 'Ultimate FPS optimization',
-                elite_opt2: 'Priority support',
-                elite_opt3: 'Access to all future features',
-                elite_opt4: 'Name in ELITE list',
-                elite_opt5: 'Exclusive launcher status',
+                one_time: 'For Steam',
+                elite_opt1: 'Steam (full)',
+                elite_opt2: 'Everything from FREE',
+                elite_opt3: 'Priority support',
                 buy_elite: 'BUY FOR 199 ₽',
-                plan_nemesis: 'NEMESIS',
-                exclusive: 'Exclusive',
-                nemesis_opt1: 'Everything in ELITE',
-                nemesis_opt2: 'Exclusive access',
-                nemesis_opt3: 'Name in project history',
-                nemesis_opt4: 'For selected only',
-                for_nemesis: 'Only for Nemesis',
                 login_title: 'LOGIN',
                 login_sub: 'LOGIN TO YOUR ACCOUNT',
                 username_placeholder: 'USERNAME',
@@ -1248,11 +1604,6 @@
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
 
-            const statusEl = document.getElementById('acc-status');
-            if (statusEl && statusEl.textContent) {
-                statusEl.textContent = getTranslation('acc_status_active');
-            }
-
             if (isLoginMode) {
                 document.getElementById('form-title').textContent = getTranslation('login_title');
                 document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
@@ -1272,191 +1623,8 @@
 
         updateLanguage(currentLang);
 
-        window.handleAuth = async function(event) {
-            event.preventDefault();
-
-            const email = document.getElementById('auth-email').value.trim();
-            const password = document.getElementById('auth-pass').value;
-
-            statusDiv.textContent = getTranslation('auth_processing');
-            statusDiv.style.color = '#8888aa';
-
-            try {
-                if (isLoginMode) {
-                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    await updateUI(userCredential.user);
-                    document.getElementById('auth-form').reset();
-
-                } else {
-                    const username = document.getElementById('reg-username').value.trim();
-                    const passwordRepeat = document.getElementById('auth-pass-repeat').value;
-
-                    if (!username || username.length < 3) {
-                        statusDiv.textContent = getTranslation('auth_error_username');
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-                    if (password.length < 6) {
-                        statusDiv.textContent = getTranslation('auth_error_password');
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-                    if (password !== passwordRepeat) {
-                        statusDiv.textContent = getTranslation('auth_error_match');
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-
-                    await updateProfile(user, { displayName: username });
-
-                    await set(ref(db, `users/${user.uid}`), {
-                        username: username,
-                        email: email,
-                        role: "free",
-                        createdAt: new Date().toISOString()
-                    });
-
-                    await updateUI(user);
-                    document.getElementById('auth-form').reset();
-                }
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                let msg = getTranslation('auth_default_error');
-                switch (error.code) {
-                    case 'auth/email-already-in-use': msg += getTranslation('auth_error_email'); break;
-                    case 'auth/invalid-email': msg += getTranslation('auth_error_invalid'); break;
-                    case 'auth/user-not-found': msg += getTranslation('auth_error_notfound'); break;
-                    case 'auth/wrong-password': msg += getTranslation('auth_error_wrongpass'); break;
-                    case 'auth/weak-password': msg += getTranslation('auth_error_weak'); break;
-                    default: msg += error.message;
-                }
-                statusDiv.textContent = msg;
-                statusDiv.style.color = '#ff4444';
-            }
-        };
-
-        document.getElementById('toggle-link').addEventListener('click', function() {
-            isLoginMode = !isLoginMode;
-
-            const title = document.getElementById('form-title');
-            const subtitle = document.getElementById('form-subtitle');
-            const btn = document.getElementById('auth-btn');
-            const link = this;
-            const regFields = document.getElementById('reg-fields');
-            const regPassRepeat = document.getElementById('reg-pass-repeat');
-            const emailField = document.getElementById('auth-email');
-
-            if (isLoginMode) {
-                title.textContent = getTranslation('login_title');
-                subtitle.textContent = getTranslation('login_sub');
-                btn.textContent = getTranslation('login_btn');
-                link.textContent = getTranslation('toggle_register');
-                regFields.classList.add('hidden');
-                regPassRepeat.classList.add('hidden');
-                emailField.placeholder = 'EMAIL';
-            } else {
-                title.textContent = getTranslation('register_title');
-                subtitle.textContent = getTranslation('register_sub');
-                btn.textContent = getTranslation('register_btn');
-                link.textContent = getTranslation('toggle_login');
-                regFields.classList.remove('hidden');
-                regPassRepeat.classList.remove('hidden');
-                emailField.placeholder = 'EMAIL (для входа)';
-            }
-
-            statusDiv.textContent = '';
-            statusDiv.style.color = '#8888aa';
-        });
-
-        document.getElementById('btn-logout').addEventListener('click', async function() {
-            try {
-                await signOut(auth);
-                await updateUI(null);
-                showToast(getTranslation('logout_success'));
-            } catch (error) {
-                console.error('Ошибка выхода:', error);
-            }
-        });
-
-        navHome.addEventListener('click', () => showPage('home'));
-        navLogin.addEventListener('click', () => {
-            if (auth.currentUser) {
-                const userData = {
-                    username: localStorage.getItem('nemesis_user') || '—',
-                    email: localStorage.getItem('nemesis_email') || '—',
-                    role: localStorage.getItem('nemesis_role') || 'free',
-                    createdAt: null
-                };
-                showAccount(userData);
-            } else {
-                isLoginMode = true;
-                document.getElementById('form-title').textContent = getTranslation('login_title');
-                document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
-                document.getElementById('auth-btn').textContent = getTranslation('login_btn');
-                document.getElementById('toggle-link').textContent = getTranslation('toggle_register');
-                document.getElementById('reg-fields').classList.add('hidden');
-                document.getElementById('reg-pass-repeat').classList.add('hidden');
-                document.getElementById('auth-email').placeholder = 'EMAIL';
-                statusDiv.textContent = '';
-                showAuthForm();
-            }
-        });
-        navAccount.addEventListener('click', () => {
-            const userData = {
-                username: localStorage.getItem('nemesis_user') || '—',
-                email: localStorage.getItem('nemesis_email') || '—',
-                role: localStorage.getItem('nemesis_role') || 'free',
-                createdAt: null
-            };
-            showAccount(userData);
-        });
-
-        profileBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (auth.currentUser) {
-                const userData = {
-                    username: localStorage.getItem('nemesis_user') || '—',
-                    email: localStorage.getItem('nemesis_email') || '—',
-                    role: localStorage.getItem('nemesis_role') || 'free',
-                    createdAt: null
-                };
-                showAccount(userData);
-            } else {
-                isLoginMode = true;
-                document.getElementById('form-title').textContent = getTranslation('login_title');
-                document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
-                document.getElementById('auth-btn').textContent = getTranslation('login_btn');
-                document.getElementById('toggle-link').textContent = getTranslation('toggle_register');
-                document.getElementById('reg-fields').classList.add('hidden');
-                document.getElementById('reg-pass-repeat').classList.add('hidden');
-                document.getElementById('auth-email').placeholder = 'EMAIL';
-                statusDiv.textContent = '';
-                showAuthForm();
-            }
-        });
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                await updateUI(user);
-            } else {
-                await updateUI(null);
-            }
-        });
-
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
+        console.log('🚀 Nemesis AI готов к работе!');
+        console.log('📌 Подписки: FREE, ELITE, AI+, AI MAX, NEMESIS');
     </script>
 </body>
 </html>
