@@ -475,43 +475,41 @@
             }
         }
 
-        // ===== ОТПРАВКА К ИИ (БЕЗ ПРОКСИ, ПРЯМОЙ ЗАПРОС) =====
-        async function getAIResponse(messages, subscription) {
-            const maxTokens = getMaxTokens(subscription);
+       // ===== ОТПРАВКА К ИИ (DeepSeek API) =====
+async function getAIResponse(messages, subscription) {
+    const maxTokens = getMaxTokens(subscription);
 
-            try {
-                // === ПРЯМОЙ ЗАПРОС К OPENROUTER ===
-                const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                        'HTTP-Referer': 'https://nemesisx.fun',
-                        'X-Title': 'Nemesis AI'
-                    },
-                    body: JSON.stringify({
-                        model: AI_MODEL,
-                        messages: messages,
-                        max_tokens: maxTokens,
-                        temperature: 0.7
-                    })
-                });
+    try {
+        // === ИСПОЛЬЗУЕМ ОФИЦИАЛЬНЫЙ API DEEPSEEK ===
+        const response = await fetch('https://api.deepseek.com/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer sk-5e36ea83ded949c9b5816a346c6e3606`
+            },
+            body: JSON.stringify({
+                model: 'deepseek-chat',  // или 'deepseek-coder' для кода
+                messages: messages,
+                max_tokens: maxTokens,
+                temperature: 0.7,
+                stream: false
+            })
+        });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error('API Error:', errorData);
-                    throw new Error(errorData.error?.message || 'Ошибка API: ' + response.status);
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content;
-
-            } catch (error) {
-                console.error('AI Error:', error);
-                throw error;
-            }
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('API Error:', errorData);
+            throw new Error(errorData.error?.message || 'Ошибка API: ' + response.status);
         }
 
+        const data = await response.json();
+        return data.choices[0].message.content;
+
+    } catch (error) {
+        console.error('AI Error:', error);
+        throw error;
+    }
+}
         // ===== АВТОРИЗАЦИЯ =====
         async function updateUI(user) {
             if (user) {
