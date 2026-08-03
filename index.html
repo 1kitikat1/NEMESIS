@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { min-height: 100vh; }
         body {
             background: #07070d;
             font-family: 'Inter', sans-serif;
@@ -50,36 +49,15 @@
             pointer-events: none;
             z-index: 0;
         }
-        .glow-1 {
-            width: 700px;
-            height: 700px;
-            background: rgba(108, 99, 255, 0.08);
-            top: -20%;
-            left: -15%;
-        }
-        .glow-2 {
-            width: 600px;
-            height: 600px;
-            background: rgba(255, 215, 0, 0.05);
-            bottom: -20%;
-            right: -15%;
-        }
-        .glow-3 {
-            width: 500px;
-            height: 500px;
-            background: rgba(108, 99, 255, 0.06);
-            top: 30%;
-            left: 55%;
-        }
+        .glow-1 { width: 700px; height: 700px; background: rgba(108, 99, 255, 0.08); top: -20%; left: -15%; }
+        .glow-2 { width: 600px; height: 600px; background: rgba(255, 215, 0, 0.05); bottom: -20%; right: -15%; }
+        .glow-3 { width: 500px; height: 500px; background: rgba(108, 99, 255, 0.06); top: 30%; left: 55%; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-in {
-            animation: fadeUp 0.7s ease forwards;
-            opacity: 0;
-        }
+        .animate-in { animation: fadeUp 0.7s ease forwards; opacity: 0; }
 
         header {
             width: 100%;
@@ -460,140 +438,28 @@
             transform: scale(1.03);
             box-shadow: 0 8px 32px rgba(108,99,255,0.15);
         }
+        .btn-buy {
+            background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(108,99,255,0.05));
+            color: #fff;
+            border: 1px solid rgba(108,99,255,0.15);
+        }
+        .btn-buy:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 32px rgba(108,99,255,0.15);
+        }
         .btn-nemesis {
             background: rgba(255,215,0,0.06);
             color: #ffd700;
             border: 1px solid rgba(255,215,0,0.08);
             cursor: default;
         }
-        .btn-elite-hidden { display: none !important; }
-
-        .auth-wrapper {
-            width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
+        .btn-active {
+            background: rgba(34,197,94,0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34,197,94,0.2);
+            cursor: default;
         }
-        .glass-card {
-            background: rgba(255,255,255,0.025);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 28px;
-            padding: 44px 36px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-            width: 100%;
-        }
-        .glass-card h2 {
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 4px;
-        }
-        .glass-card .sub {
-            text-align: center;
-            font-size: 11px;
-            color: #8888aa;
-            letter-spacing: 1.5px;
-            font-weight: 500;
-            margin-bottom: 28px;
-            text-transform: uppercase;
-        }
-        .input-group { margin-bottom: 14px; }
-        .input-group input {
-            width: 100%;
-            padding: 15px 18px;
-            background: rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .input-group input:focus {
-            border-color: #6c63ff;
-            box-shadow: 0 0 0 4px rgba(108,99,255,0.06);
-        }
-        .input-group input::placeholder { color: #555566; }
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(108,99,255,0.04));
-            border: 1px solid rgba(108,99,255,0.15);
-            border-radius: 60px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            margin-top: 8px;
-        }
-        .btn-submit:hover {
-            background: rgba(108,99,255,0.15);
-            box-shadow: 0 8px 32px rgba(108,99,255,0.08);
-        }
-        .toggle-mode {
-            text-align: center;
-            margin-top: 18px;
-            color: #8888aa;
-            font-size: 13px;
-        }
-        .toggle-mode span {
-            color: #6c63ff;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        #auth-status {
-            margin-top: 16px;
-            text-align: center;
-            font-size: 13px;
-            min-height: 22px;
-            color: #8888aa;
-        }
-
-        .btn-logout {
-            width: 100%;
-            padding: 13px;
-            background: rgba(255,0,55,0.05);
-            border: 1px solid rgba(255,0,55,0.08);
-            border-radius: 60px;
-            color: #ff4455;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 18px;
-            font-family: 'Inter', sans-serif;
-            text-align: center;
-        }
-        .btn-logout:hover {
-            background: rgba(255,0,55,0.10);
-            border-color: rgba(255,0,55,0.15);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(11,11,18,0.95);
-            color: #fff;
-            padding: 14px 36px;
-            border-radius: 60px;
-            border: 1px solid rgba(108,99,255,0.15);
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 9999;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            animation: fadeUp 0.3s ease;
-            text-align: center;
-            max-width: 90%;
-        }
-        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+        .btn-buy-hidden { display: none !important; }
 
         @media (max-width: 900px) {
             header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
@@ -604,7 +470,6 @@
             .section-title { font-size: 28px; }
             .pricing-grid { flex-direction: column; align-items: center; }
             .card { width: 100%; max-width: 340px; }
-            .auth-wrapper { max-width: 100%; }
             .logo { font-size: 17px; }
             .logo-icon { width: 34px; height: 34px; font-size: 17px; }
             .products-grid { flex-direction: column; align-items: center; }
@@ -666,12 +531,12 @@
 
             <h2 class="section-title animate-in delay-1"><span class="gradient">ПРОДУКТЫ</span></h2>
             <div class="products-grid animate-in delay-2">
-               <div class="product-card" onclick="location.href='/steam'">
-    <div class="icon">🖥️</div>
-    <h3>Nemesis Steam</h3>
-    <p>Лаунчер + оптимизация Steam. Повысь FPS до +40%.</p>
-    <span class="tag">FREE / ELITE</span>
-</div>
+                <div class="product-card" onclick="location.href='/steam'">
+                    <div class="icon">🖥️</div>
+                    <h3>Nemesis Steam</h3>
+                    <p>Лаунчер + оптимизация Steam. Повысь FPS до +40%.</p>
+                    <span class="tag">FREE / ELITE</span>
+                </div>
                 <div class="product-card" onclick="location.href='/ai'">
                     <div class="icon">🤖</div>
                     <h3>Nemesis AI</h3>
@@ -682,6 +547,7 @@
 
             <h2 class="section-title animate-in delay-2">ВЫБЕРИ <span class="gradient">ТАРИФ</span></h2>
             <div class="pricing-grid">
+                <!-- FREE -->
                 <div class="card free animate-in delay-3">
                     <div class="icon-big">🆓</div>
                     <h3>FREE</h3>
@@ -693,10 +559,11 @@
                         <li>ИИ (базовый)</li>
                         <li>Режим кода</li>
                     </ul>
-                    <div class="btn btn-gray">Текущий тариф</div>
+                    <div class="btn btn-gray" id="current-plan-free">Текущий тариф</div>
                 </div>
 
-                <div class="card elite animate-in delay-3">
+                <!-- ELITE (Steam) -->
+                <div class="card elite animate-in delay-3" id="card-elite">
                     <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
                     <div class="icon-big">⭐</div>
                     <h3>NEMESIS ELITE</h3>
@@ -707,12 +574,14 @@
                         <li>Всё из FREE</li>
                         <li>Приоритетная поддержка</li>
                     </ul>
-                    <a id="btn-buy-elite" href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
+                    <button class="btn btn-elite" id="btn-buy-elite" onclick="openPayment('elite')">
                         ⚡ КУПИТЬ ЗА 199 ₽
-                    </a>
+                    </button>
+                    <button class="btn btn-active hidden" id="btn-active-elite">✅ АКТИВЕН</button>
                 </div>
 
-                <div class="card elite animate-in delay-3">
+                <!-- AI+ -->
+                <div class="card elite animate-in delay-3" id="card-ai-plus">
                     <div class="icon-big">🧠</div>
                     <h3>AI+</h3>
                     <div class="price">99 ₽ <small>за 3 мес</small></div>
@@ -723,10 +592,14 @@
                         <li>Приоритет</li>
                         <li>Режим кода</li>
                     </ul>
-                    <a href="#" class="btn btn-elite" onclick="buyAI()">⚡ КУПИТЬ AI+</a>
+                    <button class="btn btn-buy" id="btn-buy-ai-plus" onclick="openPayment('ai_plus')">
+                        ⚡ КУПИТЬ AI+
+                    </button>
+                    <button class="btn btn-active hidden" id="btn-active-ai-plus">✅ АКТИВЕН</button>
                 </div>
 
-                <div class="card elite animate-in delay-4">
+                <!-- AI MAX -->
+                <div class="card elite animate-in delay-4" id="card-ai-max">
                     <div class="badge" style="background: linear-gradient(135deg, #ffd700, #ff8c00);">👑 ВСЁ ВКЛЮЧЕНО</div>
                     <div class="icon-big">🚀</div>
                     <h3>AI MAX</h3>
@@ -739,9 +612,13 @@
                         <li>Приоритет</li>
                         <li>Всё из ELITE и AI+</li>
                     </ul>
-                    <a href="#" class="btn btn-elite" onclick="buyAIMax()">⚡ КУПИТЬ AI MAX</a>
+                    <button class="btn btn-buy" id="btn-buy-ai-max" onclick="openPayment('ai_max')">
+                        ⚡ КУПИТЬ AI MAX
+                    </button>
+                    <button class="btn btn-active hidden" id="btn-active-ai-max">✅ АКТИВЕН</button>
                 </div>
 
+                <!-- NEMESIS (скрыт) -->
                 <div class="card nemesis hidden" id="card-nemesis">
                     <div class="icon-big">👑</div>
                     <h3>NEMESIS</h3>
@@ -771,8 +648,8 @@
 
     <script type="module">
         import { initializeApp } from "firebase/app";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get } from "firebase/database";
+        import { getAuth, onAuthStateChanged } from "firebase/auth";
+        import { getDatabase, ref, get } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -789,95 +666,95 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        let currentUser = null;
+        // ===== ОТКРЫТИЕ ОПЛАТЫ =====
+        window.openPayment = function(plan) {
+            const forms = {
+                'elite': {
+                    url: 'https://merchant.intellectmoney.ru/v2/ru/prepareForm/?EshopId=472851&ServiceName=Elite%20Nemesis&PaymentAmount=199&PaymentCurrency=RUB&PaymentAmountIsReadonly=true&SuccessUrl=https%3A%2F%2Fnemesisx.fun%2F&Hash=495ac98e687e1eb58763a7b7d8d95392'
+                },
+                'ai_plus': {
+                    url: 'https://merchant.intellectmoney.ru/v2/ru/prepareForm/?EshopId=472851&ServiceName=Ai%2B%20Nemesis&PaymentAmount=99&PaymentCurrency=RUB&PaymentAmountIsReadonly=true&SuccessUrl=https%3A%2F%2Fnemesisx.fun%2F&Hash=397377cf88f1f4a2a8fa4593b0d1bfad'
+                },
+                'ai_max': {
+                    url: 'https://merchant.intellectmoney.ru/v2/ru/prepareForm/?EshopId=472851&ServiceName=Ai%20MAX%20Nemesis&PaymentAmount=299&PaymentCurrency=RUB&PaymentAmountIsReadonly=true&SuccessUrl=https%3A%2F%2Fnemesisx.fun%2F&Hash=d2731402c3b2dfdcddb6ec2e1ab6a3a7'
+                }
+            };
 
-        const profileLabel = document.getElementById('profile-label');
-        const btnBuyElite = document.getElementById('btn-buy-elite');
+            const planData = forms[plan];
+            if (!planData) return;
 
-        window.buyAI = function() {
-            if (!currentUser) { showToast('Войдите в аккаунт'); return; }
-            window.open('https://www.donationalerts.com/r/nemesis_fps?amount=99', '_blank');
-        }
-        
-        window.buyAIMax = function() {
-            if (!currentUser) { showToast('Войдите в аккаунт'); return; }
-            window.open('https://www.donationalerts.com/r/nemesis_fps?amount=299', '_blank');
-        }
+            // Открываем в новом окне
+            window.open(planData.url, '_blank', 'width=600,height=700');
+        };
 
-        function updateProfileUI(username) {
-            if (username && username !== '—') {
-                profileLabel.textContent = username;
-            } else {
-                profileLabel.textContent = 'Войти';
+        // ===== УПРАВЛЕНИЕ КНОПКАМИ =====
+        function updateButtons(role) {
+            // Скрываем все кнопки покупки и показываем "Активен"
+            const buyBtns = {
+                elite: document.getElementById('btn-buy-elite'),
+                ai_plus: document.getElementById('btn-buy-ai-plus'),
+                ai_max: document.getElementById('btn-buy-ai-max')
+            };
+            const activeBtns = {
+                elite: document.getElementById('btn-active-elite'),
+                ai_plus: document.getElementById('btn-active-ai-plus'),
+                ai_max: document.getElementById('btn-active-ai-max')
+            };
+
+            // По умолчанию показываем кнопки покупки
+            Object.keys(buyBtns).forEach(key => {
+                buyBtns[key].classList.remove('hidden');
+                activeBtns[key].classList.add('hidden');
+            });
+
+            // В зависимости от роли скрываем купленные тарифы
+            if (role === 'elite' || role === 'ai_max' || role === 'nemesis') {
+                buyBtns.elite.classList.add('hidden');
+                activeBtns.elite.classList.remove('hidden');
+            }
+            if (role === 'ai_basic' || role === 'ai_max' || role === 'nemesis') {
+                buyBtns.ai_plus.classList.add('hidden');
+                activeBtns.ai_plus.classList.remove('hidden');
+            }
+            if (role === 'ai_max' || role === 'nemesis') {
+                buyBtns.ai_max.classList.add('hidden');
+                activeBtns.ai_max.classList.remove('hidden');
+            }
+
+            // Обновляем текст в карточках
+            if (role === 'elite' || role === 'ai_max' || role === 'nemesis') {
+                document.querySelector('#card-elite .price-sub').textContent = '✅ АКТИВЕН';
+            }
+            if (role === 'ai_basic' || role === 'ai_max' || role === 'nemesis') {
+                document.querySelector('#card-ai-plus .price-sub').textContent = '✅ АКТИВЕН';
+            }
+            if (role === 'ai_max' || role === 'nemesis') {
+                document.querySelector('#card-ai-max .price-sub').textContent = '✅ АКТИВЕН';
             }
         }
 
-        async function updateUI(user) {
+        // ===== ПРОФИЛЬ =====
+        const profileLabel = document.getElementById('profile-label');
+        
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 try {
                     const snapshot = await get(ref(db, `users/${user.uid}`));
-                    let data = snapshot.exists() ? snapshot.val() : {};
-
-                    if (!data.role) {
-                        const userData = {
-                            username: user.displayName || user.email.split('@')[0],
-                            email: user.email,
-                            role: 'free',
-                            createdAt: new Date().toISOString(),
-                            subscription: { free: { active: true } }
-                        };
-                        await set(ref(db, `users/${user.uid}`), userData);
-                        data = userData;
+                    const data = snapshot.val();
+                    if (data) {
+                        profileLabel.textContent = data.username || user.email;
+                        updateButtons(data.role || 'free');
                     }
-
-                    currentUser = user;
-                    const username = data.username || user.displayName || user.email.split('@')[0];
-                    localStorage.setItem('nemesis_user', username);
-                    localStorage.setItem('nemesis_email', data.email);
-                    localStorage.setItem('nemesis_role', data.role || 'free');
-                    localStorage.setItem('nemesis_logged', 'true');
-
-                    updateProfileUI(username);
-
-                    if (data.role === 'elite' || data.role === 'nemesis') {
-                        btnBuyElite.classList.add('btn-elite-hidden');
-                    } else {
-                        btnBuyElite.classList.remove('btn-elite-hidden');
-                    }
-
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
-                currentUser = null;
-                localStorage.removeItem('nemesis_user');
-                localStorage.removeItem('nemesis_email');
-                localStorage.removeItem('nemesis_role');
-                localStorage.removeItem('nemesis_logged');
-                btnBuyElite.classList.remove('btn-elite-hidden');
-                updateProfileUI(null);
-            }
-        }
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                await updateUI(user);
-            } else {
-                await updateUI(null);
+                profileLabel.textContent = 'Войти';
+                updateButtons('free');
             }
         });
 
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
+        // ===== ЗВЁЗДЫ =====
         function createStars() {
             const container = document.getElementById('stars');
             for (let i = 0; i < 120; i++) {
@@ -895,7 +772,7 @@
         createStars();
 
         console.log('🚀 NEMESIS :3 готов к работе!');
+        console.log('👑 Роли: free, elite, ai_basic, ai_max, nemesis');
     </script>
-
 </body>
 </html>
