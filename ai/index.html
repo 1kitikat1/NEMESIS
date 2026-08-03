@@ -544,7 +544,6 @@
 
                 } catch (error) {
                     console.error('Ошибка загрузки:', error);
-                    // ===== ИСПРАВЛЕНИЕ ОШИБКИ =====
                     if (error.code === 'auth/user-not-found') {
                         authStatus.textContent = '❌ Пользователь не найден. Зарегистрируйтесь!';
                         authStatus.style.color = '#ff4444';
