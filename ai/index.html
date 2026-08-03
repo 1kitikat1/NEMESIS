@@ -476,11 +476,13 @@
         }
 
 // ===== ОТПРАВКА К ИИ (ЧЕРЕЗ PHP-ПРОКСИ) =====
+// ===== ОТПРАВКА К ИИ (ЧЕРЕЗ ПРОКСИ) =====
 async function getAIResponse(messages, subscription) {
     const maxTokens = getMaxTokens(subscription);
 
     try {
-        const response = await fetch('/proxy.php', {
+        // === ИСПОЛЬЗУЕМ ПРОКСИ С ПОДДЕРЖКОЙ POST ===
+        const response = await fetch('https://api.allorigins.win/post?url=' + encodeURIComponent('https://openrouter.ai/api/v1/chat/completions'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -489,23 +491,25 @@ async function getAIResponse(messages, subscription) {
                 model: AI_MODEL,
                 messages: messages,
                 max_tokens: maxTokens,
-                temperature: 0.7
+                temperature: 0.7,
+                // Передаём заголовки в теле запроса
+                headers: {
+                    'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                    'HTTP-Referer': 'https://nemesisx.fun',
+                    'X-Title': 'Nemesis AI'
+                }
             })
         });
 
-        if (!response.ok) {
-            const errorData = await response.text();
-            console.error('API Error:', errorData);
-            throw new Error('Ошибка API: ' + response.status);
-        }
-
         const data = await response.json();
         
-        if (data.error) {
-            throw new Error(data.error.message || 'Ошибка API');
+        // allorigins.win возвращает ответ в data.contents
+        if (data.contents) {
+            const result = JSON.parse(data.contents);
+            return result.choices[0].message.content;
         }
         
-        return data.choices[0].message.content;
+        throw new Error('Не удалось получить ответ');
 
     } catch (error) {
         console.error('AI Error:', error);
