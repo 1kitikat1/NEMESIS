@@ -475,22 +475,15 @@
             }
         }
 
-      // ===== ОТПРАВКА К ИИ (ЧЕРЕЗ РАБОЧИЙ ПРОКСИ) =====
+// ===== ОТПРАВКА К ИИ (ЧЕРЕЗ PHP-ПРОКСИ) =====
 async function getAIResponse(messages, subscription) {
     const maxTokens = getMaxTokens(subscription);
 
     try {
-        // === ИСПОЛЬЗУЕМ corsproxy.io С ПРАВИЛЬНЫМ ФОРМАТОМ ===
-        const targetUrl = 'https://openrouter.ai/api/v1/chat/completions';
-        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
-        
-        const response = await fetch(proxyUrl, {
+        const response = await fetch('/proxy.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                'HTTP-Referer': 'https://nemesisx.fun',
-                'X-Title': 'Nemesis AI'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 model: AI_MODEL,
@@ -507,6 +500,11 @@ async function getAIResponse(messages, subscription) {
         }
 
         const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error.message || 'Ошибка API');
+        }
+        
         return data.choices[0].message.content;
 
     } catch (error) {
