@@ -172,6 +172,7 @@
             background: #6c63ff;
             border-radius: 2px;
         }
+
         .lang-switcher {
             display: flex;
             gap: 4px;
@@ -240,7 +241,6 @@
         }
         .hidden { display: none !important; }
 
-        /* ===== КОНТЕЙНЕР ===== */
         .container {
             width: 100%;
             max-width: 1280px;
@@ -252,7 +252,6 @@
             align-items: center;
         }
 
-        /* ===== ГЛАВНАЯ ===== */
         .hero {
             text-align: center;
             max-width: 740px;
@@ -276,7 +275,6 @@
             color: #8888aa;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 4px;
         }
         .hero .sub {
             color: #555566;
@@ -394,12 +392,12 @@
             text-transform: uppercase;
             box-shadow: 0 4px 20px rgba(108,99,255,0.25);
         }
-        .card .icon-big { font-size: 36px; margin-bottom: 6px; }
-        .card h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+        .card .icon-big { font-size: 36px; }
+        .card h3 { font-size: 22px; font-weight: 700; margin: 6px 0; }
         .card .price {
             font-size: 36px;
             font-weight: 800;
-            margin-bottom: 4px;
+            margin: 4px 0;
         }
         .card .price small {
             font-size: 14px;
@@ -462,7 +460,6 @@
         .btn-elite:hover {
             transform: scale(1.03);
             box-shadow: 0 8px 32px rgba(108,99,255,0.15);
-            border-color: rgba(108,99,255,0.3);
         }
         .btn-nemesis {
             background: rgba(255,215,0,0.06);
@@ -539,7 +536,6 @@
         .btn-submit:hover {
             background: rgba(108,99,255,0.15);
             box-shadow: 0 8px 32px rgba(108,99,255,0.08);
-            transform: scale(1.01);
         }
         .toggle-mode {
             text-align: center;
@@ -552,7 +548,6 @@
             cursor: pointer;
             font-weight: 600;
         }
-        .toggle-mode span:hover { text-shadow: 0 0 20px rgba(108,99,255,0.2); }
         #auth-status {
             margin-top: 16px;
             text-align: center;
@@ -623,168 +618,6 @@
         }
         .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 
-        /* ===== СТРАНИЦА AI ЧАТА ===== */
-        .ai-container {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .ai-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .ai-header h2 {
-            color: #fff;
-            font-size: 24px;
-        }
-        .ai-back-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-        .ai-back-btn:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .chat-list {
-            background: rgba(255,255,255,0.025);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .chat-list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .chat-list-header span {
-            color: #8888aa;
-            font-size: 13px;
-        }
-        .chat-list-header button {
-            background: rgba(108,99,255,0.2);
-            border: 1px solid rgba(108,99,255,0.3);
-            color: #fff;
-            padding: 4px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-family: 'Inter', sans-serif;
-        }
-        .chat-list-header button:hover {
-            background: rgba(108,99,255,0.3);
-        }
-
-        .chat-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-bottom: 4px;
-        }
-        .chat-item:hover {
-            background: rgba(108,99,255,0.05);
-        }
-        .chat-item .title {
-            color: #fff;
-            font-size: 13px;
-        }
-        .chat-item .count {
-            color: #555566;
-            font-size: 11px;
-        }
-        .chat-empty {
-            color: #555566;
-            text-align: center;
-            padding: 12px;
-        }
-
-        .chat-window {
-            background: rgba(255,255,255,0.025);
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-        }
-        .chat-messages .empty {
-            text-align: center;
-            color: #555566;
-            padding: 40px 0;
-        }
-        .message {
-            padding: 10px 16px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            max-width: 85%;
-            font-size: 14px;
-        }
-        .message.user {
-            background: rgba(108,99,255,0.15);
-            margin-left: auto;
-            color: #fff;
-        }
-        .message.assistant {
-            background: rgba(255,255,255,0.05);
-            color: #ccc;
-        }
-        .chat-input-area {
-            display: flex;
-            gap: 10px;
-            padding: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .chat-input-area input {
-            flex: 1;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-        .chat-input-area input::placeholder {
-            color: #555566;
-        }
-        .chat-input-area input:focus {
-            border-color: #6c63ff;
-        }
-        .chat-input-area button {
-            background: rgba(108,99,255,0.2);
-            border: 1px solid rgba(108,99,255,0.3);
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: 0.2s;
-        }
-        .chat-input-area button:hover {
-            background: rgba(108,99,255,0.3);
-        }
-
-        /* ===== АДАПТИВ ===== */
         @media (max-width: 900px) {
             header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
             nav { flex-wrap: wrap; justify-content: center; gap: 10px; }
@@ -799,8 +632,6 @@
             .logo-icon { width: 34px; height: 34px; font-size: 17px; }
             .products-grid { flex-direction: column; align-items: center; }
             .product-card { width: 100%; max-width: 340px; }
-            .ai-container { padding: 0 10px; }
-            .chat-window { height: 300px; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 28px; }
@@ -812,10 +643,7 @@
 </head>
 <body>
 
-    <!-- ЗВЁЗДЫ -->
     <div id="stars"></div>
-
-    <!-- ГЛОУ -->
     <div class="glow glow-1"></div>
     <div class="glow glow-2"></div>
     <div class="glow glow-3"></div>
@@ -832,9 +660,8 @@
 
         <div class="header-right">
             <nav>
-                <a class="active" id="nav-home" data-key="nav_home">ГЛАВНАЯ</a>
+                <a class="active" id="nav-home">ГЛАВНАЯ</a>
                 <a id="nav-login" data-key="nav_login">ВХОД</a>
-                <a class="hidden nav-user" id="nav-account" data-key="nav_account">АККАУНТ</a>
             </nav>
             <div class="lang-switcher">
                 <button class="lang-btn active" data-lang="ru">RU</button>
@@ -852,17 +679,13 @@
 
     <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="container">
-
-        <!-- ============================================ -->
-        <!-- ГЛАВНАЯ СТРАНИЦА -->
-        <!-- ============================================ -->
         <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
 
             <div class="hero animate-in">
                 <h1>NEMESIS <span class="gradient">AI</span> ⚡</h1>
-                <p data-key="hero_desc1">Экосистема продуктов для оптимизации, игр и искусственного интеллекта.</p>
-                <p data-key="hero_desc2">Nemesis Steam · Nemesis AI</p>
-                <p class="sub" data-key="hero_sub">🚀 Всё в одном месте</p>
+                <p>Экосистема продуктов для оптимизации, игр и искусственного интеллекта.</p>
+                <p>Nemesis Steam · Nemesis AI</p>
+                <p class="sub">🚀 Всё в одном месте</p>
             </div>
 
             <h2 class="section-title animate-in delay-1"><span class="gradient">ПРОДУКТЫ</span></h2>
@@ -873,43 +696,43 @@
                     <p>Лаунчер + оптимизация Steam. Повысь FPS до +40%.</p>
                     <span class="tag">FREE / ELITE</span>
                 </div>
-               <div class="product-card" onclick="location.href='/ai'">
-    <div class="icon">🤖</div>
-    <h3>Nemesis AI</h3>
-    <p>ИИ-помощник для любых задач: чат, код, советы.</p>
-    <span class="tag premium">AI+ / AI MAX</span>
-</div>
+                <div class="product-card" onclick="location.href='/ai'">
+                    <div class="icon">🤖</div>
+                    <h3>Nemesis AI</h3>
+                    <p>ИИ-помощник для любых задач: чат, код, советы.</p>
+                    <span class="tag premium">AI+ / AI MAX</span>
+                </div>
             </div>
 
-            <h2 class="section-title animate-in delay-2"><span data-key="pricing_title">ВЫБЕРИ</span> <span class="gradient" data-key="pricing_highlight">ТАРИФ</span></h2>
+            <h2 class="section-title animate-in delay-2">ВЫБЕРИ <span class="gradient">ТАРИФ</span></h2>
             <div class="pricing-grid">
                 <div class="card free animate-in delay-3">
                     <div class="icon-big">🆓</div>
-                    <h3 data-key="plan_free">FREE</h3>
+                    <h3>FREE</h3>
                     <div class="price">0 ₽</div>
                     <ul>
-                        <li data-key="free_opt1">Steam (база)</li>
-                        <li data-key="free_opt2">Прицел</li>
-                        <li data-key="free_opt3">Утилиты</li>
-                        <li data-key="free_opt4">ИИ (базовый)</li>
-                        <li data-key="free_opt5">Режим кода</li>
+                        <li>Steam (база)</li>
+                        <li>Прицел</li>
+                        <li>Утилиты</li>
+                        <li>ИИ (базовый)</li>
+                        <li>Режим кода</li>
                     </ul>
-                    <div class="btn btn-gray" data-key="current_plan">Текущий тариф</div>
+                    <div class="btn btn-gray">Текущий тариф</div>
                 </div>
 
                 <div class="card elite animate-in delay-3">
-                    <div class="badge" data-key="badge_popular">🔥 ПОПУЛЯРНЫЙ</div>
+                    <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
                     <div class="icon-big">⭐</div>
-                    <h3 data-key="plan_elite">NEMESIS ELITE</h3>
+                    <h3>NEMESIS ELITE</h3>
                     <div class="price">199 ₽</div>
-                    <div class="price-sub" data-key="one_time">Для Steam</div>
+                    <div class="price-sub">Для Steam</div>
                     <ul>
-                        <li data-key="elite_opt1">Steam (полная)</li>
-                        <li data-key="elite_opt2">Всё из FREE</li>
-                        <li data-key="elite_opt3">Приоритетная поддержка</li>
+                        <li>Steam (полная)</li>
+                        <li>Всё из FREE</li>
+                        <li>Приоритетная поддержка</li>
                     </ul>
                     <a id="btn-buy-elite" href="https://www.donationalerts.com/r/nemesis_fps?amount=199" target="_blank" class="btn btn-elite">
-                        ⚡ <span data-key="buy_elite">КУПИТЬ ЗА 199 ₽</span>
+                        ⚡ КУПИТЬ ЗА 199 ₽
                     </a>
                 </div>
 
@@ -946,7 +769,7 @@
                 <div class="card nemesis hidden" id="card-nemesis">
                     <div class="icon-big">👑</div>
                     <h3>NEMESIS</h3>
-                    <div class="price" data-key="exclusive">Эксклюзив</div>
+                    <div class="price">Эксклюзив</div>
                     <ul>
                         <li>Всё, что есть в AI MAX</li>
                         <li>Эксклюзивный доступ</li>
@@ -960,35 +783,35 @@
             <div class="auth-wrapper">
                 <div class="glass-card hidden animate-in" id="auth-card">
                     <div id="auth-form-container">
-                        <h2 id="form-title" data-key="login_title">ВХОД</h2>
-                        <div class="sub" id="form-subtitle" data-key="login_sub">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+                        <h2 id="form-title">ВХОД</h2>
+                        <div class="sub" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
                         <form id="auth-form" onsubmit="handleAuth(event)">
                             <div id="reg-fields" class="hidden">
                                 <div class="input-group">
-                                    <input type="text" id="reg-username" data-key="username_placeholder" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
+                                    <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="input-group">
                                 <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
                             </div>
                             <div class="input-group">
-                                <input type="password" id="auth-pass" data-key="password_placeholder" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
+                                <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
                             </div>
                             <div id="reg-pass-repeat" class="input-group hidden">
-                                <input type="password" id="auth-pass-repeat" data-key="repeat_password" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
+                                <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
                             </div>
-                            <button type="submit" class="btn-submit" id="auth-btn" data-key="login_btn">ВОЙТИ</button>
+                            <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
                         </form>
                         <div class="toggle-mode">
-                            <span id="toggle-link" data-key="toggle_register">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+                            <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
                         </div>
                         <div id="auth-status"></div>
                     </div>
                     <div class="account-info hidden" id="account-info">
-                        <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;" data-key="account_title">👤 АККАУНТ</h2>
-                        <div class="sub" style="text-align:center; margin-bottom:24px;" data-key="account_sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
+                        <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;">👤 АККАУНТ</h2>
+                        <div class="sub" style="text-align:center; margin-bottom:24px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
                         <div class="info-row">
-                            <span class="label" data-key="acc_username">Имя пользователя</span>
+                            <span class="label">Имя пользователя</span>
                             <span class="value highlight" id="acc-username">—</span>
                         </div>
                         <div class="info-row">
@@ -996,59 +819,23 @@
                             <span class="value" id="acc-email">—</span>
                         </div>
                         <div class="info-row">
-                            <span class="label" data-key="acc_role">Роль</span>
+                            <span class="label">Роль</span>
                             <span class="value" id="acc-role">—</span>
                         </div>
                         <div class="info-row">
-                            <span class="label" data-key="acc_date">Дата регистрации</span>
+                            <span class="label">Дата регистрации</span>
                             <span class="value" id="acc-date">—</span>
                         </div>
                         <div class="info-row">
-                            <span class="label" data-key="acc_status_label">Статус</span>
-                            <span class="value" style="color:#6c63ff;" id="acc-status" data-key="acc_status_active">Активен</span>
+                            <span class="label">Статус</span>
+                            <span class="value" style="color:#6c63ff;" id="acc-status">Активен</span>
                         </div>
-                        <button class="btn-logout" id="btn-logout" data-key="logout_btn">ВЫЙТИ</button>
+                        <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
                     </div>
                 </div>
             </div>
+
         </div>
-
-        <!-- ============================================ -->
-        <!-- СТРАНИЦА AI ЧАТА (ОТДЕЛЬНО) -->
-        <!-- ============================================ -->
-        <div id="page-ai" style="display:none; width:100%; flex-direction:column; align-items:center;">
-            <div class="ai-container">
-
-                <div class="ai-header">
-                    <h2>🤖 NEMESIS AI</h2>
-                    <button class="ai-back-btn" onclick="showPage('home')">← На главную</button>
-                </div>
-
-                <!-- Список чатов -->
-                <div class="chat-list">
-                    <div class="chat-list-header">
-                        <span>📋 Мои чаты</span>
-                        <button onclick="createNewChat()">+ Новый</button>
-                    </div>
-                    <div id="chat-list-items">
-                        <div class="chat-empty">Нет чатов. Создайте новый!</div>
-                    </div>
-                </div>
-
-                <!-- Окно чата -->
-                <div class="chat-window">
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="empty">Начните новый чат или выберите существующий</div>
-                    </div>
-                    <div class="chat-input-area">
-                        <input id="chat-input" type="text" placeholder="Напиши сообщение..." onkeydown="if(event.key==='Enter') sendMessage()">
-                        <button onclick="sendMessage()">📤</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
     </div>
 
     <!-- FIREBASE -->
@@ -1065,7 +852,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get, push, update } from "firebase/database";
+        import { getDatabase, ref, set, get } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -1082,35 +869,20 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // ===== ПЕРЕМЕННЫЕ =====
         let currentUser = null;
-        let currentChatId = null;
         let isLoginMode = true;
 
-        // ===== DOM =====
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
         const accountInfo = document.getElementById('account-info');
         const authCard = document.getElementById('auth-card');
-        const pageHome = document.getElementById('page-home');
-        const pageAI = document.getElementById('page-ai');
-        const navHome = document.getElementById('nav-home');
-        const navLogin = document.getElementById('nav-login');
-        const navAccount = document.getElementById('nav-account');
-        const profileBtn = document.getElementById('profile-btn');
         const btnBuyElite = document.getElementById('btn-buy-elite');
+        const profileBtn = document.getElementById('profile-btn');
+        const navLogin = document.getElementById('nav-login');
         const logoHome = document.getElementById('logo-home');
 
-        // ===== ПОКАЗ СТРАНИЦ =====
         window.showPage = function(page) {
-            pageHome.style.display = (page === 'home') ? 'flex' : 'none';
-            pageAI.style.display = (page === 'ai') ? 'flex' : 'none';
             authCard.classList.toggle('hidden', page !== 'auth' && page !== 'account');
-            
-            navHome.classList.toggle('active', page === 'home');
-            navLogin.classList.toggle('active', page === 'auth');
-            navAccount.classList.toggle('active', page === 'account');
-
             if (page === 'account') {
                 authFormContainer.style.display = 'none';
                 accountInfo.classList.remove('hidden');
@@ -1118,46 +890,28 @@
                 authFormContainer.style.display = 'block';
                 accountInfo.classList.add('hidden');
             }
-            
-            if (page === 'ai' && currentUser) {
-                loadUserChats();
-            }
         }
 
-        // ===== ЛОГОТИП НА ГЛАВНУЮ =====
-        logoHome.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('home');
-        });
-
-        // ===== ПОКУПКА =====
         window.buyAI = function() {
-            if (!currentUser) {
-                showToast('Войдите в аккаунт');
-                return;
-            }
+            if (!currentUser) { showToast('Войдите в аккаунт'); return; }
             window.open('https://www.donationalerts.com/r/nemesis_fps?amount=99', '_blank');
         }
         
         window.buyAIMax = function() {
-            if (!currentUser) {
-                showToast('Войдите в аккаунт');
-                return;
-            }
+            if (!currentUser) { showToast('Войдите в аккаунт'); return; }
             window.open('https://www.donationalerts.com/r/nemesis_fps?amount=299', '_blank');
         }
 
-        // ===== АВТОРИЗАЦИЯ =====
         function showAuthForm() {
             authFormContainer.style.display = 'block';
             accountInfo.classList.add('hidden');
-            showPage('auth');
+            window.showPage('auth');
         }
 
         function showAccount(userData) {
             authFormContainer.style.display = 'none';
             accountInfo.classList.remove('hidden');
-            showPage('account');
+            window.showPage('account');
 
             document.getElementById('acc-username').textContent = userData.username || '—';
             document.getElementById('acc-email').textContent = userData.email || '—';
@@ -1207,15 +961,13 @@
                             email: user.email,
                             role: 'free',
                             createdAt: new Date().toISOString(),
-                            subscription: { free: { active: true } },
-                            ai_chats: {}
+                            subscription: { free: { active: true } }
                         };
                         await set(ref(db, `users/${user.uid}`), userData);
                         data = userData;
                     }
 
                     currentUser = user;
-                    
                     const userData = {
                         username: data.username || user.displayName || user.email.split('@')[0],
                         email: user.email,
@@ -1224,8 +976,8 @@
                     };
 
                     showAccount(userData);
-                    navLogin.classList.add('hidden');
-                    navAccount.classList.remove('hidden');
+                    navLogin.textContent = userData.username;
+                    navLogin.onclick = () => showAccount(userData);
                     localStorage.setItem('nemesis_user', userData.username);
                     localStorage.setItem('nemesis_email', userData.email);
                     localStorage.setItem('nemesis_role', userData.role);
@@ -1235,9 +987,7 @@
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
-                showPage('home');
-                navLogin.classList.remove('hidden');
-                navAccount.classList.add('hidden');
+                authCard.classList.add('hidden');
                 localStorage.removeItem('nemesis_user');
                 localStorage.removeItem('nemesis_email');
                 localStorage.removeItem('nemesis_role');
@@ -1245,151 +995,13 @@
                 btnBuyElite.classList.remove('btn-elite-hidden');
                 updateProfileBtn(null);
                 currentUser = null;
-                currentChatId = null;
+                navLogin.textContent = 'ВХОД';
+                navLogin.onclick = () => showAuthForm();
             }
         }
 
-        // ===== AI ЧАТ =====
-        async function loadUserChats() {
-            if (!currentUser) return;
-            
-            try {
-                const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats`));
-                const data = snapshot.val();
-                const container = document.getElementById('chat-list-items');
-                container.innerHTML = '';
-                
-                if (!data || Object.keys(data).length === 0) {
-                    container.innerHTML = '<div class="chat-empty">Нет чатов. Создайте новый!</div>';
-                    return;
-                }
-                
-                const chatIds = Object.keys(data).sort((a, b) => data[b].updated_at?.localeCompare(data[a].updated_at) || 0);
-                
-                chatIds.forEach(id => {
-                    const chat = data[id];
-                    const div = document.createElement('div');
-                    div.className = 'chat-item';
-                    div.innerHTML = `
-                        <span class="title">${chat.title || 'Новый чат'}</span>
-                        <span class="count">${chat.messages ? Object.keys(chat.messages).length : 0} сообщ.</span>
-                    `;
-                    div.onclick = () => openChat(id);
-                    container.appendChild(div);
-                });
-                
-            } catch (error) {
-                console.error('Ошибка загрузки чатов:', error);
-            }
-        }
-
-        async function openChat(chatId) {
-            if (!currentUser) return;
-            currentChatId = chatId;
-            
-            try {
-                const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats/${chatId}`));
-                const data = snapshot.val();
-                if (!data) return;
-                
-                const container = document.getElementById('chat-messages');
-                container.innerHTML = '';
-                
-                if (data.messages) {
-                    const msgIds = Object.keys(data.messages).sort((a, b) => data.messages[a].timestamp - data.messages[b].timestamp);
-                    msgIds.forEach(id => {
-                        const msg = data.messages[id];
-                        const div = document.createElement('div');
-                        div.className = `message ${msg.role}`;
-                        div.textContent = msg.content;
-                        container.appendChild(div);
-                    });
-                } else {
-                    container.innerHTML = '<div class="empty">Нет сообщений. Напишите что-нибудь!</div>';
-                }
-                
-                container.scrollTop = container.scrollHeight;
-                
-                document.querySelectorAll('.chat-item').forEach(el => {
-                    el.style.background = 'transparent';
-                });
-                const items = document.querySelectorAll('.chat-item');
-                const index = Array.from(items).findIndex(el => el.onclick && el.onclick.toString().includes(chatId));
-                if (index !== -1 && items[index]) {
-                    items[index].style.background = 'rgba(108,99,255,0.1)';
-                }
-                
-            } catch (error) {
-                console.error('Ошибка открытия чата:', error);
-            }
-        }
-
-        window.createNewChat = async function() {
-            if (!currentUser) {
-                showToast('Войдите в аккаунт');
-                return;
-            }
-            
-            try {
-                const chatId = `chat_${Date.now()}`;
-                await set(ref(db, `users/${currentUser.uid}/ai_chats/${chatId}`), {
-                    title: 'Новый чат',
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
-                    messages: {}
-                });
-                await loadUserChats();
-                await openChat(chatId);
-                showToast('Новый чат создан');
-            } catch (error) {
-                console.error('Ошибка создания чата:', error);
-                showToast('Ошибка создания чата');
-            }
-        }
-
-        window.sendMessage = async function() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            if (!text || !currentUser || !currentChatId) {
-                if (!currentUser) showToast('Войдите в аккаунт');
-                return;
-            }
-            input.value = '';
-            
-            try {
-                const msgRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                await set(msgRef, {
-                    role: 'user',
-                    content: text,
-                    timestamp: Date.now()
-                });
-                
-                await update(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}`), {
-                    updated_at: new Date().toISOString()
-                });
-                
-                const response = `Я получил ваше сообщение: "${text}". Интеграция с ИИ будет добавлена позже.`;
-                
-                const responseRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                await set(responseRef, {
-                    role: 'assistant',
-                    content: response,
-                    timestamp: Date.now()
-                });
-                
-                await openChat(currentChatId);
-                await loadUserChats();
-                
-            } catch (error) {
-                console.error('Ошибка отправки:', error);
-                showToast('Ошибка отправки сообщения');
-            }
-        }
-
-        // ===== ОБРАБОТЧИКИ =====
         window.handleAuth = async function(event) {
             event.preventDefault();
-
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-pass').value;
 
@@ -1407,7 +1019,7 @@
                     const passwordRepeat = document.getElementById('auth-pass-repeat').value;
 
                     if (!username || username.length < 3) {
-                        statusDiv.textContent = '❌ Имя пользователя не менее 3 символов!';
+                        statusDiv.textContent = '❌ Имя не менее 3 символов!';
                         statusDiv.style.color = '#ff4444';
                         return;
                     }
@@ -1424,7 +1036,6 @@
 
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
-
                     await updateProfile(user, { displayName: username });
 
                     await set(ref(db, `users/${user.uid}`), {
@@ -1432,8 +1043,7 @@
                         email: email,
                         role: "free",
                         createdAt: new Date().toISOString(),
-                        subscription: { free: { active: true } },
-                        ai_chats: {}
+                        subscription: { free: { active: true } }
                     });
 
                     await updateUI(user);
@@ -1459,7 +1069,6 @@
 
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
-
             const title = document.getElementById('form-title');
             const subtitle = document.getElementById('form-subtitle');
             const btn = document.getElementById('auth-btn');
@@ -1485,7 +1094,6 @@
                 regPassRepeat.classList.remove('hidden');
                 emailField.placeholder = 'EMAIL (для входа)';
             }
-
             statusDiv.textContent = '';
             statusDiv.style.color = '#8888aa';
         });
@@ -1495,15 +1103,12 @@
                 await signOut(auth);
                 await updateUI(null);
                 showToast('Вы вышли из аккаунта!');
-                showPage('home');
+                authCard.classList.add('hidden');
             } catch (error) {
                 console.error('Ошибка выхода:', error);
             }
         });
 
-        // ===== НАВИГАЦИЯ =====
-        navHome.addEventListener('click', () => showPage('home'));
-        
         navLogin.addEventListener('click', () => {
             if (currentUser) {
                 const userData = {
@@ -1525,21 +1130,6 @@
                 statusDiv.textContent = '';
                 showAuthForm();
             }
-        });
-        
-        navAccount.addEventListener('click', () => {
-            if (!currentUser) {
-                showToast('Войдите в аккаунт');
-                showAuthForm();
-                return;
-            }
-            const userData = {
-                username: localStorage.getItem('nemesis_user') || '—',
-                email: localStorage.getItem('nemesis_email') || '—',
-                role: localStorage.getItem('nemesis_role') || 'free',
-                createdAt: null
-            };
-            showAccount(userData);
         });
 
         profileBtn.addEventListener('click', (e) => {
@@ -1566,18 +1156,19 @@
             }
         });
 
-        // ===== СОСТОЯНИЕ АВТОРИЗАЦИИ =====
+        logoHome.addEventListener('click', (e) => {
+            e.preventDefault();
+            authCard.classList.add('hidden');
+        });
+
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 await updateUI(user);
-                showPage('home');
             } else {
                 await updateUI(null);
-                showPage('home');
             }
         });
 
-        // ===== TOAST =====
         function showToast(message) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -1589,7 +1180,6 @@
             }, 3000);
         }
 
-        // ===== ЗВЁЗДЫ =====
         function createStars() {
             const container = document.getElementById('stars');
             for (let i = 0; i < 120; i++) {
@@ -1608,116 +1198,8 @@
 
         // ===== ПЕРЕВОД =====
         const translations = {
-            ru: {
-                nav_home: 'ГЛАВНАЯ',
-                nav_login: 'ВХОД',
-                nav_account: 'АККАУНТ',
-                profile_login: 'Войти',
-                hero_desc1: 'Экосистема продуктов для оптимизации, игр и искусственного интеллекта.',
-                hero_desc2: 'Nemesis Steam · Nemesis AI',
-                hero_sub: '🚀 Всё в одном месте',
-                pricing_title: 'ВЫБЕРИ',
-                pricing_highlight: 'ТАРИФ',
-                plan_free: 'FREE',
-                free_opt1: 'Steam (база)',
-                free_opt2: 'Прицел',
-                free_opt3: 'Утилиты',
-                free_opt4: 'ИИ (базовый)',
-                free_opt5: 'Режим кода',
-                current_plan: 'Текущий тариф',
-                badge_popular: '🔥 ПОПУЛЯРНЫЙ',
-                plan_elite: 'NEMESIS ELITE',
-                one_time: 'Для Steam',
-                elite_opt1: 'Steam (полная)',
-                elite_opt2: 'Всё из FREE',
-                elite_opt3: 'Приоритетная поддержка',
-                buy_elite: 'КУПИТЬ ЗА 199 ₽',
-                login_title: 'ВХОД',
-                login_sub: 'ВОЙДИТЕ В СВОЙ АККАУНТ',
-                username_placeholder: 'ИМЯ ПОЛЬЗОВАТЕЛЯ',
-                password_placeholder: 'ПАРОЛЬ',
-                repeat_password: 'ПОВТОРИТЕ ПАРОЛЬ',
-                login_btn: 'ВОЙТИ',
-                toggle_register: 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ',
-                toggle_login: 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ',
-                account_title: '👤 АККАУНТ',
-                account_sub: 'ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ',
-                acc_username: 'Имя пользователя',
-                acc_role: 'Роль',
-                acc_date: 'Дата регистрации',
-                acc_status_label: 'Статус',
-                acc_status_active: 'Активен',
-                logout_btn: 'ВЫЙТИ',
-                register_title: 'РЕГИСТРАЦИЯ',
-                register_sub: 'СОЗДАЙТЕ НОВЫЙ АККАУНТ',
-                register_btn: 'ЗАРЕГИСТРИРОВАТЬСЯ',
-                auth_processing: '⏳ Обработка...',
-                auth_error_username: '❌ Имя пользователя не менее 3 символов!',
-                auth_error_password: '❌ Пароль не менее 6 символов!',
-                auth_error_match: '❌ Пароли не совпадают!',
-                auth_error_email: '❌ Email уже используется.',
-                auth_error_invalid: '❌ Некорректный email.',
-                auth_error_notfound: '❌ Пользователь не найден.',
-                auth_error_wrongpass: '❌ Неверный пароль.',
-                auth_error_weak: '❌ Слабый пароль (мин. 6 символов).',
-                auth_default_error: '❌ Ошибка! ',
-                logout_success: 'Вы вышли из аккаунта!'
-            },
-            en: {
-                nav_home: 'HOME',
-                nav_login: 'LOGIN',
-                nav_account: 'ACCOUNT',
-                profile_login: 'Login',
-                hero_desc1: 'Ecosystem of products for optimization, games and artificial intelligence.',
-                hero_desc2: 'Nemesis Steam · Nemesis AI',
-                hero_sub: '🚀 Everything in one place',
-                pricing_title: 'CHOOSE',
-                pricing_highlight: 'PLAN',
-                plan_free: 'FREE',
-                free_opt1: 'Steam (basic)',
-                free_opt2: 'Crosshair',
-                free_opt3: 'Utilities',
-                free_opt4: 'AI (basic)',
-                free_opt5: 'Code mode',
-                current_plan: 'Current plan',
-                badge_popular: '🔥 POPULAR',
-                plan_elite: 'NEMESIS ELITE',
-                one_time: 'For Steam',
-                elite_opt1: 'Steam (full)',
-                elite_opt2: 'Everything from FREE',
-                elite_opt3: 'Priority support',
-                buy_elite: 'BUY FOR 199 ₽',
-                login_title: 'LOGIN',
-                login_sub: 'LOGIN TO YOUR ACCOUNT',
-                username_placeholder: 'USERNAME',
-                password_placeholder: 'PASSWORD',
-                repeat_password: 'REPEAT PASSWORD',
-                login_btn: 'LOGIN',
-                toggle_register: "DON'T HAVE AN ACCOUNT? REGISTER",
-                toggle_login: 'ALREADY HAVE AN ACCOUNT? LOGIN',
-                account_title: '👤 ACCOUNT',
-                account_sub: 'USER INFORMATION',
-                acc_username: 'Username',
-                acc_role: 'Role',
-                acc_date: 'Registration date',
-                acc_status_label: 'Status',
-                acc_status_active: 'Active',
-                logout_btn: 'LOGOUT',
-                register_title: 'REGISTER',
-                register_sub: 'CREATE A NEW ACCOUNT',
-                register_btn: 'REGISTER',
-                auth_processing: '⏳ Processing...',
-                auth_error_username: '❌ Username must be at least 3 characters!',
-                auth_error_password: '❌ Password must be at least 6 characters!',
-                auth_error_match: '❌ Passwords do not match!',
-                auth_error_email: '❌ Email already in use.',
-                auth_error_invalid: '❌ Invalid email.',
-                auth_error_notfound: '❌ User not found.',
-                auth_error_wrongpass: '❌ Wrong password.',
-                auth_error_weak: '❌ Weak password (min 6 characters).',
-                auth_default_error: '❌ Error! ',
-                logout_success: 'You have been logged out!'
-            }
+            ru: { nav_home: 'ГЛАВНАЯ', nav_login: 'ВХОД', profile_login: 'Войти' },
+            en: { nav_home: 'HOME', nav_login: 'LOGIN', profile_login: 'Login' }
         };
 
         let currentLang = localStorage.getItem('nemesis_lang') || 'ru';
@@ -1729,7 +1211,6 @@
         function updateLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('nemesis_lang', lang);
-
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 const translation = getTranslation(key);
@@ -1741,20 +1222,9 @@
                     }
                 }
             });
-
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
-
-            if (isLoginMode) {
-                document.getElementById('form-title').textContent = getTranslation('login_title');
-                document.getElementById('form-subtitle').textContent = getTranslation('login_sub');
-                document.getElementById('auth-btn').textContent = getTranslation('login_btn');
-            } else {
-                document.getElementById('form-title').textContent = getTranslation('register_title');
-                document.getElementById('form-subtitle').textContent = getTranslation('register_sub');
-                document.getElementById('auth-btn').textContent = getTranslation('register_btn');
-            }
         }
 
         document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -1766,7 +1236,6 @@
         updateLanguage(currentLang);
 
         console.log('🚀 NEMESIS ⚡ готов к работе!');
-        console.log('📌 Подписки: FREE, ELITE, AI+, AI MAX, NEMESIS');
     </script>
 
 </body>
