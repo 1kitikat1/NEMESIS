@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#07070d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
+        /* ===== ОСНОВНЫЕ СТИЛИ ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #07070d;
@@ -121,6 +122,7 @@
             text-transform: uppercase;
         }
 
+        /* ===== ФОРМА ВХОДА ===== */
         .input-group { margin-bottom: 14px; }
         .input-group input {
             width: 100%;
@@ -178,6 +180,9 @@
             color: #8888aa;
         }
 
+        .hidden { display: none !important; }
+
+        /* ===== ИНФОРМАЦИЯ ОБ АККАУНТЕ ===== */
         .info-row {
             display: flex;
             justify-content: space-between;
@@ -221,7 +226,56 @@
             border-color: rgba(255,0,55,0.15);
         }
 
-        .hidden { display: none !important; }
+        /* ===== АКТИВАЦИЯ КЛЮЧА ===== */
+        .key-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .key-section h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        .key-input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .key-input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .key-input-group input:focus {
+            border-color: #6c63ff;
+        }
+        .key-input-group button {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .key-input-group button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(108,99,255,0.2);
+        }
+        .key-status {
+            margin-top: 12px;
+            font-size: 13px;
+            min-height: 20px;
+            color: #8888aa;
+        }
 
         .toast {
             position: fixed;
@@ -243,6 +297,12 @@
             max-width: 90%;
         }
         .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+
+        @media (max-width: 600px) {
+            .header .logo { font-size: 17px; }
+            .card { padding: 30px 20px; }
+            .key-input-group { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -250,6 +310,7 @@
     <div id="stars"></div>
 
     <div class="container">
+        <!-- ХЕДЕР -->
         <div class="header">
             <a href="/" class="logo">
                 <div class="icon">N</div>
@@ -311,6 +372,16 @@
                     <span class="value" style="color:#6c63ff;" id="acc-status">Активен</span>
                 </div>
                 <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
+
+                <!-- АКТИВАЦИЯ КЛЮЧА -->
+                <div class="key-section">
+                    <h3>🎁 Активировать ключ</h3>
+                    <div class="key-input-group">
+                        <input type="text" id="key-input" placeholder="Введите ключ..." autocomplete="off">
+                        <button onclick="activateKeyFromAccount()">Активировать</button>
+                    </div>
+                    <div class="key-status" id="key-status"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -329,7 +400,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get } from "firebase/database";
+        import { getDatabase, ref, set, get, update } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -347,6 +418,7 @@
         const db = getDatabase(app);
 
         let isLoginMode = true;
+        let currentUser = null;
 
         const statusDiv = document.getElementById('auth-status');
         const authFormContainer = document.getElementById('auth-form-container');
@@ -356,9 +428,119 @@
         const accRole = document.getElementById('acc-role');
         const accDate = document.getElementById('acc-date');
 
+        // ===== ТОСТ =====
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // ===== АКТИВАЦИЯ КЛЮЧА =====
+        window.activateKeyFromAccount = function() {
+            const input = document.getElementById('key-input');
+            const key = input.value.trim().toUpperCase();
+            const status = document.getElementById('key-status');
+            
+            if (!key) {
+                status.textContent = '❌ Введите ключ';
+                status.style.color = '#ff4444';
+                return;
+            }
+            
+            if (!currentUser) {
+                status.textContent = '❌ Войдите в аккаунт!';
+                status.style.color = '#ff4444';
+                return;
+            }
+            
+            activateKey(key);
+            input.value = '';
+        };
+
+        async function activateKey(key) {
+            const status = document.getElementById('key-status');
+            status.textContent = '⏳ Проверка ключа...';
+            status.style.color = '#8888aa';
+            
+            try {
+                const keyRef = ref(db, `keys/${key}`);
+                const snapshot = await get(keyRef);
+                
+                if (!snapshot.exists()) {
+                    status.textContent = '❌ Неверный ключ';
+                    status.style.color = '#ff4444';
+                    return;
+                }
+                
+                const keyData = snapshot.val();
+                
+                if (keyData.used) {
+                    status.textContent = '❌ Ключ уже использован';
+                    status.style.color = '#ff4444';
+                    return;
+                }
+                
+                const userSnapshot = await get(ref(db, `users/${currentUser.uid}`));
+                const userData = userSnapshot.val();
+                const currentRole = userData.role || 'free';
+                
+                let newRole = currentRole;
+                const plan = keyData.plan;
+                
+                if (plan === 'elite' && currentRole === 'ai_basic') {
+                    newRole = 'ai_max';
+                } else if (plan === 'ai_basic' && currentRole === 'elite') {
+                    newRole = 'ai_max';
+                } else if (plan === 'ai_max') {
+                    newRole = 'ai_max';
+                } else {
+                    newRole = plan;
+                }
+                
+                await update(ref(db, `users/${currentUser.uid}`), {
+                    role: newRole
+                });
+                
+                await update(ref(db, `keys/${key}`), {
+                    used: true,
+                    usedBy: currentUser.uid,
+                    usedAt: new Date().toISOString()
+                });
+                
+                const roleLabels = {
+                    'free': '🆓 FREE',
+                    'elite': '⚡ ELITE',
+                    'ai_basic': '🧠 AI+',
+                    'ai_max': '🚀 AI MAX',
+                    'nemesis': '👑 NEMESIS'
+                };
+                
+                status.textContent = `🎉 Подписка активирована! ${roleLabels[newRole] || newRole.toUpperCase()}`;
+                status.style.color = '#22c55e';
+                
+                // Обновляем отображение роли
+                const roleDisplay = roleLabels[newRole] || newRole.toUpperCase();
+                accRole.textContent = roleDisplay;
+                accRole.className = 'value role-' + newRole;
+                
+                showToast(`🎉 Добро пожаловать в ${roleDisplay}!`);
+                
+            } catch (error) {
+                console.error('Ошибка активации:', error);
+                status.textContent = '❌ Ошибка активации ключа';
+                status.style.color = '#ff4444';
+            }
+        }
+
         // ===== ОБНОВЛЕНИЕ UI =====
         async function updateUI(user) {
             if (user) {
+                currentUser = user;
                 try {
                     const snapshot = await get(ref(db, `users/${user.uid}`));
                     let data = snapshot.exists() ? snapshot.val() : {};
@@ -368,8 +550,7 @@
                             username: user.displayName || user.email.split('@')[0],
                             email: user.email,
                             role: 'free',
-                            createdAt: new Date().toISOString(),
-                            subscription: { free: { active: true } }
+                            createdAt: new Date().toISOString()
                         };
                         await set(ref(db, `users/${user.uid}`), userData);
                         data = userData;
@@ -398,9 +579,11 @@
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
+                currentUser = null;
                 authFormContainer.style.display = 'block';
                 accountInfo.classList.add('hidden');
                 statusDiv.textContent = '';
+                document.getElementById('key-status').textContent = '';
             }
         }
 
@@ -448,8 +631,7 @@
                         username: username,
                         email: email,
                         role: "free",
-                        createdAt: new Date().toISOString(),
-                        subscription: { free: { active: true } }
+                        createdAt: new Date().toISOString()
                     });
 
                     await updateUI(user);
@@ -524,18 +706,6 @@
             }
         });
 
-        // ===== TOAST =====
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
         // ===== ЗВЁЗДЫ =====
         function createStars() {
             const container = document.getElementById('stars');
@@ -554,6 +724,7 @@
         createStars();
 
         console.log('📋 Страница аккаунта NEMESIS :3');
+        console.log('🔑 Система активации ключей активна!');
     </script>
 </body>
 </html>
