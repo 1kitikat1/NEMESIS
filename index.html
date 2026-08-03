@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#07070d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
+        /* ===== ОСНОВНЫЕ СТИЛИ (ТВОИ) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #07070d;
@@ -19,15 +20,7 @@
             padding-top: 80px;
         }
 
-        #stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+        #stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .star {
             position: absolute;
             width: 2px;
@@ -59,6 +52,7 @@
         }
         .animate-in { animation: fadeUp 0.7s ease forwards; opacity: 0; }
 
+        /* ===== ХЕДЕР ===== */
         header {
             width: 100%;
             max-width: 1280px;
@@ -218,6 +212,7 @@
         }
         .hidden { display: none !important; }
 
+        /* ===== КОНТЕЙНЕР ===== */
         .container {
             width: 100%;
             max-width: 1280px;
@@ -323,6 +318,7 @@
             background-clip: text;
         }
 
+        /* ===== КАРТОЧКИ ТАРИФОВ ===== */
         .pricing-grid {
             display: flex;
             justify-content: center;
@@ -411,6 +407,7 @@
             opacity: 0.8;
         }
         .card ul li:last-child { border-bottom: none; }
+
         .card .btn {
             width: 100%;
             padding: 13px 0;
@@ -429,15 +426,6 @@
             color: #8888aa;
             border: 1px solid rgba(255,255,255,0.04);
         }
-        .btn-elite {
-            background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(108,99,255,0.05));
-            color: #fff;
-            border: 1px solid rgba(108,99,255,0.15);
-        }
-        .btn-elite:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 32px rgba(108,99,255,0.15);
-        }
         .btn-buy {
             background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(108,99,255,0.05));
             color: #fff;
@@ -447,20 +435,99 @@
             transform: scale(1.03);
             box-shadow: 0 8px 32px rgba(108,99,255,0.15);
         }
-        .btn-nemesis {
-            background: rgba(255,215,0,0.06);
-            color: #ffd700;
-            border: 1px solid rgba(255,215,0,0.08);
-            cursor: default;
-        }
         .btn-active {
             background: rgba(34,197,94,0.1);
             color: #22c55e;
             border: 1px solid rgba(34,197,94,0.2);
             cursor: default;
         }
+        .btn-nemesis {
+            background: rgba(255,215,0,0.06);
+            color: #ffd700;
+            border: 1px solid rgba(255,215,0,0.08);
+            cursor: default;
+        }
         .btn-buy-hidden { display: none !important; }
 
+        /* ===== АКТИВАЦИЯ КЛЮЧА ===== */
+        .key-activation {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 24px;
+            background: rgba(255,255,255,0.025);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+        .key-activation h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        .key-input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .key-input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .key-input-group input:focus {
+            border-color: #6c63ff;
+        }
+        .key-input-group button {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .key-input-group button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(108,99,255,0.2);
+        }
+        .key-status {
+            margin-top: 12px;
+            font-size: 14px;
+            min-height: 24px;
+            color: #8888aa;
+        }
+
+        /* ===== ТОСТЫ ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(11,11,18,0.95);
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 60px;
+            border: 1px solid rgba(108,99,255,0.15);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            animation: fadeUp 0.3s ease;
+            text-align: center;
+            max-width: 90%;
+        }
+        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 900px) {
             header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
             nav { flex-wrap: wrap; justify-content: center; gap: 10px; }
@@ -474,6 +541,7 @@
             .logo-icon { width: 34px; height: 34px; font-size: 17px; }
             .products-grid { flex-direction: column; align-items: center; }
             .product-card { width: 100%; max-width: 340px; }
+            .key-input-group { flex-direction: column; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 28px; }
@@ -485,6 +553,7 @@
 </head>
 <body>
 
+    <!-- ЗВЁЗДЫ И ГЛОУ -->
     <div id="stars"></div>
     <div class="glow glow-1"></div>
     <div class="glow glow-2"></div>
@@ -522,6 +591,7 @@
     <div class="container">
         <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
 
+            <!-- ГЕРО -->
             <div class="hero animate-in">
                 <h1>NEMESIS <span class="gradient">:3</span></h1>
                 <p>Экосистема продуктов для оптимизации, игр и искусственного интеллекта.</p>
@@ -529,6 +599,7 @@
                 <p class="sub">🚀 Всё в одном месте</p>
             </div>
 
+            <!-- ПРОДУКТЫ -->
             <h2 class="section-title animate-in delay-1"><span class="gradient">ПРОДУКТЫ</span></h2>
             <div class="products-grid animate-in delay-2">
                 <div class="product-card" onclick="location.href='/steam'">
@@ -545,6 +616,7 @@
                 </div>
             </div>
 
+            <!-- ТАРИФЫ -->
             <h2 class="section-title animate-in delay-2">ВЫБЕРИ <span class="gradient">ТАРИФ</span></h2>
             <div class="pricing-grid">
                 <!-- FREE -->
@@ -559,22 +631,22 @@
                         <li>ИИ (базовый)</li>
                         <li>Режим кода</li>
                     </ul>
-                    <div class="btn btn-gray" id="current-plan-free">Текущий тариф</div>
+                    <div class="btn btn-gray">Текущий тариф</div>
                 </div>
 
-                <!-- ELITE (Steam) -->
+                <!-- ELITE -->
                 <div class="card elite animate-in delay-3" id="card-elite">
                     <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
                     <div class="icon-big">⭐</div>
                     <h3>NEMESIS ELITE</h3>
                     <div class="price">199 ₽</div>
-                    <div class="price-sub">Для Steam</div>
+                    <div class="price-sub" id="elite-status">Для Steam</div>
                     <ul>
                         <li>Steam (полная)</li>
                         <li>Всё из FREE</li>
                         <li>Приоритетная поддержка</li>
                     </ul>
-                    <button class="btn btn-elite" id="btn-buy-elite" onclick="openPayment('elite')">
+                    <button class="btn btn-buy" id="btn-buy-elite" onclick="goToFunPay('elite')">
                         ⚡ КУПИТЬ ЗА 199 ₽
                     </button>
                     <button class="btn btn-active hidden" id="btn-active-elite">✅ АКТИВЕН</button>
@@ -585,14 +657,14 @@
                     <div class="icon-big">🧠</div>
                     <h3>AI+</h3>
                     <div class="price">99 ₽ <small>за 3 мес</small></div>
-                    <div class="price-sub">Только ИИ</div>
+                    <div class="price-sub" id="ai-plus-status">Только ИИ</div>
                     <ul>
                         <li>ИИ (полный)</li>
                         <li>Экспорт диалогов</li>
                         <li>Приоритет</li>
                         <li>Режим кода</li>
                     </ul>
-                    <button class="btn btn-buy" id="btn-buy-ai-plus" onclick="openPayment('ai_plus')">
+                    <button class="btn btn-buy" id="btn-buy-ai-plus" onclick="goToFunPay('ai_plus')">
                         ⚡ КУПИТЬ AI+
                     </button>
                     <button class="btn btn-active hidden" id="btn-active-ai-plus">✅ АКТИВЕН</button>
@@ -604,7 +676,7 @@
                     <div class="icon-big">🚀</div>
                     <h3>AI MAX</h3>
                     <div class="price">299 ₽</div>
-                    <div class="price-sub">Steam + ИИ</div>
+                    <div class="price-sub" id="ai-max-status">Steam + ИИ</div>
                     <ul>
                         <li>Steam (полная)</li>
                         <li>ИИ (полный)</li>
@@ -612,7 +684,7 @@
                         <li>Приоритет</li>
                         <li>Всё из ELITE и AI+</li>
                     </ul>
-                    <button class="btn btn-buy" id="btn-buy-ai-max" onclick="openPayment('ai_max')">
+                    <button class="btn btn-buy" id="btn-buy-ai-max" onclick="goToFunPay('ai_max')">
                         ⚡ КУПИТЬ AI MAX
                     </button>
                     <button class="btn btn-active hidden" id="btn-active-ai-max">✅ АКТИВЕН</button>
@@ -632,6 +704,16 @@
                 </div>
             </div>
 
+            <!-- АКТИВАЦИЯ КЛЮЧА -->
+            <div class="key-activation animate-in delay-4" id="key-activation">
+                <h3>🎁 Есть ключ? Активируй!</h3>
+                <div class="key-input-group">
+                    <input type="text" id="key-input" placeholder="Введите ключ..." autocomplete="off">
+                    <button onclick="activateKeyFromInput()">Активировать</button>
+                </div>
+                <div class="key-status" id="key-status"></div>
+            </div>
+
         </div>
     </div>
 
@@ -649,7 +731,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth, onAuthStateChanged } from "firebase/auth";
-        import { getDatabase, ref, get } from "firebase/database";
+        import { getDatabase, ref, get, update } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -666,71 +748,145 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // ===== ОТКРЫТИЕ ОПЛАТЫ =====
-        window.openPayment = function(plan) {
-            const forms = {
-                'elite': {
-                    url: 'https://merchant.intellectmoney.ru/v2/ru/prepareForm/?EshopId=472851&ServiceName=Elite%20Nemesis&PaymentAmount=199&PaymentCurrency=RUB&PaymentAmountIsReadonly=true&SuccessUrl=https%3A%2F%2Fnemesisx.fun%2F&Hash=495ac98e687e1eb58763a7b7d8d95392'
-                },
-                'ai_plus': {
-                    url: 'https://merchant.intellectmoney.ru/v2/ru/prepareForm/?EshopId=472851&ServiceName=Ai%2B%20Nemesis&PaymentAmount=99&PaymentCurrency=RUB&PaymentAmountIsReadonly=true&SuccessUrl=https%3A%2F%2Fnemesisx.fun%2F&Hash=397377cf88f1f4a2a8fa4593b0d1bfad'
-                },
-                'ai_max': {
-                    url: 'https://merchant.intellectmoney.ru/v2/ru/prepareForm/?EshopId=472851&ServiceName=Ai%20MAX%20Nemesis&PaymentAmount=299&PaymentCurrency=RUB&PaymentAmountIsReadonly=true&SuccessUrl=https%3A%2F%2Fnemesisx.fun%2F&Hash=d2731402c3b2dfdcddb6ec2e1ab6a3a7'
-                }
+        // ===== ФУНКЦИИ =====
+        let currentUser = null;
+
+        // ===== ПЕРЕХОД НА FUNPAY =====
+        window.goToFunPay = function(plan) {
+            const lotUrls = {
+                'elite': 'https://funpay.com/lots/открыть?id=ТВОЙ_ЛОТ_ELITE',
+                'ai_plus': 'https://funpay.com/lots/открыть?id=ТВОЙ_ЛОТ_AI_PLUS',
+                'ai_max': 'https://funpay.com/lots/открыть?id=ТВОЙ_ЛОТ_AI_MAX'
             };
-
-            const planData = forms[plan];
-            if (!planData) return;
-
-            // Открываем в новом окне
-            window.open(planData.url, '_blank', 'width=600,height=700');
+            window.open(lotUrls[plan], '_blank');
         };
+
+        // ===== ТОСТ =====
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // ===== АКТИВАЦИЯ КЛЮЧА =====
+        window.activateKeyFromInput = function() {
+            const input = document.getElementById('key-input');
+            const key = input.value.trim().toUpperCase();
+            const status = document.getElementById('key-status');
+            
+            if (!key) {
+                status.textContent = '❌ Введите ключ';
+                status.style.color = '#ff4444';
+                return;
+            }
+            
+            if (!currentUser) {
+                status.textContent = '❌ Войдите в аккаунт!';
+                status.style.color = '#ff4444';
+                return;
+            }
+            
+            activateKey(key);
+            input.value = '';
+        };
+
+        async function activateKey(key) {
+            const status = document.getElementById('key-status');
+            status.textContent = '⏳ Проверка ключа...';
+            status.style.color = '#8888aa';
+            
+            try {
+                const keyRef = ref(db, `keys/${key}`);
+                const snapshot = await get(keyRef);
+                
+                if (!snapshot.exists()) {
+                    status.textContent = '❌ Неверный ключ';
+                    status.style.color = '#ff4444';
+                    return;
+                }
+                
+                const keyData = snapshot.val();
+                
+                if (keyData.used) {
+                    status.textContent = '❌ Ключ уже использован';
+                    status.style.color = '#ff4444';
+                    return;
+                }
+                
+                // Получаем текущего пользователя
+                const userSnapshot = await get(ref(db, `users/${currentUser.uid}`));
+                const userData = userSnapshot.val();
+                const currentRole = userData.role || 'free';
+                
+                // Определяем новую роль
+                let newRole = currentRole;
+                const plan = keyData.plan;
+                
+                if (plan === 'elite' && currentRole === 'ai_basic') {
+                    newRole = 'ai_max';
+                } else if (plan === 'ai_basic' && currentRole === 'elite') {
+                    newRole = 'ai_max';
+                } else if (plan === 'ai_max') {
+                    newRole = 'ai_max';
+                } else {
+                    newRole = plan;
+                }
+                
+                // Обновляем роль пользователя
+                await update(ref(db, `users/${currentUser.uid}`), {
+                    role: newRole
+                });
+                
+                // Отмечаем ключ как использованный
+                await update(ref(db, `keys/${key}`), {
+                    used: true,
+                    usedBy: currentUser.uid,
+                    usedAt: new Date().toISOString()
+                });
+                
+                const roleLabels = {
+                    'free': '🆓 FREE',
+                    'elite': '⚡ ELITE',
+                    'ai_basic': '🧠 AI+',
+                    'ai_max': '🚀 AI MAX',
+                    'nemesis': '👑 NEMESIS'
+                };
+                
+                status.textContent = `🎉 Подписка активирована! ${roleLabels[newRole] || newRole.toUpperCase()}`;
+                status.style.color = '#22c55e';
+                
+                // Обновляем кнопки
+                updateButtons(newRole);
+                showToast(`🎉 Добро пожаловать в ${roleLabels[newRole] || newRole.toUpperCase()}!`);
+                
+            } catch (error) {
+                console.error('Ошибка активации:', error);
+                status.textContent = '❌ Ошибка активации ключа';
+                status.style.color = '#ff4444';
+            }
+        }
 
         // ===== УПРАВЛЕНИЕ КНОПКАМИ =====
         function updateButtons(role) {
-            // Скрываем все кнопки покупки и показываем "Активен"
-            const buyBtns = {
-                elite: document.getElementById('btn-buy-elite'),
-                ai_plus: document.getElementById('btn-buy-ai-plus'),
-                ai_max: document.getElementById('btn-buy-ai-max')
-            };
-            const activeBtns = {
-                elite: document.getElementById('btn-active-elite'),
-                ai_plus: document.getElementById('btn-active-ai-plus'),
-                ai_max: document.getElementById('btn-active-ai-max')
-            };
+            const hasElite = role === 'elite' || role === 'ai_max' || role === 'nemesis';
+            const hasAiPlus = role === 'ai_basic' || role === 'ai_max' || role === 'nemesis';
+            const hasAiMax = role === 'ai_max' || role === 'nemesis';
 
-            // По умолчанию показываем кнопки покупки
-            Object.keys(buyBtns).forEach(key => {
-                buyBtns[key].classList.remove('hidden');
-                activeBtns[key].classList.add('hidden');
-            });
+            document.getElementById('btn-buy-elite').classList.toggle('hidden', hasElite);
+            document.getElementById('btn-active-elite').classList.toggle('hidden', !hasElite);
+            document.getElementById('btn-buy-ai-plus').classList.toggle('hidden', hasAiPlus);
+            document.getElementById('btn-active-ai-plus').classList.toggle('hidden', !hasAiPlus);
+            document.getElementById('btn-buy-ai-max').classList.toggle('hidden', hasAiMax);
+            document.getElementById('btn-active-ai-max').classList.toggle('hidden', !hasAiMax);
 
-            // В зависимости от роли скрываем купленные тарифы
-            if (role === 'elite' || role === 'ai_max' || role === 'nemesis') {
-                buyBtns.elite.classList.add('hidden');
-                activeBtns.elite.classList.remove('hidden');
-            }
-            if (role === 'ai_basic' || role === 'ai_max' || role === 'nemesis') {
-                buyBtns.ai_plus.classList.add('hidden');
-                activeBtns.ai_plus.classList.remove('hidden');
-            }
-            if (role === 'ai_max' || role === 'nemesis') {
-                buyBtns.ai_max.classList.add('hidden');
-                activeBtns.ai_max.classList.remove('hidden');
-            }
-
-            // Обновляем текст в карточках
-            if (role === 'elite' || role === 'ai_max' || role === 'nemesis') {
-                document.querySelector('#card-elite .price-sub').textContent = '✅ АКТИВЕН';
-            }
-            if (role === 'ai_basic' || role === 'ai_max' || role === 'nemesis') {
-                document.querySelector('#card-ai-plus .price-sub').textContent = '✅ АКТИВЕН';
-            }
-            if (role === 'ai_max' || role === 'nemesis') {
-                document.querySelector('#card-ai-max .price-sub').textContent = '✅ АКТИВЕН';
-            }
+            if (hasElite) document.getElementById('elite-status').textContent = '✅ АКТИВЕН';
+            if (hasAiPlus) document.getElementById('ai-plus-status').textContent = '✅ АКТИВЕН';
+            if (hasAiMax) document.getElementById('ai-max-status').textContent = '✅ АКТИВЕН';
         }
 
         // ===== ПРОФИЛЬ =====
@@ -738,6 +894,7 @@
         
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                currentUser = user;
                 try {
                     const snapshot = await get(ref(db, `users/${user.uid}`));
                     const data = snapshot.val();
@@ -749,8 +906,10 @@
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
+                currentUser = null;
                 profileLabel.textContent = 'Войти';
                 updateButtons('free');
+                document.getElementById('key-status').textContent = '';
             }
         });
 
@@ -773,6 +932,8 @@
 
         console.log('🚀 NEMESIS :3 готов к работе!');
         console.log('👑 Роли: free, elite, ai_basic, ai_max, nemesis');
+        console.log('🔑 Система ключей активна!');
     </script>
+
 </body>
 </html>
