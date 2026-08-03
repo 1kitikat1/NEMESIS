@@ -475,45 +475,34 @@
             }
         }
 
-        // ===== ОТПРАВКА К ИИ (ЧЕРЕЗ CORS-ПРОКСИ) =====
-        async function getAIResponse(messages, subscription) {
-            const maxTokens = getMaxTokens(subscription);
+       async function getAIResponse(messages, subscription) {
+    const maxTokens = getMaxTokens(subscription);
 
-            try {
-                // === ИСПОЛЬЗУЕМ CORS-ПРОКСИ ДЛЯ ОБХОДА БЛОКИРОВКИ ===
-                const proxyUrl = 'https://corsproxy.io/?';
-                const targetUrl = 'https://openrouter.ai/api/v1/chat/completions';
-                
-                const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                        'HTTP-Referer': 'https://nemesisx.fun',
-                        'X-Title': 'Nemesis AI'
-                    },
-                    body: JSON.stringify({
-                        model: AI_MODEL,
-                        messages: messages,
-                        max_tokens: maxTokens,
-                        temperature: 0.7
-                    })
-                });
+    try {
+        const response = await fetch('https://thingsproxy.fly.dev/https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'HTTP-Referer': 'https://nemesisx.fun',
+                'X-Title': 'Nemesis AI'
+            },
+            body: JSON.stringify({
+                model: AI_MODEL,
+                messages: messages,
+                max_tokens: maxTokens,
+                temperature: 0.7
+            })
+        });
 
-                if (!response.ok) {
-                    const errorData = await response.text();
-                    console.error('API Error:', errorData);
-                    throw new Error('Ошибка API: ' + response.status);
-                }
+        const data = await response.json();
+        return data.choices[0].message.content;
 
-                const data = await response.json();
-                return data.choices[0].message.content;
-
-            } catch (error) {
-                console.error('AI Error:', error);
-                throw error;
-            }
-        }
+    } catch (error) {
+        console.error('AI Error:', error);
+        throw error;
+    }
+}
 
         // ===== АВТОРИЗАЦИЯ =====
         async function updateUI(user) {
