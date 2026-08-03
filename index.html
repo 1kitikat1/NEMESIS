@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NEMESIS :3</title>
-    <meta name="description" content="NEMESIS — экосистема продуктов для оптимизации, игр и искусственного интеллекта" />
     <meta name="theme-color" content="#07070d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
@@ -469,7 +468,6 @@
         }
         .btn-elite-hidden { display: none !important; }
 
-        /* ===== АВТОРИЗАЦИЯ ===== */
         .auth-wrapper {
             width: 100%;
             max-width: 420px;
@@ -640,15 +638,13 @@
         <div class="header-right">
             <nav>
                 <a class="active" id="nav-home">ГЛАВНАЯ</a>
-                <a id="nav-login">ВХОД</a>
-                <a id="nav-account" class="hidden">АККАУНТ</a>
             </nav>
             <div class="lang-switcher">
                 <button class="lang-btn active" data-lang="ru">RU</button>
                 <button class="lang-btn" data-lang="en">EN</button>
             </div>
             <div class="header-profile">
-                <a href="#" class="profile-btn" id="profile-btn">
+                <a href="/akk" class="profile-btn" id="profile-btn">
                     <span class="profile-avatar">👤</span>
                     <span id="profile-label">Войти</span>
                     <span class="profile-dot"></span>
@@ -759,65 +755,6 @@
                 </div>
             </div>
 
-            <!-- АВТОРИЗАЦИЯ И АККАУНТ -->
-            <div class="auth-wrapper">
-                <div class="glass-card hidden animate-in" id="auth-card">
-                    <!-- ФОРМА ВХОДА -->
-                    <div id="auth-form-container">
-                        <h2 id="form-title">ВХОД</h2>
-                        <div class="sub" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
-                        <form id="auth-form" onsubmit="handleAuth(event)">
-                            <div id="reg-fields" class="hidden">
-                                <div class="input-group">
-                                    <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
-                            </div>
-                            <div class="input-group">
-                                <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
-                            </div>
-                            <div id="reg-pass-repeat" class="input-group hidden">
-                                <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
-                            </div>
-                            <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
-                        </form>
-                        <div class="toggle-mode">
-                            <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
-                        </div>
-                        <div id="auth-status"></div>
-                    </div>
-
-                    <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
-                    <div id="account-info" class="hidden">
-                        <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;">👤 АККАУНТ</h2>
-                        <div class="sub" style="text-align:center; margin-bottom:24px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-                            <span class="label" style="color:#8888aa; font-size:13px;">Имя пользователя</span>
-                            <span class="value highlight" style="font-weight:600; color:#6c63ff;" id="acc-username">—</span>
-                        </div>
-                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-                            <span class="label" style="color:#8888aa; font-size:13px;">Email</span>
-                            <span class="value" style="font-weight:600;" id="acc-email">—</span>
-                        </div>
-                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-                            <span class="label" style="color:#8888aa; font-size:13px;">Роль</span>
-                            <span class="value" style="font-weight:600;" id="acc-role">—</span>
-                        </div>
-                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-                            <span class="label" style="color:#8888aa; font-size:13px;">Дата регистрации</span>
-                            <span class="value" style="font-weight:600;" id="acc-date">—</span>
-                        </div>
-                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0;">
-                            <span class="label" style="color:#8888aa; font-size:13px;">Статус</span>
-                            <span class="value" style="font-weight:600; color:#6c63ff;" id="acc-status">Активен</span>
-                        </div>
-                        <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -853,33 +790,9 @@
         const db = getDatabase(app);
 
         let currentUser = null;
-        let isLoginMode = true;
 
-        const statusDiv = document.getElementById('auth-status');
-        const authFormContainer = document.getElementById('auth-form-container');
-        const accountInfo = document.getElementById('account-info');
-        const authCard = document.getElementById('auth-card');
-        const btnBuyElite = document.getElementById('btn-buy-elite');
-        const profileBtn = document.getElementById('profile-btn');
         const profileLabel = document.getElementById('profile-label');
-        const navLogin = document.getElementById('nav-login');
-        const navAccount = document.getElementById('nav-account');
-        const logoHome = document.getElementById('logo-home');
-
-        window.showPage = function(page) {
-            authCard.classList.toggle('hidden', page !== 'auth' && page !== 'account');
-            if (page === 'account') {
-                authFormContainer.style.display = 'none';
-                accountInfo.classList.remove('hidden');
-                navAccount.classList.add('active');
-                navLogin.classList.remove('active');
-            } else if (page === 'auth') {
-                authFormContainer.style.display = 'block';
-                accountInfo.classList.add('hidden');
-                navLogin.classList.add('active');
-                navAccount.classList.remove('active');
-            }
-        }
+        const btnBuyElite = document.getElementById('btn-buy-elite');
 
         window.buyAI = function() {
             if (!currentUser) { showToast('Войдите в аккаунт'); return; }
@@ -891,49 +804,11 @@
             window.open('https://www.donationalerts.com/r/nemesis_fps?amount=299', '_blank');
         }
 
-        function showAuthForm() {
-            authFormContainer.style.display = 'block';
-            accountInfo.classList.add('hidden');
-            window.showPage('auth');
-        }
-
-        function showAccountPage(userData) {
-            authFormContainer.style.display = 'none';
-            accountInfo.classList.remove('hidden');
-            window.showPage('account');
-
-            document.getElementById('acc-username').textContent = userData.username || '—';
-            document.getElementById('acc-email').textContent = userData.email || '—';
-
-            const roleEl = document.getElementById('acc-role');
-            const role = userData.role || 'free';
-            roleEl.textContent = role.toUpperCase();
-            roleEl.style.color = role === 'nemesis' ? '#ffd700' : role === 'elite' ? '#6c63ff' : '#8888aa';
-
-            document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
-            document.getElementById('acc-status').textContent = 'Активен';
-
-            if (role === 'elite' || role === 'nemesis') {
-                btnBuyElite.classList.add('btn-elite-hidden');
-            } else {
-                btnBuyElite.classList.remove('btn-elite-hidden');
-            }
-
-            updateProfileUI(userData.username);
-        }
-
         function updateProfileUI(username) {
             if (username && username !== '—') {
                 profileLabel.textContent = username;
-                navLogin.textContent = username;
-                navLogin.onclick = () => showAccountPage({ username: username, email: localStorage.getItem('nemesis_email'), role: localStorage.getItem('nemesis_role'), createdAt: localStorage.getItem('nemesis_date') });
-                navAccount.classList.remove('hidden');
-                navAccount.onclick = () => showAccountPage({ username: username, email: localStorage.getItem('nemesis_email'), role: localStorage.getItem('nemesis_role'), createdAt: localStorage.getItem('nemesis_date') });
             } else {
                 profileLabel.textContent = 'Войти';
-                navLogin.textContent = 'ВХОД';
-                navLogin.onclick = () => showAuthForm();
-                navAccount.classList.add('hidden');
             }
         }
 
@@ -956,220 +831,33 @@
                     }
 
                     currentUser = user;
-                    const userData = {
-                        username: data.username || user.displayName || user.email.split('@')[0],
-                        email: user.email,
-                        role: data.role || 'free',
-                        createdAt: data.createdAt || null
-                    };
-
-                    localStorage.setItem('nemesis_user', userData.username);
-                    localStorage.setItem('nemesis_email', userData.email);
-                    localStorage.setItem('nemesis_role', userData.role);
-                    localStorage.setItem('nemesis_date', userData.createdAt);
+                    const username = data.username || user.displayName || user.email.split('@')[0];
+                    localStorage.setItem('nemesis_user', username);
+                    localStorage.setItem('nemesis_email', data.email);
+                    localStorage.setItem('nemesis_role', data.role || 'free');
                     localStorage.setItem('nemesis_logged', 'true');
 
-                    updateProfileUI(userData.username);
+                    updateProfileUI(username);
 
-                    // Автоматически показываем страницу аккаунта после входа
-                    showAccountPage(userData);
+                    if (data.role === 'elite' || data.role === 'nemesis') {
+                        btnBuyElite.classList.add('btn-elite-hidden');
+                    } else {
+                        btnBuyElite.classList.remove('btn-elite-hidden');
+                    }
 
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
                 currentUser = null;
-                authCard.classList.add('hidden');
                 localStorage.removeItem('nemesis_user');
                 localStorage.removeItem('nemesis_email');
                 localStorage.removeItem('nemesis_role');
-                localStorage.removeItem('nemesis_date');
                 localStorage.removeItem('nemesis_logged');
                 btnBuyElite.classList.remove('btn-elite-hidden');
                 updateProfileUI(null);
-                // Показываем главную
-                authCard.classList.add('hidden');
             }
         }
-
-        window.handleAuth = async function(event) {
-            event.preventDefault();
-            const email = document.getElementById('auth-email').value.trim();
-            const password = document.getElementById('auth-pass').value;
-
-            statusDiv.textContent = '⏳ Обработка...';
-            statusDiv.style.color = '#8888aa';
-
-            try {
-                if (isLoginMode) {
-                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    await updateUI(userCredential.user);
-                    document.getElementById('auth-form').reset();
-                    showToast('Добро пожаловать!');
-                } else {
-                    const username = document.getElementById('reg-username').value.trim();
-                    const passwordRepeat = document.getElementById('auth-pass-repeat').value;
-
-                    if (!username || username.length < 3) {
-                        statusDiv.textContent = '❌ Имя не менее 3 символов!';
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-                    if (password.length < 6) {
-                        statusDiv.textContent = '❌ Пароль не менее 6 символов!';
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-                    if (password !== passwordRepeat) {
-                        statusDiv.textContent = '❌ Пароли не совпадают!';
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    await updateProfile(user, { displayName: username });
-
-                    await set(ref(db, `users/${user.uid}`), {
-                        username: username,
-                        email: email,
-                        role: "free",
-                        createdAt: new Date().toISOString(),
-                        subscription: { free: { active: true } }
-                    });
-
-                    await updateUI(user);
-                    document.getElementById('auth-form').reset();
-                    showToast('Аккаунт создан!');
-                }
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                let msg = '❌ Ошибка! ';
-                switch (error.code) {
-                    case 'auth/email-already-in-use': msg += 'Email уже используется.'; break;
-                    case 'auth/invalid-email': msg += 'Некорректный email.'; break;
-                    case 'auth/user-not-found': msg += 'Пользователь не найден.'; break;
-                    case 'auth/wrong-password': msg += 'Неверный пароль.'; break;
-                    case 'auth/weak-password': msg += 'Слабый пароль (мин. 6 символов).'; break;
-                    default: msg += error.message;
-                }
-                statusDiv.textContent = msg;
-                statusDiv.style.color = '#ff4444';
-            }
-        };
-
-        document.getElementById('toggle-link').addEventListener('click', function() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('form-title');
-            const subtitle = document.getElementById('form-subtitle');
-            const btn = document.getElementById('auth-btn');
-            const link = this;
-            const regFields = document.getElementById('reg-fields');
-            const regPassRepeat = document.getElementById('reg-pass-repeat');
-            const emailField = document.getElementById('auth-email');
-
-            if (isLoginMode) {
-                title.textContent = 'ВХОД';
-                subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
-                btn.textContent = 'ВОЙТИ';
-                link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
-                regFields.classList.add('hidden');
-                regPassRepeat.classList.add('hidden');
-                emailField.placeholder = 'EMAIL';
-            } else {
-                title.textContent = 'РЕГИСТРАЦИЯ';
-                subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
-                btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
-                link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
-                regFields.classList.remove('hidden');
-                regPassRepeat.classList.remove('hidden');
-                emailField.placeholder = 'EMAIL (для входа)';
-            }
-            statusDiv.textContent = '';
-            statusDiv.style.color = '#8888aa';
-        });
-
-        document.getElementById('btn-logout').addEventListener('click', async function() {
-            try {
-                await signOut(auth);
-                await updateUI(null);
-                showToast('Вы вышли из аккаунта!');
-                authCard.classList.add('hidden');
-            } catch (error) {
-                console.error('Ошибка выхода:', error);
-            }
-        });
-
-        // Навигация
-        navLogin.addEventListener('click', () => {
-            if (currentUser) {
-                const userData = {
-                    username: localStorage.getItem('nemesis_user') || '—',
-                    email: localStorage.getItem('nemesis_email') || '—',
-                    role: localStorage.getItem('nemesis_role') || 'free',
-                    createdAt: localStorage.getItem('nemesis_date') || null
-                };
-                showAccountPage(userData);
-            } else {
-                isLoginMode = true;
-                document.getElementById('form-title').textContent = 'ВХОД';
-                document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
-                document.getElementById('auth-btn').textContent = 'ВОЙТИ';
-                document.getElementById('toggle-link').textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
-                document.getElementById('reg-fields').classList.add('hidden');
-                document.getElementById('reg-pass-repeat').classList.add('hidden');
-                document.getElementById('auth-email').placeholder = 'EMAIL';
-                statusDiv.textContent = '';
-                showAuthForm();
-            }
-        });
-
-        navAccount.addEventListener('click', () => {
-            if (!currentUser) {
-                showToast('Войдите в аккаунт');
-                showAuthForm();
-                return;
-            }
-            const userData = {
-                username: localStorage.getItem('nemesis_user') || '—',
-                email: localStorage.getItem('nemesis_email') || '—',
-                role: localStorage.getItem('nemesis_role') || 'free',
-                createdAt: localStorage.getItem('nemesis_date') || null
-            };
-            showAccountPage(userData);
-        });
-
-        profileBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (currentUser) {
-                const userData = {
-                    username: localStorage.getItem('nemesis_user') || '—',
-                    email: localStorage.getItem('nemesis_email') || '—',
-                    role: localStorage.getItem('nemesis_role') || 'free',
-                    createdAt: localStorage.getItem('nemesis_date') || null
-                };
-                showAccountPage(userData);
-            } else {
-                isLoginMode = true;
-                document.getElementById('form-title').textContent = 'ВХОД';
-                document.getElementById('form-subtitle').textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
-                document.getElementById('auth-btn').textContent = 'ВОЙТИ';
-                document.getElementById('toggle-link').textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
-                document.getElementById('reg-fields').classList.add('hidden');
-                document.getElementById('reg-pass-repeat').classList.add('hidden');
-                document.getElementById('auth-email').placeholder = 'EMAIL';
-                statusDiv.textContent = '';
-                showAuthForm();
-            }
-        });
-
-        logoHome.addEventListener('click', (e) => {
-            e.preventDefault();
-            authCard.classList.add('hidden');
-            navLogin.classList.remove('active');
-            navAccount.classList.remove('active');
-        });
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -1205,45 +893,6 @@
             }
         }
         createStars();
-
-        // ===== ПЕРЕВОД =====
-        const translations = {
-            ru: { nav_home: 'ГЛАВНАЯ', nav_login: 'ВХОД', nav_account: 'АККАУНТ', profile_login: 'Войти' },
-            en: { nav_home: 'HOME', nav_login: 'LOGIN', nav_account: 'ACCOUNT', profile_login: 'Login' }
-        };
-
-        let currentLang = localStorage.getItem('nemesis_lang') || 'ru';
-
-        function getTranslation(key) {
-            return translations[currentLang]?.[key] || key;
-        }
-
-        function updateLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('nemesis_lang', lang);
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                const translation = getTranslation(key);
-                if (translation && translation !== key) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = translation;
-                    } else {
-                        el.textContent = translation;
-                    }
-                }
-            });
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-        }
-
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                updateLanguage(btn.dataset.lang);
-            });
-        });
-
-        updateLanguage(currentLang);
 
         console.log('🚀 NEMESIS :3 готов к работе!');
     </script>
