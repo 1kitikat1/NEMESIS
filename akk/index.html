@@ -1,1 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Аккаунт — NEMESIS :3</title>
+    <meta name="theme-color" content="#07070d" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #07070d;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 0.9; transform: scale(1.2); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 24px;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+        .header .logo .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(108,99,255,0.15);
+            border: 1px solid rgba(108,99,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #6c63ff;
+        }
+        .header .logo span.nemesis {
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .back-btn {
+            color: #8899bb;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 8px 18px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+        .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
+
+        .card {
+            background: rgba(255,255,255,0.025);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 28px;
+            padding: 44px 36px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .card .sub {
+            text-align: center;
+            font-size: 11px;
+            color: #8888aa;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+            margin-bottom: 28px;
+            text-transform: uppercase;
+        }
+
+        .input-group { margin-bottom: 14px; }
+        .input-group input {
+            width: 100%;
+            padding: 15px 18px;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .input-group input:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 4px rgba(108,99,255,0.06);
+        }
+        .input-group input::placeholder { color: #555566; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(108,99,255,0.04));
+            border: 1px solid rgba(108,99,255,0.15);
+            border-radius: 60px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+        }
+        .btn-submit:hover {
+            background: rgba(108,99,255,0.15);
+            box-shadow: 0 8px 32px rgba(108,99,255,0.08);
+        }
+
+        .toggle-mode {
+            text-align: center;
+            margin-top: 18px;
+            color: #8888aa;
+            font-size: 13px;
+        }
+        .toggle-mode span {
+            color: #6c63ff;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        #auth-status {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 13px;
+            min-height: 22px;
+            color: #8888aa;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-row .label {
+            color: #8888aa;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .info-row .value {
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .info-row .value.highlight { color: #6c63ff; }
+        .role-free { color: #8888aa; }
+        .role-elite { color: #6c63ff; }
+        .role-nemesis { color: #ffd700; }
+
+        .btn-logout {
+            width: 100%;
+            padding: 13px;
+            background: rgba(255,0,55,0.05);
+            border: 1px solid rgba(255,0,55,0.08);
+            border-radius: 60px;
+            color: #ff4455;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 18px;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+        }
+        .btn-logout:hover {
+            background: rgba(255,0,55,0.10);
+            border-color: rgba(255,0,55,0.15);
+        }
+
+        .hidden { display: none !important; }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(11,11,18,0.95);
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 60px;
+            border: 1px solid rgba(108,99,255,0.15);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            animation: fadeUp 0.3s ease;
+            text-align: center;
+            max-width: 90%;
+        }
+        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+    </style>
+</head>
+<body>
+
+    <div id="stars"></div>
+
+    <div class="container">
+        <div class="header">
+            <a href="/" class="logo">
+                <div class="icon">N</div>
+                <span class="nemesis">NEMESIS</span> <span style="color:#6c63ff;">:3</span>
+            </a>
+            <a href="/" class="back-btn">← На главную</a>
+        </div>
+
+        <div class="card">
+            <!-- ФОРМА ВХОДА -->
+            <div id="auth-form-container">
+                <h2 id="form-title">ВХОД</h2>
+                <div class="sub" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <div id="reg-fields" class="hidden">
+                        <div class="input-group">
+                            <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
+                    </div>
+                    <div id="reg-pass-repeat" class="input-group hidden">
+                        <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
+                    </div>
+                    <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
+                </form>
+                <div class="toggle-mode">
+                    <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+                </div>
+                <div id="auth-status"></div>
+            </div>
+
+            <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
+            <div id="account-info" class="hidden">
+                <h2>👤 АККАУНТ</h2>
+                <div class="sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
+                <div class="info-row">
+                    <span class="label">Имя пользователя</span>
+                    <span class="value highlight" id="acc-username">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Email</span>
+                    <span class="value" id="acc-email">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Роль</span>
+                    <span class="value" id="acc-role">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Дата регистрации</span>
+                    <span class="value" id="acc-date">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Статус</span>
+                    <span class="value" style="color:#6c63ff;" id="acc-status">Активен</span>
+                </div>
+                <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
+        import { getDatabase, ref, set, get } from "firebase/database";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
+            authDomain: "nemesissteam-13577.firebaseapp.com",
+            databaseURL: "https://nemesissteam-13577-default-rtdb.firebaseio.com",
+            projectId: "nemesissteam-13577",
+            storageBucket: "nemesissteam-13577.firebasestorage.app",
+            messagingSenderId: "649763368476",
+            appId: "1:649763368476:web:de4e044d4d971168fa79d9",
+            measurementId: "G-GJ9KHSG65L"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let isLoginMode = true;
+
+        const statusDiv = document.getElementById('auth-status');
+        const authFormContainer = document.getElementById('auth-form-container');
+        const accountInfo = document.getElementById('account-info');
+        const accUsername = document.getElementById('acc-username');
+        const accEmail = document.getElementById('acc-email');
+        const accRole = document.getElementById('acc-role');
+        const accDate = document.getElementById('acc-date');
+
+        async function updateUI(user) {
+            if (user) {
+                try {
+                    const snapshot = await get(ref(db, `users/${user.uid}`));
+                    let data = snapshot.exists() ? snapshot.val() : {};
+
+                    if (!data.role) {
+                        const userData = {
+                            username: user.displayName || user.email.split('@')[0],
+                            email: user.email,
+                            role: 'free',
+                            createdAt: new Date().toISOString(),
+                            subscription: { free: { active: true } }
+                        };
+                        await set(ref(db, `users/${user.uid}`), userData);
+                        data = userData;
+                    }
+
+                    accUsername.textContent = data.username || user.displayName || user.email.split('@')[0];
+                    accEmail.textContent = user.email;
+
+                    const role = data.role || 'free';
+                    accRole.textContent = role.toUpperCase();
+                    accRole.className = 'value role-' + role;
+
+                    accDate.textContent = data.createdAt ? new Date(data.createdAt).toLocaleDateString('ru-RU') : '—';
+
+                    authFormContainer.style.display = 'none';
+                    accountInfo.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error('Ошибка загрузки данных:', error);
+                    if (error.code === 'auth/user-not-found') {
+                        statusDiv.textContent = '❌ Пользователь не найден. Зарегистрируйтесь!';
+                        statusDiv.style.color = '#ff4444';
+                    }
+                }
+            } else {
+                authFormContainer.style.display = 'block';
+                accountInfo.classList.add('hidden');
+                statusDiv.textContent = '';
+            }
+        }
+
+        window.handleAuth = async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-pass').value;
+
+            statusDiv.textContent = '⏳ Обработка...';
+            statusDiv.style.color = '#8888aa';
+
+            try {
+                if (isLoginMode) {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    await updateUI(userCredential.user);
+                    document.getElementById('auth-form').reset();
+                    showToast('Добро пожаловать!');
+                } else {
+                    const username = document.getElementById('reg-username').value.trim();
+                    const passwordRepeat = document.getElementById('auth-pass-repeat').value;
+
+                    if (!username || username.length < 3) {
+                        statusDiv.textContent = '❌ Имя не менее 3 символов!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    if (password.length < 6) {
+                        statusDiv.textContent = '❌ Пароль не менее 6 символов!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+                    if (password !== passwordRepeat) {
+                        statusDiv.textContent = '❌ Пароли не совпадают!';
+                        statusDiv.style.color = '#ff4444';
+                        return;
+                    }
+
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    await updateProfile(user, { displayName: username });
+
+                    await set(ref(db, `users/${user.uid}`), {
+                        username: username,
+                        email: email,
+                        role: "free",
+                        createdAt: new Date().toISOString(),
+                        subscription: { free: { active: true } }
+                    });
+
+                    await updateUI(user);
+                    document.getElementById('auth-form').reset();
+                    showToast('Аккаунт создан!');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                let msg = '❌ Ошибка! ';
+                switch (error.code) {
+                    case 'auth/email-already-in-use': msg += 'Email уже используется.'; break;
+                    case 'auth/invalid-email': msg += 'Некорректный email.'; break;
+                    case 'auth/user-not-found': msg += 'Пользователь не найден. Зарегистрируйтесь!'; break;
+                    case 'auth/wrong-password': msg += 'Неверный пароль.'; break;
+                    case 'auth/weak-password': msg += 'Слабый пароль (мин. 6 символов).'; break;
+                    default: msg += error.message;
+                }
+                statusDiv.textContent = msg;
+                statusDiv.style.color = '#ff4444';
+            }
+        };
+
+        document.getElementById('toggle-link').addEventListener('click', function() {
+            isLoginMode = !isLoginMode;
+            const title = document.getElementById('form-title');
+            const subtitle = document.getElementById('form-subtitle');
+            const btn = document.getElementById('auth-btn');
+            const link = this;
+            const regFields = document.getElementById('reg-fields');
+            const regPassRepeat = document.getElementById('reg-pass-repeat');
+            const emailField = document.getElementById('auth-email');
+
+            if (isLoginMode) {
+                title.textContent = 'ВХОД';
+                subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
+                btn.textContent = 'ВОЙТИ';
+                link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
+                regFields.classList.add('hidden');
+                regPassRepeat.classList.add('hidden');
+                emailField.placeholder = 'EMAIL';
+            } else {
+                title.textContent = 'РЕГИСТРАЦИЯ';
+                subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
+                btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
+                link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
+                regFields.classList.remove('hidden');
+                regPassRepeat.classList.remove('hidden');
+                emailField.placeholder = 'EMAIL (для входа)';
+            }
+            statusDiv.textContent = '';
+            statusDiv.style.color = '#8888aa';
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', async function() {
+            try {
+                await signOut(auth);
+                await updateUI(null);
+                showToast('Вы вышли из аккаунта!');
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
+            }
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                await updateUI(user);
+            } else {
+                await updateUI(null);
+            }
+        });
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 120; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 2 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        console.log('📋 Страница аккаунта NEMESIS :3');
+    </script>
+</body>
+</html>
