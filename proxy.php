@@ -1,27 +1,28 @@
 <?php
 // =====================================================
-// NEMESIS AI PROXY — для обхода CORS и блокировок
+// NEMESIS AI PROXY — ИСПРАВЛЕННАЯ ВЕРСИЯ
 // =====================================================
 
-// Разрешаем запросы с любого домена
+// Разрешаем CORS
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Content-Type: application/json');
 
-// Обработка preflight запроса (OPTIONS)
+// === ОБРАБОТКА OPTIONS (preflight) ===
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit(0);
 }
 
-// Принимаем только POST запросы
+// === ПРОВЕРКА METHOD ===
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
+    echo json_encode(['error' => 'Method not allowed. Use POST.']);
     exit;
 }
 
-// Получаем данные от клиента
+// === ПОЛУЧАЕМ ДАННЫЕ ===
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
 
@@ -31,10 +32,10 @@ if (!$data) {
     exit;
 }
 
-// API ключ OpenRouter
+// === API КЛЮЧ ===
 $apiKey = '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';
 
-// Отправляем запрос к OpenRouter
+// === ОТПРАВКА ЗАПРОСА К OPENROUTER ===
 $ch = curl_init('https://openrouter.ai/api/v1/chat/completions');
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -55,14 +56,14 @@ $error = curl_error($ch);
 
 curl_close($ch);
 
+// === ПРОВЕРКА ОШИБОК ===
 if ($error) {
     http_response_code(500);
     echo json_encode(['error' => 'CURL Error: ' . $error]);
     exit;
 }
 
-// Возвращаем ответ
+// === ВОЗВРАЩАЕМ ОТВЕТ ===
 http_response_code($httpCode);
-header('Content-Type: application/json');
 echo $response;
 ?>
