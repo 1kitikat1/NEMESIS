@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEMESIS ⚡</title>
+    <title>NEMESIS :3</title>
     <meta name="description" content="NEMESIS — экосистема продуктов для оптимизации, игр и искусственного интеллекта" />
     <meta name="theme-color" content="#07070d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
@@ -556,27 +556,6 @@
             color: #8888aa;
         }
 
-        .account-info .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-        .account-info .info-row:last-child { border-bottom: none; }
-        .account-info .label {
-            color: #8888aa;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .account-info .value {
-            font-weight: 600;
-            font-size: 13px;
-        }
-        .account-info .value.highlight { color: #6c63ff; }
-        .role-free { color: #8888aa; }
-        .role-elite { color: #6c63ff; }
-        .role-nemesis { color: #ffd700; }
-
         .btn-logout {
             width: 100%;
             padding: 13px;
@@ -654,14 +633,15 @@
             <div class="logo-icon">N</div>
             <div class="logo-text">
                 <span class="nemesis">NEMESIS</span>
-                <span class="smile">⚡</span>
+                <span class="smile">:3</span>
             </div>
         </a>
 
         <div class="header-right">
             <nav>
                 <a class="active" id="nav-home">ГЛАВНАЯ</a>
-                <a id="nav-login" data-key="nav_login">ВХОД</a>
+                <a id="nav-login">ВХОД</a>
+                <a id="nav-account" class="hidden">АККАУНТ</a>
             </nav>
             <div class="lang-switcher">
                 <button class="lang-btn active" data-lang="ru">RU</button>
@@ -670,7 +650,7 @@
             <div class="header-profile">
                 <a href="#" class="profile-btn" id="profile-btn">
                     <span class="profile-avatar">👤</span>
-                    <span data-key="profile_login">Войти</span>
+                    <span id="profile-label">Войти</span>
                     <span class="profile-dot"></span>
                 </a>
             </div>
@@ -682,7 +662,7 @@
         <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
 
             <div class="hero animate-in">
-                <h1>NEMESIS <span class="gradient">AI</span> ⚡</h1>
+                <h1>NEMESIS <span class="gradient">:3</span></h1>
                 <p>Экосистема продуктов для оптимизации, игр и искусственного интеллекта.</p>
                 <p>Nemesis Steam · Nemesis AI</p>
                 <p class="sub">🚀 Всё в одном месте</p>
@@ -779,9 +759,10 @@
                 </div>
             </div>
 
-            <!-- АВТОРИЗАЦИЯ -->
+            <!-- АВТОРИЗАЦИЯ И АККАУНТ -->
             <div class="auth-wrapper">
                 <div class="glass-card hidden animate-in" id="auth-card">
+                    <!-- ФОРМА ВХОДА -->
                     <div id="auth-form-container">
                         <h2 id="form-title">ВХОД</h2>
                         <div class="sub" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
@@ -807,28 +788,30 @@
                         </div>
                         <div id="auth-status"></div>
                     </div>
-                    <div class="account-info hidden" id="account-info">
+
+                    <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
+                    <div id="account-info" class="hidden">
                         <h2 style="font-size:24px; font-weight:700; text-align:center; margin-bottom:4px;">👤 АККАУНТ</h2>
                         <div class="sub" style="text-align:center; margin-bottom:24px;">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-                        <div class="info-row">
-                            <span class="label">Имя пользователя</span>
-                            <span class="value highlight" id="acc-username">—</span>
+                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span class="label" style="color:#8888aa; font-size:13px;">Имя пользователя</span>
+                            <span class="value highlight" style="font-weight:600; color:#6c63ff;" id="acc-username">—</span>
                         </div>
-                        <div class="info-row">
-                            <span class="label">Email</span>
-                            <span class="value" id="acc-email">—</span>
+                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span class="label" style="color:#8888aa; font-size:13px;">Email</span>
+                            <span class="value" style="font-weight:600;" id="acc-email">—</span>
                         </div>
-                        <div class="info-row">
-                            <span class="label">Роль</span>
-                            <span class="value" id="acc-role">—</span>
+                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span class="label" style="color:#8888aa; font-size:13px;">Роль</span>
+                            <span class="value" style="font-weight:600;" id="acc-role">—</span>
                         </div>
-                        <div class="info-row">
-                            <span class="label">Дата регистрации</span>
-                            <span class="value" id="acc-date">—</span>
+                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                            <span class="label" style="color:#8888aa; font-size:13px;">Дата регистрации</span>
+                            <span class="value" style="font-weight:600;" id="acc-date">—</span>
                         </div>
-                        <div class="info-row">
-                            <span class="label">Статус</span>
-                            <span class="value" style="color:#6c63ff;" id="acc-status">Активен</span>
+                        <div class="info-row" style="display:flex; justify-content:space-between; padding:12px 0;">
+                            <span class="label" style="color:#8888aa; font-size:13px;">Статус</span>
+                            <span class="value" style="font-weight:600; color:#6c63ff;" id="acc-status">Активен</span>
                         </div>
                         <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
                     </div>
@@ -878,7 +861,9 @@
         const authCard = document.getElementById('auth-card');
         const btnBuyElite = document.getElementById('btn-buy-elite');
         const profileBtn = document.getElementById('profile-btn');
+        const profileLabel = document.getElementById('profile-label');
         const navLogin = document.getElementById('nav-login');
+        const navAccount = document.getElementById('nav-account');
         const logoHome = document.getElementById('logo-home');
 
         window.showPage = function(page) {
@@ -886,9 +871,13 @@
             if (page === 'account') {
                 authFormContainer.style.display = 'none';
                 accountInfo.classList.remove('hidden');
+                navAccount.classList.add('active');
+                navLogin.classList.remove('active');
             } else if (page === 'auth') {
                 authFormContainer.style.display = 'block';
                 accountInfo.classList.add('hidden');
+                navLogin.classList.add('active');
+                navAccount.classList.remove('active');
             }
         }
 
@@ -908,7 +897,7 @@
             window.showPage('auth');
         }
 
-        function showAccount(userData) {
+        function showAccountPage(userData) {
             authFormContainer.style.display = 'none';
             accountInfo.classList.remove('hidden');
             window.showPage('account');
@@ -919,7 +908,7 @@
             const roleEl = document.getElementById('acc-role');
             const role = userData.role || 'free';
             roleEl.textContent = role.toUpperCase();
-            roleEl.className = 'value role-' + role;
+            roleEl.style.color = role === 'nemesis' ? '#ffd700' : role === 'elite' ? '#6c63ff' : '#8888aa';
 
             document.getElementById('acc-date').textContent = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('ru-RU') : '—';
             document.getElementById('acc-status').textContent = 'Активен';
@@ -930,22 +919,21 @@
                 btnBuyElite.classList.remove('btn-elite-hidden');
             }
 
-            updateProfileBtn(userData.username);
+            updateProfileUI(userData.username);
         }
 
-        function updateProfileBtn(username) {
+        function updateProfileUI(username) {
             if (username && username !== '—') {
-                profileBtn.innerHTML = `
-                    <span class="profile-avatar">${username.charAt(0).toUpperCase()}</span>
-                    <span>${username}</span>
-                    <span class="profile-dot"></span>
-                `;
+                profileLabel.textContent = username;
+                navLogin.textContent = username;
+                navLogin.onclick = () => showAccountPage({ username: username, email: localStorage.getItem('nemesis_email'), role: localStorage.getItem('nemesis_role'), createdAt: localStorage.getItem('nemesis_date') });
+                navAccount.classList.remove('hidden');
+                navAccount.onclick = () => showAccountPage({ username: username, email: localStorage.getItem('nemesis_email'), role: localStorage.getItem('nemesis_role'), createdAt: localStorage.getItem('nemesis_date') });
             } else {
-                profileBtn.innerHTML = `
-                    <span class="profile-avatar">👤</span>
-                    <span>Войти</span>
-                    <span class="profile-dot"></span>
-                `;
+                profileLabel.textContent = 'Войти';
+                navLogin.textContent = 'ВХОД';
+                navLogin.onclick = () => showAuthForm();
+                navAccount.classList.add('hidden');
             }
         }
 
@@ -975,28 +963,32 @@
                         createdAt: data.createdAt || null
                     };
 
-                    showAccount(userData);
-                    navLogin.textContent = userData.username;
-                    navLogin.onclick = () => showAccount(userData);
                     localStorage.setItem('nemesis_user', userData.username);
                     localStorage.setItem('nemesis_email', userData.email);
                     localStorage.setItem('nemesis_role', userData.role);
+                    localStorage.setItem('nemesis_date', userData.createdAt);
                     localStorage.setItem('nemesis_logged', 'true');
+
+                    updateProfileUI(userData.username);
+
+                    // Автоматически показываем страницу аккаунта после входа
+                    showAccountPage(userData);
 
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
                 }
             } else {
+                currentUser = null;
                 authCard.classList.add('hidden');
                 localStorage.removeItem('nemesis_user');
                 localStorage.removeItem('nemesis_email');
                 localStorage.removeItem('nemesis_role');
+                localStorage.removeItem('nemesis_date');
                 localStorage.removeItem('nemesis_logged');
                 btnBuyElite.classList.remove('btn-elite-hidden');
-                updateProfileBtn(null);
-                currentUser = null;
-                navLogin.textContent = 'ВХОД';
-                navLogin.onclick = () => showAuthForm();
+                updateProfileUI(null);
+                // Показываем главную
+                authCard.classList.add('hidden');
             }
         }
 
@@ -1109,15 +1101,16 @@
             }
         });
 
+        // Навигация
         navLogin.addEventListener('click', () => {
             if (currentUser) {
                 const userData = {
                     username: localStorage.getItem('nemesis_user') || '—',
                     email: localStorage.getItem('nemesis_email') || '—',
                     role: localStorage.getItem('nemesis_role') || 'free',
-                    createdAt: null
+                    createdAt: localStorage.getItem('nemesis_date') || null
                 };
-                showAccount(userData);
+                showAccountPage(userData);
             } else {
                 isLoginMode = true;
                 document.getElementById('form-title').textContent = 'ВХОД';
@@ -1132,6 +1125,21 @@
             }
         });
 
+        navAccount.addEventListener('click', () => {
+            if (!currentUser) {
+                showToast('Войдите в аккаунт');
+                showAuthForm();
+                return;
+            }
+            const userData = {
+                username: localStorage.getItem('nemesis_user') || '—',
+                email: localStorage.getItem('nemesis_email') || '—',
+                role: localStorage.getItem('nemesis_role') || 'free',
+                createdAt: localStorage.getItem('nemesis_date') || null
+            };
+            showAccountPage(userData);
+        });
+
         profileBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if (currentUser) {
@@ -1139,9 +1147,9 @@
                     username: localStorage.getItem('nemesis_user') || '—',
                     email: localStorage.getItem('nemesis_email') || '—',
                     role: localStorage.getItem('nemesis_role') || 'free',
-                    createdAt: null
+                    createdAt: localStorage.getItem('nemesis_date') || null
                 };
-                showAccount(userData);
+                showAccountPage(userData);
             } else {
                 isLoginMode = true;
                 document.getElementById('form-title').textContent = 'ВХОД';
@@ -1159,6 +1167,8 @@
         logoHome.addEventListener('click', (e) => {
             e.preventDefault();
             authCard.classList.add('hidden');
+            navLogin.classList.remove('active');
+            navAccount.classList.remove('active');
         });
 
         onAuthStateChanged(auth, async (user) => {
@@ -1198,8 +1208,8 @@
 
         // ===== ПЕРЕВОД =====
         const translations = {
-            ru: { nav_home: 'ГЛАВНАЯ', nav_login: 'ВХОД', profile_login: 'Войти' },
-            en: { nav_home: 'HOME', nav_login: 'LOGIN', profile_login: 'Login' }
+            ru: { nav_home: 'ГЛАВНАЯ', nav_login: 'ВХОД', nav_account: 'АККАУНТ', profile_login: 'Войти' },
+            en: { nav_home: 'HOME', nav_login: 'LOGIN', nav_account: 'ACCOUNT', profile_login: 'Login' }
         };
 
         let currentLang = localStorage.getItem('nemesis_lang') || 'ru';
@@ -1235,7 +1245,7 @@
 
         updateLanguage(currentLang);
 
-        console.log('🚀 NEMESIS ⚡ готов к работе!');
+        console.log('🚀 NEMESIS :3 готов к работе!');
     </script>
 
 </body>
