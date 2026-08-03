@@ -17,6 +17,7 @@
             justify-content: center;
             padding: 20px;
         }
+
         #stars {
             position: fixed;
             top: 0;
@@ -39,6 +40,7 @@
             0% { opacity: 0.2; transform: scale(0.8); }
             100% { opacity: 0.9; transform: scale(1.2); }
         }
+
         .container {
             width: 100%;
             max-width: 900px;
@@ -47,6 +49,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -132,15 +135,13 @@
         .profile-bar .role.free { background: rgba(255,255,255,0.05); color: #8888aa; }
         .profile-bar .role.elite { background: rgba(108,99,255,0.15); color: #6c63ff; }
         .profile-bar .role.nemesis { background: rgba(255,215,0,0.1); color: #ffd700; }
-        .profile-bar .role.ai_basic { background: rgba(108,99,255,0.12); color: #6c63ff; }
-        .profile-bar .role.ai_max { background: rgba(255,215,0,0.08); color: #ffd700; }
 
         .chat-list {
             background: rgba(255,255,255,0.025);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 16px;
-            max-height: 180px;
+            max-height: 200px;
             overflow-y: auto;
         }
         .chat-list .header {
@@ -216,13 +217,8 @@
             background: rgba(255,255,255,0.05);
             color: #ccc;
         }
-        .message.assistant.loading {
-            opacity: 0.6;
-        }
-        .message.assistant.error {
-            color: #ff4444;
-            background: rgba(255,68,68,0.08);
-        }
+        .message.assistant.loading { opacity: 0.6; }
+        .message.assistant.error { color: #ff4444; background: rgba(255,68,68,0.08); }
         .chat-input-area {
             display: flex;
             gap: 10px;
@@ -303,8 +299,6 @@
         .login-box .toggle span { color: #6c63ff; cursor: pointer; font-weight: 600; }
         .login-box .status { margin-top: 12px; font-size: 13px; min-height: 20px; color: #8888aa; }
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 600px) {
             .header .logo { font-size: 17px; }
@@ -323,7 +317,7 @@
         <div class="header">
             <a href="/" class="logo">
                 <div class="icon">N</div>
-                <span class="nemesis">NEMESIS</span> <span style="color:#6c63ff;">⚡</span>
+                <span class="nemesis">NEMESIS</span> <span style="color:#6c63ff;">:3</span>
             </a>
             <a href="/" class="back-btn">← На главную</a>
         </div>
@@ -409,7 +403,6 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
         import { getDatabase, ref, set, get, push, update } from "firebase/database";
 
-        // ===== FIREBASE =====
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
             authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -426,7 +419,8 @@
         const db = getDatabase(app);
 
         // ===== OPENROUTER API =====
-        const OPENROUTER_API_KEY = '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';
+        const OPENROUTER_API_KEY = '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';
+        const AI_MODEL = 'google/gemma-4-31b-it:free';
 
         // ===== ПЕРЕМЕННЫЕ =====
         let currentUser = null;
@@ -468,19 +462,11 @@
             chatSection.classList.remove('hidden');
         }
 
-        // ===== ПОЛУЧИТЬ ПОДПИСКУ =====
+        // ===== ПОДПИСКА =====
         function getSubscription(role) {
             if (role === 'nemesis' || role === 'ai_max') return 'ai_max';
             if (role === 'elite' || role === 'ai_basic') return 'ai_basic';
             return 'free';
-        }
-
-        function getModel(subscription) {
-            switch (subscription) {
-                case 'ai_max': return 'deepseek/deepseek-chat';
-                case 'ai_basic': return 'deepseek/deepseek-chat:free';
-                default: return 'deepseek/deepseek-chat:free';
-            }
         }
 
         function getMaxTokens(subscription) {
@@ -493,7 +479,6 @@
 
         // ===== ОТПРАВКА К ИИ =====
         async function getAIResponse(messages, subscription) {
-            const model = getModel(subscription);
             const maxTokens = getMaxTokens(subscription);
 
             try {
@@ -506,7 +491,7 @@
                         'X-Title': 'Nemesis AI'
                     },
                     body: JSON.stringify({
-                        model: model,
+                        model: AI_MODEL,
                         messages: messages,
                         max_tokens: maxTokens,
                         temperature: 0.7
@@ -747,12 +732,10 @@
             isProcessing = true;
 
             try {
-                // Сохраняем сообщение пользователя
                 const msgRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
                 await set(msgRef, { role: 'user', content: text, timestamp: Date.now() });
                 await update(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}`), { updated_at: new Date().toISOString() });
 
-                // Получаем историю чата
                 const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
                 const data = snapshot.val();
                 const history = [];
@@ -763,25 +746,20 @@
                     });
                 }
 
-                // Получаем подписку
                 const userSnapshot = await get(ref(db, `users/${currentUser.uid}`));
                 const userData = userSnapshot.val();
                 const subscription = getSubscription(userData.role || 'free');
 
-                // Показываем "печатает..."
                 const loadingDiv = document.createElement('div');
                 loadingDiv.className = 'message assistant loading';
                 loadingDiv.textContent = '🧠 Думаю...';
                 chatMessages.appendChild(loadingDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                // Запрос к ИИ
                 const response = await getAIResponse(history, subscription);
 
-                // Удаляем "печатает..."
                 if (loadingDiv.parentNode) loadingDiv.remove();
 
-                // Сохраняем ответ
                 const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
                 await set(resRef, { role: 'assistant', content: response, timestamp: Date.now() });
 
@@ -831,6 +809,7 @@
         createStars();
 
         console.log('🚀 Nemesis AI готов к работе!');
+        console.log('🤖 Модель:', AI_MODEL);
     </script>
 
 </body>
