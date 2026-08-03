@@ -197,6 +197,8 @@
         .info-row .value.highlight { color: #6c63ff; }
         .role-free { color: #8888aa; }
         .role-elite { color: #6c63ff; }
+        .role-ai_basic { color: #6c63ff; }
+        .role-ai_max { color: #ffd700; }
         .role-nemesis { color: #ffd700; }
 
         .btn-logout {
@@ -354,6 +356,7 @@
         const accRole = document.getElementById('acc-role');
         const accDate = document.getElementById('acc-date');
 
+        // ===== ОБНОВЛЕНИЕ UI =====
         async function updateUI(user) {
             if (user) {
                 try {
@@ -376,7 +379,14 @@
                     accEmail.textContent = user.email;
 
                     const role = data.role || 'free';
-                    accRole.textContent = role.toUpperCase();
+                    const roleLabels = {
+                        'free': '🆓 FREE',
+                        'elite': '⚡ ELITE',
+                        'ai_basic': '🧠 AI+',
+                        'ai_max': '🚀 AI MAX',
+                        'nemesis': '👑 NEMESIS'
+                    };
+                    accRole.textContent = roleLabels[role] || 'FREE';
                     accRole.className = 'value role-' + role;
 
                     accDate.textContent = data.createdAt ? new Date(data.createdAt).toLocaleDateString('ru-RU') : '—';
@@ -386,10 +396,6 @@
 
                 } catch (error) {
                     console.error('Ошибка загрузки данных:', error);
-                    if (error.code === 'auth/user-not-found') {
-                        statusDiv.textContent = '❌ Пользователь не найден. Зарегистрируйтесь!';
-                        statusDiv.style.color = '#ff4444';
-                    }
                 }
             } else {
                 authFormContainer.style.display = 'block';
@@ -398,6 +404,7 @@
             }
         }
 
+        // ===== АВТОРИЗАЦИЯ =====
         window.handleAuth = async function(event) {
             event.preventDefault();
 
@@ -465,6 +472,7 @@
             }
         };
 
+        // ===== ТОГГЛ РЕГИСТРАЦИИ =====
         document.getElementById('toggle-link').addEventListener('click', function() {
             isLoginMode = !isLoginMode;
             const title = document.getElementById('form-title');
@@ -496,6 +504,7 @@
             statusDiv.style.color = '#8888aa';
         });
 
+        // ===== ВЫХОД =====
         document.getElementById('btn-logout').addEventListener('click', async function() {
             try {
                 await signOut(auth);
@@ -506,6 +515,7 @@
             }
         });
 
+        // ===== СОСТОЯНИЕ =====
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 await updateUI(user);
@@ -514,6 +524,7 @@
             }
         });
 
+        // ===== TOAST =====
         function showToast(message) {
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -525,6 +536,7 @@
             }, 3000);
         }
 
+        // ===== ЗВЁЗДЫ =====
         function createStars() {
             const container = document.getElementById('stars');
             for (let i = 0; i < 120; i++) {
