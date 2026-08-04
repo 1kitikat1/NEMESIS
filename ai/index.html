@@ -99,7 +99,6 @@
         }
         .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
-        /* ===== ПРОФИЛЬ ===== */
         .profile-bar {
             display: flex;
             justify-content: space-between;
@@ -146,7 +145,6 @@
             box-shadow: 0 0 20px rgba(255,215,0,0.1);
         }
 
-        /* ===== СПИСОК ЧАТОВ ===== */
         .chat-list {
             background: rgba(255,255,255,0.025);
             border-radius: 16px;
@@ -194,7 +192,6 @@
         .chat-item .count { color: #555566; font-size: 11px; }
         .chat-empty { color: #555566; text-align: center; padding: 12px; }
 
-        /* ===== ОКНО ЧАТА ===== */
         .chat-window {
             background: rgba(255,255,255,0.025);
             border-radius: 16px;
@@ -291,7 +288,6 @@
             white-space: pre-wrap;
         }
 
-        /* ===== ПОЛЕ ВВОДА ===== */
         .chat-input-area {
             display: flex;
             gap: 10px;
@@ -364,7 +360,6 @@
             font-weight: 700;
         }
 
-        /* ===== ЛОГИН ===== */
         .login-box {
             background: rgba(255,255,255,0.025);
             border-radius: 24px;
@@ -483,7 +478,7 @@
             </div>
 
             <!-- АВТОРИЗОВАН -->
-            <div id="chat-section" class="hidden" style="display:flex; flex-direction:column; flex:1; min-height:0;">
+            <div id="chat-section" style="display:none; flex-direction:column; flex:1; min-height:0;">
 
                 <div class="profile-bar">
                     <div class="user">
@@ -636,11 +631,13 @@
         function showLogin() {
             loginSection.style.display = 'flex';
             chatSection.style.display = 'none';
+            chatSection.classList.remove('hidden');
         }
 
         function showChat() {
             loginSection.style.display = 'none';
             chatSection.style.display = 'flex';
+            chatSection.classList.remove('hidden');
         }
 
         // ===== ФОРМАТИРОВАНИЕ КОДА =====
@@ -839,7 +836,7 @@
                     userRole.className = 'role ' + role;
 
                     showChat();
-                    loadUserChats();
+                    await loadUserChats();
                 } catch (error) {
                     console.error('Ошибка загрузки:', error);
                 }
