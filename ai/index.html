@@ -188,8 +188,21 @@
         }
         .chat-item:hover { background: rgba(108,99,255,0.05); }
         .chat-item.active { background: rgba(108,99,255,0.08); }
-        .chat-item .title { color: #fff; font-size: 13px; flex: 1; }
-        .chat-item .count { color: #555566; font-size: 11px; }
+        .chat-item .title { color: #fff; font-size: 13px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chat-item .count { color: #555566; font-size: 11px; margin-right: 8px; }
+        .chat-item .del-chat {
+            color: #555566;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0 4px;
+            transition: 0.2s;
+            line-height: 1;
+        }
+        .chat-item .del-chat:hover {
+            color: #ff4455;
+            background: rgba(255,68,68,0.1);
+            border-radius: 4px;
+        }
         .chat-empty { color: #555566; text-align: center; padding: 12px; }
 
         .chat-window {
@@ -242,6 +255,17 @@
         }
         .message.assistant.loading { opacity: 0.6; }
         .message.assistant.error { color: #ff4444; background: rgba(255,68,68,0.08); }
+
+        .message .cursor-blink {
+            display: inline-block;
+            width: 2px;
+            height: 16px;
+            background: #6c63ff;
+            margin-left: 2px;
+            animation: blink 0.8s infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .code-block {
             background: rgba(0,0,0,0.4);
@@ -442,7 +466,6 @@
 
     <div class="container">
 
-        <!-- ХЕДЕР -->
         <div class="header">
             <a href="/" class="logo">
                 <div class="icon">N</div>
@@ -451,10 +474,8 @@
             <a href="/" class="back-btn">← На главную</a>
         </div>
 
-        <!-- ОСНОВНОЙ КОНТЕНТ -->
         <div id="main-content" style="display:flex; flex-direction:column; flex:1; min-height:0;">
 
-            <!-- НЕ АВТОРИЗОВАН -->
             <div id="login-section" style="display:flex; align-items:center; justify-content:center; flex:1;">
                 <div class="login-box">
                     <h2 id="form-title">ВХОД</h2>
@@ -477,7 +498,6 @@
                 </div>
             </div>
 
-            <!-- АВТОРИЗОВАН -->
             <div id="chat-section" style="display:none; flex-direction:column; flex:1; min-height:0;">
 
                 <div class="profile-bar">
@@ -529,7 +549,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get, push, update } from "firebase/database";
+        import { getDatabase, ref, set, get, push, update, remove } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -631,13 +651,11 @@
         function showLogin() {
             loginSection.style.display = 'flex';
             chatSection.style.display = 'none';
-            chatSection.classList.remove('hidden');
         }
 
         function showChat() {
             loginSection.style.display = 'none';
             chatSection.style.display = 'flex';
-            chatSection.classList.remove('hidden');
         }
 
         // ===== ФОРМАТИРОВАНИЕ КОДА =====
@@ -723,8 +741,8 @@
             }
         }
 
-        // ===== AGNES API =====
-        async function callAgnesAI(messages, maxTokens, imageUrl = null) {
+        // ===== STREAMING AGNES =====
+        async function streamAgnesAI(messages, maxTokens, imageUrl = null, onChunk) {
             let formattedMessages = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
 
             if (imageUrl) {
@@ -752,7 +770,8 @@
                     model: AGNES_MODEL,
                     messages: formattedMessages,
                     max_tokens: maxTokens,
-                    temperature: 0.7
+                    temperature: 0.7,
+                    stream: true
                 })
             });
 
@@ -761,12 +780,36 @@
                 throw new Error(errorData.error?.message || 'Ошибка Agnes API');
             }
 
-            const data = await response.json();
-            return data.choices[0].message.content;
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop() || '';
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const data = line.slice(6);
+                        if (data === '[DONE]') continue;
+                        try {
+                            const json = JSON.parse(data);
+                            const chunk = json.choices[0]?.delta?.content || '';
+                            if (chunk) {
+                                onChunk(chunk);
+                            }
+                        } catch (e) {}
+                    }
+                }
+            }
         }
 
-        // ===== KODIKROUTER API =====
-        async function callKodikRouterAI(messages, maxTokens) {
+        // ===== STREAMING KODIKROUTER =====
+        async function streamKodikRouterAI(messages, maxTokens, onChunk) {
             const formattedMessages = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
 
             const response = await fetch(KODIKROUTER_URL, {
@@ -779,7 +822,8 @@
                     model: FREE_MODEL,
                     messages: formattedMessages,
                     max_tokens: maxTokens,
-                    temperature: 0.7
+                    temperature: 0.7,
+                    stream: true
                 })
             });
 
@@ -788,19 +832,63 @@
                 throw new Error(errorData.error?.message || 'Ошибка KodikRouter API');
             }
 
-            const data = await response.json();
-            return data.choices[0].message.content;
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop() || '';
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const data = line.slice(6);
+                        if (data === '[DONE]') continue;
+                        try {
+                            const json = JSON.parse(data);
+                            const chunk = json.choices[0]?.delta?.content || '';
+                            if (chunk) {
+                                onChunk(chunk);
+                            }
+                        } catch (e) {}
+                    }
+                }
+            }
         }
 
-        // ===== ГЛАВНАЯ ФУНКЦИЯ =====
-        async function getAIResponse(messages, role, imageUrl = null) {
+        // ===== УДАЛЕНИЕ ЧАТА =====
+        window.deleteChat = async function(chatId, e) {
+            e.stopPropagation();
+            if (!currentUser) return;
+            if (!confirm('🗑️ Удалить этот чат?')) return;
+
+            try {
+                await remove(ref(db, `users/${currentUser.uid}/ai_chats/${chatId}`));
+                if (currentChatId === chatId) {
+                    currentChatId = null;
+                    chatMessages.innerHTML = '<div class="empty">Выберите чат или создайте новый</div>';
+                }
+                await loadUserChats();
+                showToast('Чат удалён');
+            } catch (error) {
+                console.error(error);
+                showToast('Ошибка удаления');
+            }
+        };
+
+        // ===== ГЛАВНАЯ ФУНКЦИЯ СТРИМИНГА =====
+        async function getAIResponseStream(messages, role, imageUrl = null, onChunk) {
             const perms = getUserPermissions(role);
 
             try {
                 if (perms.provider === 'agnes') {
-                    return await callAgnesAI(messages, perms.maxTokens, imageUrl);
+                    await streamAgnesAI(messages, perms.maxTokens, imageUrl, onChunk);
                 } else {
-                    return await callKodikRouterAI(messages, perms.maxTokens);
+                    await streamKodikRouterAI(messages, perms.maxTokens, onChunk);
                 }
             } catch (error) {
                 console.error('AI Error:', error);
@@ -981,7 +1069,11 @@
                     const chat = data[id];
                     const div = document.createElement('div');
                     div.className = 'chat-item' + (currentChatId === id ? ' active' : '');
-                    div.innerHTML = `<span class="title">${chat.title || 'Новый чат'}</span><span class="count">${chat.messages ? Object.keys(chat.messages).length : 0}</span>`;
+                    div.innerHTML = `
+                        <span class="title">${chat.title || 'Новый чат'}</span>
+                        <span class="count">${chat.messages ? Object.keys(chat.messages).length : 0}</span>
+                        <span class="del-chat" onclick="deleteChat('${id}', event)">✕</span>
+                    `;
                     div.onclick = () => openChat(id);
                     chatListItems.appendChild(div);
                 });
@@ -1046,7 +1138,7 @@
             }
         };
 
-        // ===== ОТПРАВКА СООБЩЕНИЯ =====
+        // ===== ОТПРАВКА СООБЩЕНИЯ (СТРИМИНГ) =====
         window.sendMessage = async function() {
             const text = chatInput.value.trim();
             if (!text || !currentUser || !currentChatId || isProcessing) {
@@ -1102,29 +1194,42 @@
                     });
                 }
 
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'message assistant loading';
-                loadingDiv.innerHTML = `<div class="msg-header">Nemesis AI</div>Думаю...`;
-                chatMessages.appendChild(loadingDiv);
+                // СОЗДАЁМ СООБЩЕНИЕ ДЛЯ ОТВЕТА
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message assistant';
+                msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><span></span><span class="cursor-blink"></span>`;
+                chatMessages.appendChild(msgDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                const response = await getAIResponse(history, role, imageUrl);
+                let fullResponse = '';
+                const textSpan = msgDiv.querySelector('span');
+                const cursorSpan = msgDiv.querySelector('.cursor-blink');
 
-                if (loadingDiv.parentNode) loadingDiv.remove();
+                await getAIResponseStream(history, role, imageUrl, (chunk) => {
+                    fullResponse += chunk;
+                    textSpan.innerHTML = formatCodeBlock(fullResponse);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                });
 
+                // Убираем курсор
+                if (cursorSpan) cursorSpan.remove();
+
+                // СОХРАНЯЕМ ПОЛНЫЙ ОТВЕТ В FIREBASE
                 const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                await set(resRef, { role: 'assistant', content: response, timestamp: Date.now() });
+                await set(resRef, { role: 'assistant', content: fullResponse, timestamp: Date.now() });
 
                 clearFile();
                 currentImageUrl = null;
 
-                await openChat(currentChatId);
                 await loadUserChats();
 
             } catch (error) {
                 console.error(error);
-                const loading = chatMessages.querySelector('.message.assistant.loading');
-                if (loading) loading.remove();
+                // Удаляем сообщение с курсором, если оно есть
+                const lastMsg = chatMessages.lastElementChild;
+                if (lastMsg && lastMsg.classList.contains('assistant') && lastMsg.querySelector('.cursor-blink')) {
+                    lastMsg.remove();
+                }
 
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'message assistant error';
@@ -1166,6 +1271,8 @@
         console.log('🚀 Nemesis AI готов к работе!');
         console.log('⭐ Создан командой Kotik Team');
         console.log('🤖 Модели: FREE/ELITE: NVIDIA Nemotron Nano 12B VL | Premium: Agnes-2.0-Flash');
+        console.log('📝 Стриминг включён');
+        console.log('🗑️ Удаление чатов — кнопка ✕');
     </script>
 </body>
 </html>
