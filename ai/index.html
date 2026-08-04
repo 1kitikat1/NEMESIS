@@ -257,16 +257,6 @@
         .message.assistant.loading { opacity: 0.6; }
         .message.assistant.error { color: #ff4444; background: rgba(255,68,68,0.08); }
 
-        .message .streaming-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 16px;
-            background: #6c63ff;
-            margin-left: 2px;
-            animation: blink 0.8s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
         .code-block {
             background: rgba(0,0,0,0.4);
             border-radius: 10px;
@@ -607,7 +597,6 @@
         let isLoginMode = true;
         let isProcessing = false;
         let currentImageUrl = null;
-        let streamController = null;
 
         // ===== DOM =====
         const loginSection = document.getElementById('login-section');
@@ -742,9 +731,10 @@
             }
         }
 
-        // ===== STREAMING (ПЕЧАТЬ В РЕАЛЬНОМ ВРЕМЕНИ) =====
-        async function streamAgnesAI(messages, maxTokens, imageUrl = null, onChunk) {
+        // ===== AGNES API =====
+        async function callAgnesAI(messages, maxTokens, imageUrl = null) {
             let formattedMessages = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
+
             if (imageUrl) {
                 const lastMsg = messages[messages.length - 1];
                 formattedMessages = [
@@ -770,44 +760,21 @@
                     model: AGNES_MODEL,
                     messages: formattedMessages,
                     max_tokens: maxTokens,
-                    temperature: 0.7,
-                    stream: true
+                    temperature: 0.7
                 })
             });
 
             if (!response.ok) {
-                throw new Error('Ошибка API');
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || 'Ошибка Agnes API');
             }
 
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-            let buffer = '';
-
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                buffer += decoder.decode(value, { stream: true });
-                const lines = buffer.split('\n');
-                buffer = lines.pop() || '';
-
-                for (const line of lines) {
-                    if (line.startsWith('data: ')) {
-                        const data = line.slice(6);
-                        if (data === '[DONE]') continue;
-                        try {
-                            const json = JSON.parse(data);
-                            const chunk = json.choices[0]?.delta?.content || '';
-                            if (chunk) {
-                                onChunk(chunk);
-                            }
-                        } catch (e) {}
-                    }
-                }
-            }
+            const data = await response.json();
+            return data.choices[0].message.content;
         }
 
-        async function streamKodikRouterAI(messages, maxTokens, onChunk) {
+        // ===== KODIKROUTER API =====
+        async function callKodikRouterAI(messages, maxTokens) {
             const formattedMessages = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
 
             const response = await fetch(KODIKROUTER_URL, {
@@ -820,52 +787,28 @@
                     model: FREE_MODEL,
                     messages: formattedMessages,
                     max_tokens: maxTokens,
-                    temperature: 0.7,
-                    stream: true
+                    temperature: 0.7
                 })
             });
 
             if (!response.ok) {
-                throw new Error('Ошибка API');
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || 'Ошибка KodikRouter API');
             }
 
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-            let buffer = '';
-
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                buffer += decoder.decode(value, { stream: true });
-                const lines = buffer.split('\n');
-                buffer = lines.pop() || '';
-
-                for (const line of lines) {
-                    if (line.startsWith('data: ')) {
-                        const data = line.slice(6);
-                        if (data === '[DONE]') continue;
-                        try {
-                            const json = JSON.parse(data);
-                            const chunk = json.choices[0]?.delta?.content || '';
-                            if (chunk) {
-                                onChunk(chunk);
-                            }
-                        } catch (e) {}
-                    }
-                }
-            }
+            const data = await response.json();
+            return data.choices[0].message.content;
         }
 
         // ===== ГЛАВНАЯ ФУНКЦИЯ =====
-        async function getAIResponseStream(messages, role, imageUrl = null, onChunk) {
+        async function getAIResponse(messages, role, imageUrl = null) {
             const perms = getUserPermissions(role);
 
             try {
                 if (perms.provider === 'agnes') {
-                    await streamAgnesAI(messages, perms.maxTokens, imageUrl, onChunk);
+                    return await callAgnesAI(messages, perms.maxTokens, imageUrl);
                 } else {
-                    await streamKodikRouterAI(messages, perms.maxTokens, onChunk);
+                    return await callKodikRouterAI(messages, perms.maxTokens);
                 }
             } catch (error) {
                 console.error('AI Error:', error);
@@ -1135,7 +1078,7 @@
             }
         };
 
-        // ===== ОТПРАВКА СООБЩЕНИЯ (С STREAMING) =====
+        // ===== ОТПРАВКА СООБЩЕНИЯ =====
         window.sendMessage = async function() {
             const text = chatInput.value.trim();
             if (!text || !currentUser || !currentChatId || isProcessing) {
@@ -1191,29 +1134,23 @@
                     });
                 }
 
-                // Создаём сообщение для ответа
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'message assistant';
-                msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><span></span>`;
-                chatMessages.appendChild(msgDiv);
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message assistant loading';
+                loadingDiv.innerHTML = `<div class="msg-header">Nemesis AI</div>Думаю...`;
+                chatMessages.appendChild(loadingDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                let fullResponse = '';
-                const textSpan = msgDiv.querySelector('span');
+                const response = await getAIResponse(history, role, imageUrl);
 
-                await getAIResponseStream(history, role, imageUrl, (chunk) => {
-                    fullResponse += chunk;
-                    textSpan.innerHTML = formatCodeBlock(fullResponse);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                });
+                if (loadingDiv.parentNode) loadingDiv.remove();
 
-                // Сохраняем полный ответ в Firebase
                 const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                await set(resRef, { role: 'assistant', content: fullResponse, timestamp: Date.now() });
+                await set(resRef, { role: 'assistant', content: response, timestamp: Date.now() });
 
                 clearFile();
                 currentImageUrl = null;
 
+                await openChat(currentChatId);
                 await loadUserChats();
 
             } catch (error) {
@@ -1260,10 +1197,8 @@
 
         console.log('🚀 Nemesis AI готов к работе!');
         console.log('⭐ Создан командой Kotik Team');
-        console.log('🤖 Модели: FREE/ELITE: NVIDIA Nemotron Nano 12B VL | Premium: Agnes-2.0-Flash');
-        console.log('📸 Загрузка фото через FreeImage.host');
         console.log('🗑️ Удаление чатов — кнопка ✕');
-        console.log('⏳ Печать в реальном времени — включена');
+        console.log('🤖 Модели: FREE/ELITE: NVIDIA Nemotron Nano 12B VL | Premium: Agnes-2.0-Flash');
     </script>
 </body>
 </html>
