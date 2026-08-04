@@ -486,11 +486,10 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // ===== API КЛЮЧИ =====
-        const AGNES_API_KEY = 'sk-9OBSttI1TxXspLMDenWdnk5nfuzJsRXAHvvI5fCO18SOZVj0';
-        const AGNES_MODEL = 'agnes-2.0-flash';
-        const OPENROUTER_KEY = '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';
-        const FREE_MODEL = 'qwen/qwen3.5-4b-instruct:free';
+        // ===== KODIKROUTER API =====
+        const KODIKROUTER_KEY = 'sk-kr_live_ylOcxBSygMfvAbIfQsYeMxY4qoIUGLcl';
+        const KODIKROUTER_URL = 'https://api.kodikrouter.ru/v1/chat/completions';
+        const AI_MODEL = 'google/gemma-4-31b-it:free';
 
         // ===== ПЕРЕМЕННЫЕ =====
         let currentUser = null;
@@ -541,18 +540,18 @@
                 canChat: true,
                 canUseVision: false,
                 maxTokens: 500,
-                model: FREE_MODEL,
-                provider: 'openrouter',
+                model: AI_MODEL,
+                provider: 'kodikrouter',
                 label: '🆓 FREE'
             };
 
             switch (role) {
                 case 'nemesis':
-                    return { ...base, canUseVision: true, maxTokens: 4000, model: AGNES_MODEL, provider: 'agnes', label: '👑 NEMESIS' };
+                    return { ...base, canUseVision: true, maxTokens: 4000, label: '👑 NEMESIS' };
                 case 'ai_max':
-                    return { ...base, canUseVision: true, maxTokens: 4000, model: AGNES_MODEL, provider: 'agnes', label: '🚀 AI MAX' };
+                    return { ...base, canUseVision: true, maxTokens: 4000, label: '🚀 AI MAX' };
                 case 'ai_basic':
-                    return { ...base, canUseVision: true, maxTokens: 2000, model: AGNES_MODEL, provider: 'agnes', label: '🧠 AI+' };
+                    return { ...base, canUseVision: true, maxTokens: 2000, label: '🧠 AI+' };
                 case 'elite':
                     return { ...base, label: '⚡ ELITE' };
                 default:
@@ -573,9 +572,10 @@
             throw new Error('Ошибка загрузки фото');
         }
 
-        // ===== ОТПРАВКА В AGNES =====
-        async function callAgnesAI(messages, maxTokens, imageUrl = null) {
+        // ===== ОТПРАВКА В KODIKROUTER =====
+        async function callKodikRouterAI(messages, maxTokens, imageUrl = null) {
             let formattedMessages = messages;
+            
             if (imageUrl) {
                 const lastMsg = messages[messages.length - 1];
                 formattedMessages = [
@@ -590,14 +590,14 @@
                 ];
             }
 
-            const response = await fetch('https://apihub.agnes-ai.com/v1/chat/completions', {
+            const response = await fetch(KODIKROUTER_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${AGNES_API_KEY}`
+                    'Authorization': `Bearer ${KODIKROUTER_KEY}`
                 },
                 body: JSON.stringify({
-                    model: AGNES_MODEL,
+                    model: AI_MODEL,
                     messages: formattedMessages,
                     max_tokens: maxTokens,
                     temperature: 0.7
@@ -606,46 +606,19 @@
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'Ошибка Agnes API');
+                throw new Error(errorData.error?.message || 'Ошибка KodikRouter API');
             }
+
             const data = await response.json();
             return data.choices[0].message.content;
         }
 
-        // ===== ОТПРАВКА В OPENROUTER =====
-        async function callOpenRouterAI(messages, maxTokens) {
-            const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${OPENROUTER_KEY}`,
-                    'HTTP-Referer': 'https://nemesisx.fun',
-                    'X-Title': 'Nemesis AI'
-                },
-                body: JSON.stringify({
-                    model: FREE_MODEL,
-                    messages: messages,
-                    max_tokens: maxTokens,
-                    temperature: 0.7
-                })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'Ошибка OpenRouter API');
-            }
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
+        // ===== ГЛАВНАЯ ФУНКЦИЯ =====
         async function getAIResponse(messages, role, imageUrl = null) {
             const perms = getUserPermissions(role);
+
             try {
-                if (perms.provider === 'agnes') {
-                    return await callAgnesAI(messages, perms.maxTokens, imageUrl);
-                } else {
-                    return await callOpenRouterAI(messages, perms.maxTokens);
-                }
+                return await callKodikRouterAI(messages, perms.maxTokens, imageUrl);
             } catch (error) {
                 console.error('AI Error:', error);
                 throw error;
@@ -817,7 +790,7 @@
                 const data = snapshot.val();
                 chatListItems.innerHTML = '';
                 if (!data || Object.keys(data).length === 0) {
-                    chatListItems.innerHTML = '<div class="chat-empty">Нет чатов. Создайте новый!</div>';
+                    chatListItems.innerHTML = '<div class="chat-empty">Нет чатов</div>';
                     return;
                 }
                 const ids = Object.keys(data).sort((a, b) => data[b].updated_at?.localeCompare(data[a].updated_at) || 0);
@@ -825,7 +798,7 @@
                     const chat = data[id];
                     const div = document.createElement('div');
                     div.className = 'chat-item' + (currentChatId === id ? ' active' : '');
-                    div.innerHTML = `<span class="title">${chat.title || 'Новый чат'}</span><span class="count">${chat.messages ? Object.keys(chat.messages).length : 0} сообщ.</span>`;
+                    div.innerHTML = `<span class="title">${chat.title || 'Новый чат'}</span><span class="count">${chat.messages ? Object.keys(chat.messages).length : 0}</span>`;
                     div.onclick = () => openChat(id);
                     chatListItems.appendChild(div);
                 });
@@ -996,7 +969,8 @@
         createStars();
 
         console.log('🚀 Nemesis AI готов к работе!');
-        console.log('🤖 Модели: FREE: Qwen3.5-4B | AI+/MAX/NEMESIS: Agnes-2.0-Flash');
+        console.log('🤖 Модель:', AI_MODEL);
+        console.log('🔑 Провайдер: KodikRouter');
     </script>
 </body>
 </html>
