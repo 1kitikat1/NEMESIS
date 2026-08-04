@@ -41,11 +41,11 @@
             100% { opacity: 0.9; transform: scale(1.2); }
         }
 
-        .app {
+        .container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1200px;
             height: 92vh;
-            max-height: 950px;
+            max-height: 920px;
             position: relative;
             z-index: 5;
             display: flex;
@@ -78,7 +78,7 @@
             width: 36px;
             height: 36px;
             border-radius: 10px;
-            background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(108,99,255,0.05));
+            background: rgba(108,99,255,0.15);
             border: 1px solid rgba(108,99,255,0.1);
             display: flex;
             align-items: center;
@@ -111,7 +111,7 @@
         }
 
         .sidebar {
-            width: 280px;
+            width: 260px;
             background: rgba(0,0,0,0.15);
             border-right: 1px solid rgba(255,255,255,0.04);
             display: flex;
@@ -160,7 +160,11 @@
         .sidebar .role.elite { background: rgba(108,99,255,0.1); color: #6c63ff; }
         .sidebar .role.ai_basic { background: rgba(108,99,255,0.15); color: #6c63ff; }
         .sidebar .role.ai_max { background: rgba(255,215,0,0.1); color: #ffd700; }
-        .sidebar .role.nemesis { background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05)); color: #ffd700; }
+        .sidebar .role.nemesis {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05));
+            color: #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.05);
+        }
 
         .sidebar .chat-list-header {
             display: flex;
@@ -204,19 +208,8 @@
         }
         .chat-item:hover { background: rgba(108,99,255,0.05); }
         .chat-item.active { background: rgba(108,99,255,0.08); }
-        .chat-item .title {
-            color: #fff;
-            font-size: 13px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 140px;
-        }
-        .chat-item .count {
-            color: #555566;
-            font-size: 11px;
-            flex-shrink: 0;
-        }
+        .chat-item .title { color: #fff; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+        .chat-item .count { color: #555566; font-size: 11px; flex-shrink: 0; }
         .chat-empty { color: #555566; text-align: center; padding: 20px 0; font-size: 13px; }
 
         .sidebar .logout-btn {
@@ -458,7 +451,7 @@
             .message { max-width: 92%; }
         }
         @media (max-width: 640px) {
-            .app { height: 100vh; max-height: none; border-radius: 0; }
+            .container { height: 100vh; max-height: none; border-radius: 0; }
             .main { flex-direction: column; }
             .sidebar {
                 width: 100%;
@@ -478,7 +471,7 @@
 
     <div id="stars"></div>
 
-    <div class="app">
+    <div class="container">
 
         <!-- ХЕДЕР -->
         <div class="header">
@@ -563,7 +556,6 @@
 
     </div>
 
-    <!-- FIREBASE -->
     <script type="importmap">
         {
             "imports": {
@@ -698,7 +690,7 @@
         async function callKodikRouterAI(messages, maxTokens, imageUrl = null) {
             const systemMessage = {
                 role: 'system',
-                content: `Ты — Nemesis AI ⭐, умный и дружелюбный искусственный интеллект, созданный командой Kotik Team. Ты помогаешь пользователям с любыми вопросами. Отвечаешь кратко, понятно и с душой. Всегда представляешься как "Nemesis AI ⭐". Отвечай на русском языке.`
+                content: `Ты — Nemesis AI ⭐, умный и дружелюбный искусственный интеллект, созданный командой Kotik Team. Ты помогаешь пользователям с любыми вопросами. Отвечаешь кратко, понятно и с душой. Всегда представляешься как "Nemesis AI ⭐" в начале общения, если пользователь спрашивает кто ты. Отвечай на русском языке.`
             };
 
             let formattedMessages = [systemMessage, ...messages];
