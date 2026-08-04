@@ -56,7 +56,6 @@
             overflow: hidden;
         }
 
-        /* ===== ХЕДЕР ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -105,14 +104,12 @@
         }
         .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
-        /* ===== ОСНОВНАЯ ОБЛАСТЬ ===== */
         .main {
             display: flex;
             flex: 1;
             min-height: 0;
         }
 
-        /* ===== САЙДБАР (ЧАТЫ СЛЕВА) ===== */
         .sidebar {
             width: 280px;
             background: rgba(0,0,0,0.15);
@@ -238,7 +235,6 @@
         }
         .sidebar .logout-btn:hover { background: rgba(255,0,0,0.08); }
 
-        /* ===== ОБЛАСТЬ ЧАТА (БОЛЬШЕ) ===== */
         .chat-area {
             flex: 1;
             display: flex;
@@ -264,7 +260,6 @@
         .chat-messages .empty h3 { color: #fff; font-size: 20px; margin-bottom: 8px; }
         .chat-messages .empty p { font-size: 14px; }
 
-        /* ===== СООБЩЕНИЯ ===== */
         .message {
             padding: 12px 18px;
             border-radius: 14px;
@@ -299,7 +294,6 @@
         .message.assistant.loading { opacity: 0.6; }
         .message.assistant.error { color: #ff4444; background: rgba(255,68,68,0.08); }
 
-        /* ===== ПОЛЕ ВВОДА ===== */
         .chat-input-area {
             display: flex;
             gap: 10px;
@@ -384,7 +378,6 @@
             font-weight: 700;
         }
 
-        /* ===== ЛОГИН ===== */
         .login-box {
             background: rgba(255,255,255,0.025);
             border-radius: 24px;
@@ -520,7 +513,7 @@
             </div>
 
             <!-- АВТОРИЗОВАН -->
-            <div id="chat-section" class="hidden" style="display:none; flex:1; min-height:0;">
+            <div id="chat-section" class="hidden" style="display:flex; flex:1; min-height:0; width:100%;">
                 <div class="main" style="display:flex; flex:1; min-height:0; width:100%;">
 
                     <!-- САЙДБАР (ЧАТЫ СЛЕВА) -->
@@ -705,11 +698,18 @@
 
         // ===== ОТПРАВКА В KODIKROUTER =====
         async function callKodikRouterAI(messages, maxTokens, imageUrl = null) {
-            let formattedMessages = messages;
+            // Системный промпт — Nemesis AI от Kotik Team
+            const systemMessage = {
+                role: 'system',
+                content: 'Ты — Nemesis AI ⭐, умный и дружелюбный искусственный интеллект, созданный командой Kotik Team. Ты помогаешь пользователям с любыми вопросами: программирование, учёба, творчество, анализ данных. Отвечаешь кратко, понятно и с душой. Всегда представляешься как "Nemesis AI ⭐" в начале общения, если пользователь спрашивает кто ты. Ты — часть экосистемы NEMESIS :3. Отвечай на русском языке.'
+            };
+
+            let formattedMessages = [systemMessage, ...messages];
             
             if (imageUrl) {
                 const lastMsg = messages[messages.length - 1];
                 formattedMessages = [
+                    systemMessage,
                     ...messages.slice(0, -1),
                     {
                         role: 'user',
@@ -1111,6 +1111,7 @@
         console.log('🚀 Nemesis AI обновлён!');
         console.log('📸 Загрузка фото: для AI+ и выше');
         console.log('⭐ Все ответы от Nemesis AI (Kotik Team)');
+        console.log('🔑 Провайдер: KodikRouter');
     </script>
 </body>
 </html>
