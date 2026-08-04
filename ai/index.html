@@ -41,7 +41,6 @@
             100% { opacity: 0.9; transform: scale(1.2); }
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
         .app {
             width: 100%;
             max-width: 1400px;
@@ -57,7 +56,6 @@
             overflow: hidden;
         }
 
-        /* ===== ХЕДЕР ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -106,14 +104,12 @@
         }
         .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
-        /* ===== ОСНОВНАЯ ОБЛАСТЬ ===== */
         .main {
             display: flex;
             flex: 1;
             min-height: 0;
         }
 
-        /* ===== САЙДБАР (ЧАТЫ) ===== */
         .sidebar {
             width: 280px;
             background: rgba(0,0,0,0.15);
@@ -228,7 +224,6 @@
         }
         .sidebar .logout-btn:hover { background: rgba(255,0,0,0.08); }
 
-        /* ===== ОБЛАСТЬ ЧАТА ===== */
         .chat-area {
             flex: 1;
             display: flex;
@@ -254,7 +249,6 @@
         .chat-messages .empty h3 { color: #fff; font-size: 20px; margin-bottom: 8px; }
         .chat-messages .empty p { font-size: 14px; }
 
-        /* ===== СООБЩЕНИЯ ===== */
         .message {
             padding: 12px 18px;
             border-radius: 14px;
@@ -289,7 +283,6 @@
         .message.assistant.loading { opacity: 0.6; }
         .message.assistant.error { color: #ff4444; background: rgba(255,68,68,0.08); }
 
-        /* ===== БЛОКИ КОДА ===== */
         .code-block {
             background: rgba(0,0,0,0.5);
             border-radius: 10px;
@@ -335,7 +328,6 @@
             white-space: pre-wrap;
         }
 
-        /* ===== ПОЛЕ ВВОДА ===== */
         .chat-input-area {
             display: flex;
             gap: 10px;
@@ -408,7 +400,6 @@
             font-weight: 700;
         }
 
-        /* ===== ЛОГИН ===== */
         .login-box {
             background: rgba(255,255,255,0.025);
             border-radius: 24px;
@@ -477,12 +468,13 @@
         }
         .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
 
-        /* ===== АДАПТИВ ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 820px) {
-            .sidebar {
-                width: 220px;
-                padding: 12px;
-            }
+            .sidebar { width: 220px; padding: 12px; }
             .chat-messages { padding: 16px; }
             .chat-input-area { padding: 10px 16px; }
             .message { max-width: 92%; }
