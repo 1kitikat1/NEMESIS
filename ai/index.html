@@ -753,7 +753,6 @@
             let blockIndex = 0;
             return text.replace(codeRegex, (match, language, code) => {
                 const lang = language || 'plaintext';
-                // Экранируем HTML теги в коде
                 const escapedCode = escapeHtml(code);
                 const isHtml = ['html', 'htm', 'xhtml'].includes(lang.toLowerCase());
                 const runBtn = isHtml ? `<button class="run-btn" onclick="runCode(this)">▶ Запустить</button>` : '';
@@ -798,7 +797,6 @@
             const codeBlock = btn.closest('.code-block');
             const codeElement = codeBlock.querySelector('code');
             const lang = codeBlock.querySelector('.code-lang').textContent.toLowerCase();
-            // Берём оригинальный код (не экранированный)
             const code = codeElement.textContent;
 
             if (['html', 'htm', 'xhtml'].includes(lang)) {
@@ -911,7 +909,7 @@
             });
         }
 
-        // ===== СТРИМИНГ ОТВЕТА ЧЕРЕЗ ПРЯМОЙ API =====
+        // ===== СТРИМИНГ ОТВЕТА =====
         async function streamAIResponse(messages, imageUrl, onChunk) {
             let formatted = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
             if (imageUrl) {
@@ -1250,7 +1248,7 @@
             }
         };
 
-        // ===== ОТПРАВКА СООБЩЕНИЯ (ПРЯМОЙ API) =====
+        // ===== ОТПРАВКА СООБЩЕНИЯ (СТРИМИНГ + СБОР ПОЛНОГО ОТВЕТА) =====
         window.sendMessage = async function() {
             const text = chatInput.value.trim();
             if (!text || !currentUser || !currentChatId || isProcessing) {
@@ -1288,6 +1286,7 @@
                     ids.forEach(id => history.push({ role: data[id].role, content: data[id].content }));
                 }
 
+                // Создаём сообщение ассистента
                 const msgDiv = document.createElement('div');
                 msgDiv.className = 'message assistant';
                 msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><span></span><span class="cursor-blink"></span>`;
@@ -1298,13 +1297,15 @@
                 const textSpan = msgDiv.querySelector('span');
                 const cursorSpan = msgDiv.querySelector('.cursor-blink');
 
+                // Стримим и собираем полный ответ
                 await streamAIResponse(history, imageUrl, (chunk) => {
                     fullResponse += chunk;
-                    textSpan.innerHTML = formatCodeBlock(fullResponse);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 });
 
+                // Показываем готовый ответ
                 if (cursorSpan) cursorSpan.remove();
+                textSpan.innerHTML = formatCodeBlock(fullResponse);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
 
                 const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
                 await set(resRef, { role: 'assistant', content: fullResponse, timestamp: Date.now() });
