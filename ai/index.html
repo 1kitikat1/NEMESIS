@@ -747,14 +747,15 @@
             chatSection.style.display = 'flex';
         }
 
-        // ===== ФОРМАТИРОВАНИЕ КОДА =====
+        // ===== ФОРМАТИРОВАНИЕ КОДА (С ЭКРАНИРОВАНИЕМ) =====
         function formatCodeBlock(text) {
             const codeRegex = /```(\w+)?\n([\s\S]*?)```/g;
             let blockIndex = 0;
             return text.replace(codeRegex, (match, language, code) => {
                 const lang = language || 'plaintext';
+                // Экранируем HTML теги в коде
+                const escapedCode = escapeHtml(code);
                 const isHtml = ['html', 'htm', 'xhtml'].includes(lang.toLowerCase());
-                // Для HTML показываем кнопку "Запустить"
                 const runBtn = isHtml ? `<button class="run-btn" onclick="runCode(this)">▶ Запустить</button>` : '';
                 return `<div class="code-block" data-index="${blockIndex++}">
                             <div class="code-header">
@@ -764,7 +765,7 @@
                                     <button class="copy-btn" onclick="copyCode(this)">📋 Копировать</button>
                                 </div>
                             </div>
-                            <pre><code>${escapeHtml(code)}</code></pre>
+                            <pre><code>${escapedCode}</code></pre>
                         </div>`;
             });
         }
@@ -776,8 +777,9 @@
         }
 
         window.copyCode = function(btn) {
-            const codeBlock = btn.closest('.code-block').querySelector('code');
-            const text = codeBlock.textContent;
+            const codeBlock = btn.closest('.code-block');
+            const codeElement = codeBlock.querySelector('code');
+            const text = codeElement.textContent;
             navigator.clipboard.writeText(text).then(() => {
                 btn.textContent = '✅';
                 setTimeout(() => btn.textContent = '📋 Копировать', 2000);
@@ -796,10 +798,10 @@
             const codeBlock = btn.closest('.code-block');
             const codeElement = codeBlock.querySelector('code');
             const lang = codeBlock.querySelector('.code-lang').textContent.toLowerCase();
-            let code = codeElement.textContent;
+            // Берём оригинальный код (не экранированный)
+            const code = codeElement.textContent;
 
             if (['html', 'htm', 'xhtml'].includes(lang)) {
-                // Оборачиваем в iframe
                 const modal = document.getElementById('preview-modal');
                 const iframe = document.getElementById('preview-iframe');
                 iframe.srcdoc = code;
