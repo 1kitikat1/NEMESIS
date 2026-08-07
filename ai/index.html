@@ -862,6 +862,7 @@
 
         // ===== ЗАГРУЗКА ФОТО (ПРЯМОЙ UPLOAD) =====
        // ===== ЗАГРУЗКА ФОТО ЧЕРЕЗ imgBB =====
+// ===== ЗАГРУЗКА ФОТО ЧЕРЕЗ imgBB =====
 const IMGBB_KEY = '24b0ec6a371e4f68ccff76bd7a7d127f';
 
 async function uploadImage(file) {
@@ -869,8 +870,11 @@ async function uploadImage(file) {
     
     const compressedDataUrl = await compressImage(file);
     
+    // Убираем "data:image/jpeg;base64," из строки
+    const base64Data = compressedDataUrl.split(',')[1];
+    
     const formData = new FormData();
-    formData.append('image', compressedDataUrl);
+    formData.append('image', base64Data);
     formData.append('key', IMGBB_KEY);
 
     try {
