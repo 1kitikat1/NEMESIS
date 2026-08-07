@@ -40,128 +40,165 @@ function permsForRole(role) {
   }
 }
 
-// ===== /chat — стримит ответ ИИ =====
-exports.chat = onRequest({ cors: true }, async (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).send("Method not allowed");
-  }
+// ===== CORS ХЕЛПЕР =====
+function setCorsHeaders(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+}
 
-  try {
-    const { messages, imageUrl, uid, role } = req.body || {};
-    
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return res.status(400).json({ error: "Пустое сообщение" });
+// ===== /chat =====
+exports.chat = onRequest(
+  { 
+    cors: true,
+    maxInstances: 10,
+  },
+  async (req, res) => {
+    // CORS заголовки
+    setCorsHeaders(res);
+
+    if (req.method === 'OPTIONS') {
+      res.status(204).send('');
+      return;
     }
 
-    const perms = permsForRole(role || "free");
-
-    if (imageUrl && !perms.canVision) {
-      return res.status(403).json({ error: "Ваш тариф не поддерживает фото" });
+    if (req.method !== "POST") {
+      return res.status(405).send("Method not allowed");
     }
 
-    let formatted = [{ role: "system", content: SYSTEM_PROMPT }, ...messages];
-    
-    if (imageUrl) {
-      const last = messages[messages.length - 1];
-      formatted = [
-        { role: "system", content: SYSTEM_PROMPT },
-        ...messages.slice(0, -1),
-        {
-          role: "user",
-          content: [
-            { type: "text", text: last.content },
-            { type: "image_url", image_url: { url: imageUrl } },
-          ],
+    try {
+      const { messages, imageUrl, role } = req.body || {};
+      
+      if (!messages || !Array.isArray(messages) || messages.length === 0) {
+        return res.status(400).json({ error: "Пустое сообщение" });
+      }
+
+      const perms = permsForRole(role || "free");
+
+      if (imageUrl && !perms.canVision) {
+        return res.status(403).json({ error: "Ваш тариф не поддерживает фото" });
+      }
+
+      let formatted = [{ role: "system", content: SYSTEM_PROMPT }, ...messages];
+      
+      if (imageUrl) {
+        const last = messages[messages.length - 1];
+        formatted = [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages.slice(0, -1),
+          {
+            role: "user",
+            content: [
+              { type: "text", text: last.content },
+              { type: "image_url", image_url: { url: imageUrl } },
+            ],
+          },
+        ];
+      }
+
+      const upstream = await fetch(AGNES_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${AGNES_API_KEY}`,
         },
-      ];
-    }
+        body: JSON.stringify({
+          model: perms.model,
+          messages: formatted,
+          max_tokens: perms.maxTokens,
+          temperature: 0.7,
+          stream: true,
+        }),
+      });
 
-    const upstream = await fetch(AGNES_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${AGNES_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: perms.model,
-        messages: formatted,
-        max_tokens: perms.maxTokens,
-        temperature: 0.7,
-        stream: true,
-      }),
-    });
+      if (!upstream.ok || !upstream.body) {
+        const errText = await upstream.text().catch(() => "");
+        return res.status(502).json({ error: `Ошибка AI API: ${errText || upstream.status}` });
+      }
 
-    if (!upstream.ok || !upstream.body) {
-      return res.status(502).json({ error: "Ошибка AI API" });
-    }
+      res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+      res.setHeader("Cache-Control", "no-cache");
+      res.setHeader("Connection", "keep-alive");
+      setCorsHeaders(res);
 
-    res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
+      const reader = upstream.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
 
-    const reader = upstream.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop() || "";
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const data = line.slice(6);
+          if (data === "[DONE]") continue;
+          try {
+            const json = JSON.parse(data);
+            const chunk = json.choices?.[0]?.delta?.content || "";
+            if (chunk) res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
+          } catch (_) {}
+        }
+      }
 
-      for (const line of lines) {
-        if (!line.startsWith("data: ")) continue;
-        const data = line.slice(6);
-        if (data === "[DONE]") continue;
-        try {
-          const json = JSON.parse(data);
-          const chunk = json.choices?.[0]?.delta?.content || "";
-          if (chunk) res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
-        } catch (_) {}
+      res.write("data: [DONE]\n\n");
+      res.end();
+    } catch (err) {
+      console.error(err);
+      if (!res.headersSent) {
+        res.status(500).json({ error: err.message || "Внутренняя ошибка" });
+      } else {
+        res.end();
       }
     }
-
-    res.write("data: [DONE]\n\n");
-    res.end();
-  } catch (err) {
-    console.error(err);
-    if (!res.headersSent) {
-      res.status(500).json({ error: err.message || "Внутренняя ошибка" });
-    } else {
-      res.end();
-    }
   }
-});
+);
 
-// ===== /uploadImage — загрузка фото =====
-exports.uploadImage = onRequest({ cors: true }, async (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).send("Method not allowed");
-  }
+// ===== /uploadImage =====
+exports.uploadImage = onRequest(
+  { 
+    cors: true,
+    maxInstances: 10,
+  },
+  async (req, res) => {
+    // CORS заголовки
+    setCorsHeaders(res);
 
-  try {
-    const { imageBase64 } = req.body || {};
-    if (!imageBase64) {
-      return res.status(400).json({ error: "Нет изображения" });
+    if (req.method === 'OPTIONS') {
+      res.status(204).send('');
+      return;
     }
 
-    const form = new URLSearchParams();
-    form.append("source", imageBase64);
-    form.append("format", "json");
-
-    const r = await fetch(
-      `https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5`,
-      { method: "POST", body: form }
-    );
-    const data = await r.json();
-
-    if (data.status_code === 200) {
-      return res.json({ url: data.image.url });
+    if (req.method !== "POST") {
+      return res.status(405).send("Method not allowed");
     }
-    return res.status(502).json({ error: "Ошибка загрузки фото" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message || "Ошибка сервера" });
+
+    try {
+      const { imageBase64 } = req.body || {};
+      if (!imageBase64) {
+        return res.status(400).json({ error: "Нет изображения" });
+      }
+
+      const form = new URLSearchParams();
+      form.append("source", imageBase64);
+      form.append("format", "json");
+
+      const r = await fetch(
+        `https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5`,
+        { method: "POST", body: form }
+      );
+      const data = await r.json();
+
+      if (data.status_code === 200) {
+        return res.json({ url: data.image.url });
+      }
+      return res.status(502).json({ error: "Ошибка загрузки фото" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message || "Ошибка сервера" });
+    }
   }
-});
+);
