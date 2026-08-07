@@ -1248,88 +1248,92 @@
             }
         };
 
-        // ===== ОТПРАВКА СООБЩЕНИЯ (СТРИМИНГ + СБОР ПОЛНОГО ОТВЕТА) =====
-        window.sendMessage = async function() {
-            const text = chatInput.value.trim();
-            if (!text || !currentUser || !currentChatId || isProcessing) {
-                if (!currentUser) showToast('Войдите в аккаунт');
-                else if (!currentChatId) showToast('Создайте или откройте чат');
-                return;
-            }
+       window.sendMessage = async function() {
+    const text = chatInput.value.trim();
+    if (!text || !currentUser || !currentChatId || isProcessing) {
+        if (!currentUser) showToast('Войдите в аккаунт');
+        else if (!currentChatId) showToast('Создайте или откройте чат');
+        return;
+    }
 
-            const imageUrl = currentImageUrl;
+    const imageUrl = currentImageUrl;
 
-            chatInput.value = '';
-            sendBtn.disabled = true;
-            isProcessing = true;
+    chatInput.value = '';
+    sendBtn.disabled = true;
+    isProcessing = true;
 
-            try {
-                const msgRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                await set(msgRef, { role: 'user', content: text, imageUrl: imageUrl || null, timestamp: Date.now() });
-                await update(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}`), { updated_at: new Date().toISOString() });
+    try {
+        const msgRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
+        await set(msgRef, { role: 'user', content: text, imageUrl: imageUrl || null, timestamp: Date.now() });
+        await update(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}`), { updated_at: new Date().toISOString() });
 
-                const userDiv = document.createElement('div');
-                userDiv.className = 'message user';
-                userDiv.textContent = text;
-                if (imageUrl) {
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    userDiv.appendChild(img);
-                }
-                chatMessages.appendChild(userDiv);
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user';
+        userDiv.textContent = text;
+        if (imageUrl) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            userDiv.appendChild(img);
+        }
+        chatMessages.appendChild(userDiv);
 
-                const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                const data = snapshot.val();
-                const history = [];
-                if (data) {
-                    const ids = Object.keys(data).sort((a, b) => data[a].timestamp - data[b].timestamp);
-                    ids.forEach(id => history.push({ role: data[id].role, content: data[id].content }));
-                }
+        const snapshot = await get(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
+        const data = snapshot.val();
+        const history = [];
+        if (data) {
+            const ids = Object.keys(data).sort((a, b) => data[a].timestamp - data[b].timestamp);
+            ids.forEach(id => history.push({ role: data[id].role, content: data[id].content }));
+        }
 
-                // Создаём сообщение ассистента
-                const msgDiv = document.createElement('div');
-                msgDiv.className = 'message assistant';
-                msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><span></span><span class="cursor-blink"></span>`;
-                chatMessages.appendChild(msgDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+        // ---- СОЗДАЁМ БЛОК СООБЩЕНИЯ СРАЗУ ----
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message assistant';
+        msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><div class="assistant-content"><span class="stream-text"></span><span class="cursor-blink"></span></div>`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                let fullResponse = '';
-                const textSpan = msgDiv.querySelector('span');
-                const cursorSpan = msgDiv.querySelector('.cursor-blink');
+        const contentDiv = msgDiv.querySelector('.assistant-content');
+        const textSpan = contentDiv.querySelector('.stream-text');
+        const cursorSpan = contentDiv.querySelector('.cursor-blink');
 
-                // Стримим и собираем полный ответ
-                await streamAIResponse(history, imageUrl, (chunk) => {
-                    fullResponse += chunk;
-                });
+        let fullResponse = '';
 
-                // Показываем готовый ответ
-                if (cursorSpan) cursorSpan.remove();
-                textSpan.innerHTML = formatCodeBlock(fullResponse);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Стримим
+        await streamAIResponse(history, imageUrl, (chunk) => {
+            fullResponse += chunk;
+            // Показываем текст без форматирования (чтобы не ломать сайт)
+            textSpan.textContent = fullResponse;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
 
-                const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
-                await set(resRef, { role: 'assistant', content: fullResponse, timestamp: Date.now() });
+        // ---- ПОСЛЕ ЗАВЕРШЕНИЯ СТРИМИНГА ----
+        if (cursorSpan) cursorSpan.remove();
+        // Теперь форматируем код
+        contentDiv.innerHTML = formatCodeBlock(fullResponse);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                clearFile();
-                await loadUserChats();
+        const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
+        await set(resRef, { role: 'assistant', content: fullResponse, timestamp: Date.now() });
 
-            } catch (error) {
-                console.error(error);
-                const lastMsg = chatMessages.lastElementChild;
-                if (lastMsg && lastMsg.classList.contains('assistant') && lastMsg.querySelector('.cursor-blink')) {
-                    lastMsg.remove();
-                }
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'message assistant error';
-                errorDiv.innerHTML = `<div class="msg-header">Nemesis AI</div>❌ ${escapeHtml(error.message || 'Не удалось получить ответ')}`;
-                chatMessages.appendChild(errorDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            } finally {
-                sendBtn.disabled = false;
-                isProcessing = false;
-            }
-        };
+        clearFile();
+        await loadUserChats();
 
+    } catch (error) {
+        console.error(error);
+        const lastMsg = chatMessages.lastElementChild;
+        if (lastMsg && lastMsg.classList.contains('assistant')) {
+            lastMsg.remove();
+        }
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'message assistant error';
+        errorDiv.innerHTML = `<div class="msg-header">Nemesis AI</div>❌ ${escapeHtml(error.message || 'Не удалось получить ответ')}`;
+        chatMessages.appendChild(errorDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    } finally {
+        sendBtn.disabled = false;
+        isProcessing = false;
+    }
+};
         // ===== СОСТОЯНИЕ =====
         onAuthStateChanged(auth, async (user) => {
             await updateUI(user);
