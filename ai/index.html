@@ -17,7 +17,6 @@
             justify-content: center;
             padding: 20px;
         }
-
         #stars {
             position: fixed;
             top: 0;
@@ -40,7 +39,6 @@
             0% { opacity: 0.2; transform: scale(0.8); }
             100% { opacity: 0.9; transform: scale(1.2); }
         }
-
         .container {
             width: 100%;
             max-width: 900px;
@@ -51,7 +49,6 @@
             height: 94vh;
             max-height: 960px;
         }
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -98,7 +95,6 @@
             transition: 0.3s;
         }
         .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
-
         .profile-bar {
             display: flex;
             justify-content: space-between;
@@ -144,7 +140,6 @@
             color: #ffd700;
             box-shadow: 0 0 20px rgba(255,215,0,0.1);
         }
-
         .chat-list {
             background: rgba(255,255,255,0.025);
             border-radius: 16px;
@@ -175,7 +170,6 @@
             transition: 0.2s;
         }
         .chat-list .header button:hover { background: rgba(108,99,255,0.3); }
-
         .chat-item {
             display: flex;
             justify-content: space-between;
@@ -204,7 +198,6 @@
             border-radius: 4px;
         }
         .chat-empty { color: #555566; text-align: center; padding: 12px; }
-
         .chat-window {
             background: rgba(255,255,255,0.025);
             border-radius: 16px;
@@ -215,7 +208,6 @@
             overflow: hidden;
             min-height: 0;
         }
-
         .chat-messages {
             flex: 1;
             padding: 16px;
@@ -226,7 +218,6 @@
             color: #555566;
             padding: 40px 0;
         }
-
         .message {
             padding: 10px 16px;
             border-radius: 12px;
@@ -261,7 +252,6 @@
         }
         .message.assistant.loading { opacity: 0.6; }
         .message.assistant.error { color: #ff4444; background: rgba(255,68,68,0.08); }
-
         .message .cursor-blink {
             display: inline-block;
             width: 2px;
@@ -272,7 +262,6 @@
             vertical-align: text-bottom;
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
         .code-block {
             background: rgba(0,0,0,0.4);
             border-radius: 10px;
@@ -330,7 +319,6 @@
             color: #e0e0e0;
             white-space: pre-wrap;
         }
-
         .chat-input-area {
             display: flex;
             gap: 10px;
@@ -366,7 +354,6 @@
         }
         .chat-input-area button:hover { background: rgba(108,99,255,0.3); }
         .chat-input-area button:disabled { opacity: 0.3; cursor: not-allowed; }
-
         .file-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.06);
@@ -403,7 +390,6 @@
             cursor: pointer;
             font-weight: 700;
         }
-
         .login-box {
             background: rgba(255,255,255,0.025);
             border-radius: 24px;
@@ -450,7 +436,6 @@
         .login-box .toggle span { color: #6c63ff; cursor: pointer; font-weight: 600; }
         .login-box .status { margin-top: 12px; font-size: 13px; min-height: 20px; color: #8888aa; }
         .hidden { display: none !important; }
-
         .toast {
             position: fixed;
             bottom: 30px;
@@ -471,7 +456,6 @@
             max-width: 90%;
         }
         .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
-
         .preview-modal {
             position: fixed;
             top: 0;
@@ -486,9 +470,7 @@
             padding: 40px;
             backdrop-filter: blur(8px);
         }
-        .preview-modal.show {
-            display: flex;
-        }
+        .preview-modal.show { display: flex; }
         .preview-modal .modal-content {
             background: #0d0d1a;
             border-radius: 20px;
@@ -509,11 +491,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.04);
             flex-shrink: 0;
         }
-        .preview-modal .modal-header h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-        }
+        .preview-modal .modal-header h3 { font-size: 16px; font-weight: 600; color: #fff; }
         .preview-modal .modal-header .close-btn {
             background: rgba(255,255,255,0.03);
             border: none;
@@ -574,7 +552,6 @@
         .preview-modal .modal-footer .btn-danger:hover {
             background: rgba(255,68,68,0.1);
         }
-
         @media (max-width: 600px) {
             .header .logo { font-size: 17px; }
             .chat-list { max-height: 120px; }
@@ -708,12 +685,10 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // ===== БЭКЕНД (Cloud Functions) — НИКАКИХ ключей ИИ на клиенте больше нет =====
-        // Поменяй на адрес своих задеплоенных функций, например:
-        // "https://us-central1-nemesissteam-13577.cloudfunctions.net"
-      const BACKEND_URL = "https://us-central1-nemesissteam-13577.cloudfunctions.net"; // <-- ЭТО РАБОТАЕТ
-        const CHAT_ENDPOINT = `${BACKEND_URL}/chat`;
-        const UPLOAD_ENDPOINT = `${BACKEND_URL}/uploadImage`;
+        // ===== ПРЯМОЙ API AGNES (БЕЗ БЭКЕНДА) =====
+        const AGNES_API_KEY = "sk-9OBSttI1TxXspLMDenWdnk5nfuzJsRXAHvvI5fCO18SOZVj0";
+        const AGNES_URL = "https://apihub.agnes-ai.com/v1/chat/completions";
+        const AGNES_MODEL = "agnes-2.0-flash";
 
         // ===== ПЕРЕМЕННЫЕ =====
         let currentUser = null;
@@ -826,15 +801,15 @@
                 if (!code.trim().toLowerCase().startsWith('<!doctype') &&
                     !code.trim().toLowerCase().startsWith('<html')) {
                     code = `<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preview</title>
-<style>body{font-family:Arial,sans-serif;padding:20px;margin:0;}*{box-sizing:border-box;}</style>
-</head>
-<body>${code}</body>
-</html>`;
+        <html lang="ru">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Preview</title>
+        <style>body{font-family:Arial,sans-serif;padding:20px;margin:0;}*{box-sizing:border-box;}</style>
+        </head>
+        <body>${code}</body>
+        </html>`;
                 }
             }
 
@@ -866,7 +841,7 @@
             if (e.key === 'Escape') closePreview();
         });
 
-        // ===== ЛЕЙБЛЫ ТАРИФОВ (реальные лимиты и модель теперь решает бэкенд) =====
+        // ===== ЛЕЙБЛЫ ТАРИФОВ =====
         function labelForRole(role) {
             switch (role) {
                 case 'nemesis': return { label: 'NEMESIS', canVision: true };
@@ -877,7 +852,33 @@
             }
         }
 
-        // ===== СЖАТИЕ ИЗОБРАЖЕНИЯ ПЕРЕД ЗАГРУЗКОЙ =====
+        // ===== СИСТЕМНЫЙ ПРОМПТ =====
+        const SYSTEM_PROMPT = `
+        Ты — Nemesis AI. Твоё имя — Nemesis AI. Ты создан командой Kotik Team.
+        Ты помогаешь с легальными вопросами: программирование, учёба, творчество, анализ данных.
+        Отвечаешь кратко, понятно, с душой, на русском языке.
+        Ты НЕ AGNES, НЕ ChatGPT, НЕ Claude. Ты — Nemesis AI.
+        `;
+
+        // ===== ЗАГРУЗКА ФОТО (ПРЯМОЙ UPLOAD) =====
+        async function uploadImage(file) {
+            const compressedDataUrl = await compressImage(file);
+            const form = new URLSearchParams();
+            form.append('source', compressedDataUrl);
+            form.append('format', 'json');
+
+            const r = await fetch(`https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5`, {
+                method: 'POST',
+                body: form
+            });
+            const data = await r.json();
+            if (data.status_code === 200) {
+                return data.image.url;
+            }
+            throw new Error('Ошибка загрузки фото');
+        }
+
+        // ===== СЖАТИЕ ИЗОБРАЖЕНИЯ =====
         function compressImage(file, maxDim = 1280, quality = 0.8) {
             return new Promise((resolve, reject) => {
                 const img = new Image();
@@ -907,46 +908,42 @@
             });
         }
 
-        // ===== ЗАГРУЗКА ФОТО ЧЕРЕЗ БЭКЕНД (ключ freeimage.host спрятан) =====
-        async function uploadImage(file) {
-            if (!currentUser) throw new Error('Не авторизован');
-            const compressedDataUrl = await compressImage(file);
-            const idToken = await currentUser.getIdToken();
-
-            const response = await fetch(UPLOAD_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
-                },
-                body: JSON.stringify({ imageBase64: compressedDataUrl })
-            });
-
-            if (!response.ok) {
-                const err = await response.json().catch(() => ({}));
-                throw new Error(err.error || 'Ошибка загрузки фото');
-            }
-            const data = await response.json();
-            return data.url;
-        }
-
-        // ===== СТРИМИНГ ОТВЕТА ЧЕРЕЗ БЭКЕНД (единственный провайдер — Agnes) =====
+        // ===== СТРИМИНГ ОТВЕТА ЧЕРЕЗ ПРЯМОЙ API =====
         async function streamAIResponse(messages, imageUrl, onChunk) {
-            if (!currentUser) throw new Error('Не авторизован');
-            const idToken = await currentUser.getIdToken();
+            let formatted = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
+            if (imageUrl) {
+                const last = messages[messages.length - 1];
+                formatted = [
+                    { role: 'system', content: SYSTEM_PROMPT },
+                    ...messages.slice(0, -1),
+                    {
+                        role: 'user',
+                        content: [
+                            { type: 'text', text: last.content },
+                            { type: 'image_url', image_url: { url: imageUrl } },
+                        ],
+                    },
+                ];
+            }
 
-            const response = await fetch(CHAT_ENDPOINT, {
+            const response = await fetch(AGNES_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
+                    'Authorization': `Bearer ${AGNES_API_KEY}`,
                 },
-                body: JSON.stringify({ messages, imageUrl: imageUrl || null })
+                body: JSON.stringify({
+                    model: AGNES_MODEL,
+                    messages: formatted,
+                    max_tokens: 500,
+                    temperature: 0.7,
+                    stream: true,
+                }),
             });
 
-            if (!response.ok) {
-                const err = await response.json().catch(() => ({}));
-                throw new Error(err.error || 'Ошибка AI');
+            if (!response.ok || !response.body) {
+                const errText = await response.text().catch(() => '');
+                throw new Error(`Ошибка AI: ${errText || response.status}`);
             }
 
             const reader = response.body.getReader();
@@ -966,7 +963,8 @@
                     if (data === '[DONE]') continue;
                     try {
                         const json = JSON.parse(data);
-                        if (json.chunk) onChunk(json.chunk);
+                        const chunk = json.choices?.[0]?.delta?.content || '';
+                        if (chunk) onChunk(chunk);
                     } catch (_) {}
                 }
             }
@@ -1124,7 +1122,7 @@
             }
         };
 
-        // ===== ФАЙЛЫ: сразу грузим при выборе, чтобы к моменту отправки URL уже был готов =====
+        // ===== ФАЙЛЫ =====
         fileInput.addEventListener('change', async function() {
             const file = this.files[0];
             if (!file) return;
@@ -1249,7 +1247,7 @@
             }
         };
 
-        // ===== ОТПРАВКА СООБЩЕНИЯ (стрим через бэкенд) =====
+        // ===== ОТПРАВКА СООБЩЕНИЯ (ПРЯМОЙ API) =====
         window.sendMessage = async function() {
             const text = chatInput.value.trim();
             if (!text || !currentUser || !currentChatId || isProcessing) {
@@ -1352,7 +1350,7 @@
 
         console.log('🚀 Nemesis AI готов к работе!');
         console.log('⭐ Создан командой Kotik Team');
-        console.log('🔒 API-ключи спрятаны на бэкенде');
+        console.log('🔑 Используется прямой API Agnes');
     </script>
 </body>
 </html>
