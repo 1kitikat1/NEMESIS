@@ -269,6 +269,9 @@
             margin: 6px 0;
             overflow: hidden;
         }
+        .code-block.in-progress {
+            border-color: rgba(108,99,255,0.3);
+        }
         .code-header {
             display: flex;
             justify-content: space-between;
@@ -282,6 +285,10 @@
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
+        }
+        .code-typing {
+            color: #555566;
+            font-size: 11px;
         }
         .code-header-actions {
             display: flex;
@@ -690,6 +697,19 @@
         const AGNES_URL = "https://apihub.agnes-ai.com/v1/chat/completions";
         const AGNES_MODEL = "agnes-2.0-flash";
 
+        // ===== ЛИМИТЫ ТОКЕНОВ ПО ТАРИФУ =====
+        // Раньше везде стояло 500 — этого не хватало на developed-ответы с кодом,
+        // из-за чего блок ```...``` не успевал закрыться и обрывался на середине.
+        function getMaxTokensForRole(role) {
+            switch (role) {
+                case 'nemesis':
+                case 'ai_max': return 5000;
+                case 'ai_basic': return 5000;
+                case 'elite': return 1500;
+                default: return 1500; // free
+            }
+        }
+
         // ===== ПЕРЕМЕННЫЕ =====
         let currentUser = null;
         let currentChatId = null;
@@ -747,32 +767,54 @@
             chatSection.style.display = 'flex';
         }
 
-        // ===== ФОРМАТИРОВАНИЕ КОДА (С ЭКРАНИРОВАНИЕМ) =====
-        function formatCodeBlock(text) {
-            const codeRegex = /```(\w+)?\n([\s\S]*?)```/g;
-            let blockIndex = 0;
-            return text.replace(codeRegex, (match, language, code) => {
-                const lang = language || 'plaintext';
-                const escapedCode = escapeHtml(code);
-                const isHtml = ['html', 'htm', 'xhtml'].includes(lang.toLowerCase());
-                const runBtn = isHtml ? `<button class="run-btn" onclick="runCode(this)">▶ Запустить</button>` : '';
-                return `<div class="code-block" data-index="${blockIndex++}">
-                            <div class="code-header">
-                                <span class="code-lang">${escapeHtml(lang)}</span>
-                                <div class="code-header-actions">
-                                    ${runBtn}
-                                    <button class="copy-btn" onclick="copyCode(this)">📋 Копировать</button>
-                                </div>
-                            </div>
-                            <pre><code>${escapedCode}</code></pre>
-                        </div>`;
-            });
-        }
-
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // ===== РЕНДЕР СООБЩЕНИЯ (безопасен и во время стрима, и для готового текста) =====
+        // Раньше во время печати текст показывался как plain textContent, поэтому
+        // пока блок ```...``` не закрывался — на экране висели голые "```html" и
+        // необработанный код. Теперь код рендерится как код-блок сразу, даже
+        // недописанный — просто без кнопок, пока блок не закроется.
+        function renderMessageContent(text) {
+            const closedRegex = /```(\w+)?\n([\s\S]*?)```/g;
+            let html = '';
+            let lastIndex = 0;
+            let blockIndex = 0;
+            let m;
+
+            while ((m = closedRegex.exec(text)) !== null) {
+                html += escapeHtml(text.slice(lastIndex, m.index));
+                html += renderCodeBlockHtml(m[1] || 'plaintext', m[2], blockIndex++, true);
+                lastIndex = closedRegex.lastIndex;
+            }
+
+            const rest = text.slice(lastIndex);
+            const openMatch = rest.match(/```(\w+)?\n?([\s\S]*)$/);
+            if (openMatch && rest.includes('```')) {
+                html += escapeHtml(rest.slice(0, openMatch.index));
+                html += renderCodeBlockHtml(openMatch[1] || 'plaintext', openMatch[2] || '', blockIndex++, false);
+            } else {
+                html += escapeHtml(rest);
+            }
+            return html;
+        }
+
+        function renderCodeBlockHtml(lang, code, index, isComplete) {
+            const isHtml = ['html', 'htm', 'xhtml'].includes(lang.toLowerCase());
+            const runBtn = (isComplete && isHtml) ? `<button class="run-btn" onclick="runCode(this)">▶ Запустить</button>` : '';
+            const actionBtn = isComplete
+                ? `<button class="copy-btn" onclick="copyCode(this)">📋 Копировать</button>`
+                : `<span class="code-typing">печатает…</span>`;
+            return `<div class="code-block${isComplete ? '' : ' in-progress'}" data-index="${index}" data-complete="${isComplete}">
+                        <div class="code-header">
+                            <span class="code-lang">${escapeHtml(lang)}</span>
+                            <div class="code-header-actions">${runBtn}${actionBtn}</div>
+                        </div>
+                        <pre><code>${escapeHtml(code)}</code></pre>
+                    </div>`;
         }
 
         window.copyCode = function(btn) {
@@ -797,9 +839,23 @@
             const codeBlock = btn.closest('.code-block');
             const codeElement = codeBlock.querySelector('code');
             const lang = codeBlock.querySelector('.code-lang').textContent.toLowerCase();
-            const code = codeElement.textContent;
+            let code = codeElement.textContent;
 
             if (['html', 'htm', 'xhtml'].includes(lang)) {
+                if (!code.trim().toLowerCase().startsWith('<!doctype') &&
+                    !code.trim().toLowerCase().startsWith('<html')) {
+                    code = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview</title>
+<style>body{font-family:Arial,sans-serif;padding:20px;margin:0;}*{box-sizing:border-box;}</style>
+</head>
+<body>${code}</body>
+</html>`;
+                }
+                currentRunCode = code;
                 const modal = document.getElementById('preview-modal');
                 const iframe = document.getElementById('preview-iframe');
                 iframe.srcdoc = code;
@@ -845,6 +901,8 @@
         Ты помогаешь с легальными вопросами: программирование, учёба, творчество, анализ данных.
         Отвечаешь кратко, понятно, с душой, на русском языке.
         Ты НЕ AGNES, НЕ ChatGPT, НЕ Claude. Ты — Nemesis AI.
+        Когда пишешь код, всегда закрывай блок кода тройными обратными кавычками до конца ответа —
+        не обрывай код-блок на середине.
         `;
 
         // ===== ЗАГРУЗКА ФОТО ЧЕРЕЗ imgBB =====
@@ -852,10 +910,10 @@
 
         async function uploadImage(file) {
             if (!file) throw new Error('Нет файла');
-            
+
             const compressedDataUrl = await compressImage(file);
             const base64Data = compressedDataUrl.split(',')[1];
-            
+
             const formData = new FormData();
             formData.append('image', base64Data);
             formData.append('key', IMGBB_KEY);
@@ -909,8 +967,8 @@
             });
         }
 
-        // ===== СТРИМИНГ ОТВЕТА =====
-        async function streamAIResponse(messages, imageUrl, onChunk) {
+        // ===== ОДИН ЗАПРОС СТРИМИНГА (возвращает текст ответа и причину остановки) =====
+        async function streamOnce(messages, imageUrl, maxTokens, onChunk) {
             let formatted = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
             if (imageUrl) {
                 const last = messages[messages.length - 1];
@@ -936,7 +994,7 @@
                 body: JSON.stringify({
                     model: AGNES_MODEL,
                     messages: formatted,
-                    max_tokens: 500,
+                    max_tokens: maxTokens,
                     temperature: 0.7,
                     stream: true,
                 }),
@@ -950,6 +1008,8 @@
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
             let buffer = '';
+            let text = '';
+            let finishReason = null;
 
             while (true) {
                 const { done, value } = await reader.read();
@@ -964,11 +1024,49 @@
                     if (data === '[DONE]') continue;
                     try {
                         const json = JSON.parse(data);
-                        const chunk = json.choices?.[0]?.delta?.content || '';
-                        if (chunk) onChunk(chunk);
+                        const choice = json.choices?.[0];
+                        const chunk = choice?.delta?.content || '';
+                        if (chunk) {
+                            text += chunk;
+                            onChunk(chunk);
+                        }
+                        if (choice?.finish_reason) finishReason = choice.finish_reason;
                     } catch (_) {}
                 }
             }
+
+            return { text, finishReason };
+        }
+
+        // ===== СТРИМИНГ С АВТО-ПРОДОЛЖЕНИЕМ =====
+        // Если ответ обрывается из-за лимита токенов (finish_reason === 'length'),
+        // это раньше выглядело как "зависший"/оборванный код-блок. Теперь при таком
+        // обрыве бот автоматически просит модель продолжить с того же места —
+        // пользователь видит один непрерывный ответ.
+        async function streamAIResponse(messages, imageUrl, role, onChunk) {
+            const maxTokens = getMaxTokensForRole(role);
+            const MAX_CONTINUATIONS = 3;
+            let convo = messages;
+            let fullText = '';
+            let attempt = 0;
+            let img = imageUrl;
+
+            while (true) {
+                const { text, finishReason } = await streamOnce(convo, img, maxTokens, onChunk);
+                fullText += text;
+
+                if (finishReason !== 'length' || attempt >= MAX_CONTINUATIONS) break;
+
+                attempt++;
+                convo = [
+                    ...messages,
+                    { role: 'assistant', content: fullText },
+                    { role: 'user', content: 'Продолжи ответ ровно с того места, где остановился. Не повторяй уже написанное и обязательно закрой любой незакрытый блок кода.' }
+                ];
+                img = null; // картинку повторно не шлём в продолжениях
+            }
+
+            return fullText;
         }
 
         // ===== УДАЛЕНИЕ ЧАТА =====
@@ -1208,7 +1306,7 @@
                         const div = document.createElement('div');
                         div.className = `message ${msg.role}`;
                         if (msg.role === 'assistant') {
-                            div.innerHTML = `<div class="msg-header">Nemesis AI</div>${formatCodeBlock(msg.content)}`;
+                            div.innerHTML = `<div class="msg-header">Nemesis AI</div>${renderMessageContent(msg.content)}`;
                         } else {
                             div.textContent = msg.content;
                             if (msg.imageUrl) {
@@ -1248,7 +1346,7 @@
             }
         };
 
-        // ===== ОТПРАВКА СООБЩЕНИЯ (СТРИМИНГ + HTML В iframe) =====
+        // ===== ОТПРАВКА СООБЩЕНИЯ (стрим + безопасный live-рендер кода) =====
         window.sendMessage = async function() {
             const text = chatInput.value.trim();
             if (!text || !currentUser || !currentChatId || isProcessing) {
@@ -1258,6 +1356,7 @@
             }
 
             const imageUrl = currentImageUrl;
+            const roleClass = (userRole.className.split(' ')[1]) || 'free';
 
             chatInput.value = '';
             sendBtn.disabled = true;
@@ -1286,30 +1385,35 @@
                     ids.forEach(id => history.push({ role: data[id].role, content: data[id].content }));
                 }
 
-                // Создаём блок сообщения сразу
                 const msgDiv = document.createElement('div');
                 msgDiv.className = 'message assistant';
-                msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><div class="assistant-content"><span class="stream-text"></span><span class="cursor-blink"></span></div>`;
+                msgDiv.innerHTML = `<div class="msg-header">Nemesis AI</div><div class="assistant-content"></div><span class="cursor-blink"></span>`;
                 chatMessages.appendChild(msgDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
                 const contentDiv = msgDiv.querySelector('.assistant-content');
-                const textSpan = contentDiv.querySelector('.stream-text');
-                const cursorSpan = contentDiv.querySelector('.cursor-blink');
+                const cursorSpan = msgDiv.querySelector('.cursor-blink');
 
-                let fullResponse = '';
+                let liveText = '';
+                let renderScheduled = false;
 
-                // Стримим
-                await streamAIResponse(history, imageUrl, (chunk) => {
-                    fullResponse += chunk;
-                    textSpan.textContent = fullResponse;
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                const scheduleRender = () => {
+                    if (renderScheduled) return;
+                    renderScheduled = true;
+                    requestAnimationFrame(() => {
+                        contentDiv.innerHTML = renderMessageContent(liveText);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        renderScheduled = false;
+                    });
+                };
+
+                const fullResponse = await streamAIResponse(history, imageUrl, roleClass, (chunk) => {
+                    liveText += chunk;
+                    scheduleRender();
                 });
 
-                // После завершения стриминга
                 if (cursorSpan) cursorSpan.remove();
-                // Форматируем код
-                contentDiv.innerHTML = formatCodeBlock(fullResponse);
+                contentDiv.innerHTML = renderMessageContent(fullResponse);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
                 const resRef = push(ref(db, `users/${currentUser.uid}/ai_chats/${currentChatId}/messages`));
