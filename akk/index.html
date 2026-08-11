@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Аккаунт — NEMESIS :3</title>
+    <title>Nemesis AI — Аккаунт</title>
     <meta name="theme-color" content="#07070d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
@@ -15,494 +15,219 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
             padding: 20px;
         }
-        #stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: twinkle var(--duration) ease-in-out infinite alternate;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 0.9; transform: scale(1.2); }
-        }
         .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 600px;
-            position: relative;
-            z-index: 5;
+            padding: 20px;
         }
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0 24px;
+            padding-bottom: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
-        .header .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 20px;
+        .logo {
+            font-size: 24px;
             font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-        }
-        .header .logo .icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: rgba(108,99,255,0.15);
-            border: 1px solid rgba(108,99,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #6c63ff;
-        }
-        .header .logo span.nemesis {
             background: linear-gradient(135deg, #6c63ff, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-        .header .back-btn {
+        .back-btn {
             color: #8899bb;
             text-decoration: none;
             font-size: 13px;
-            padding: 8px 18px;
-            border-radius: 10px;
+            padding: 6px 14px;
+            border-radius: 8px;
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
         }
-        .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
-
-        .card {
-            background: rgba(255,255,255,0.025);
-            backdrop-filter: blur(20px);
+        .profile-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            padding: 24px;
             border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 28px;
-            padding: 44px 36px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
-        .card h2 {
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 4px;
-        }
-        .card .sub {
-            text-align: center;
-            font-size: 11px;
-            color: #8888aa;
-            letter-spacing: 1.5px;
-            font-weight: 500;
-            margin-bottom: 28px;
-            text-transform: uppercase;
-        }
-
-        /* ===== ФОРМА ВХОДА ===== */
-        .input-group { margin-bottom: 14px; }
-        .input-group input {
-            width: 100%;
-            padding: 15px 18px;
-            background: rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .input-group input:focus {
-            border-color: #6c63ff;
-            box-shadow: 0 0 0 4px rgba(108,99,255,0.06);
-        }
-        .input-group input::placeholder { color: #555566; }
-
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(108,99,255,0.04));
-            border: 1px solid rgba(108,99,255,0.15);
-            border-radius: 60px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            margin-top: 8px;
-        }
-        .btn-submit:hover {
-            background: rgba(108,99,255,0.15);
-            box-shadow: 0 8px 32px rgba(108,99,255,0.08);
-        }
-
-        .toggle-mode {
-            text-align: center;
-            margin-top: 18px;
-            color: #8888aa;
-            font-size: 13px;
-        }
-        .toggle-mode span {
-            color: #6c63ff;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        #auth-status {
-            margin-top: 16px;
-            text-align: center;
-            font-size: 13px;
-            min-height: 22px;
-            color: #8888aa;
-        }
-
-        .hidden { display: none !important; }
-
-        /* ===== ИНФОРМАЦИЯ ОБ АККАУНТЕ ===== */
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-        .info-row:last-child { border-bottom: none; }
-        .info-row .label {
-            color: #8888aa;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .info-row .value {
-            font-weight: 600;
-            font-size: 13px;
-        }
-        .info-row .value.highlight { color: #6c63ff; }
-        .role-free { color: #8888aa; }
-        .role-elite { color: #6c63ff; }
-        .role-ai_basic { color: #6c63ff; }
-        .role-ai_max { color: #ffd700; }
-        .role-nemesis { color: #ffd700; }
-
-        /* ===== АДМИН-ПАНЕЛЬ (только для nemesis) ===== */
-        .admin-panel {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 2px solid rgba(255,215,0,0.15);
-            display: none;
-        }
-        .admin-panel.show {
-            display: block;
-        }
-        .admin-panel h3 {
-            font-size: 18px;
-            color: #ffd700;
-            margin-bottom: 16px;
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .admin-panel h3 .badge {
-            font-size: 11px;
-            background: rgba(255,215,0,0.15);
-            color: #ffd700;
-            padding: 2px 12px;
-            border-radius: 20px;
-        }
-        .admin-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .admin-btn {
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.03);
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
             color: #fff;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        .admin-btn:hover {
-            background: rgba(255,255,255,0.06);
-            transform: translateY(-2px);
-        }
-        .admin-btn .icon { font-size: 24px; display: block; margin-bottom: 4px; }
-        .admin-btn .label { font-weight: 500; }
-        .admin-btn .sub-label { font-size: 11px; color: #8888aa; }
-        .admin-btn.gold {
-            border-color: rgba(255,215,0,0.2);
-            background: rgba(255,215,0,0.05);
-        }
-        .admin-btn.gold:hover {
-            background: rgba(255,215,0,0.1);
-            border-color: rgba(255,215,0,0.3);
-        }
-        .admin-btn.danger {
-            border-color: rgba(255,68,68,0.2);
-            background: rgba(255,68,68,0.05);
-        }
-        .admin-btn.danger:hover {
-            background: rgba(255,68,68,0.1);
-            border-color: rgba(255,68,68,0.3);
-        }
-
-        .admin-output {
-            margin-top: 16px;
-            padding: 16px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-            font-size: 13px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-family: 'Monaco', monospace;
-            color: #8888aa;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-        .admin-output .key-item {
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            display: flex;
-            justify-content: space-between;
-        }
-        .admin-output .key-item .plan-tag {
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: rgba(108,99,255,0.15);
-            color: #6c63ff;
-        }
-        .admin-output .key-item .plan-tag.elite { background: rgba(108,99,255,0.15); color: #6c63ff; }
-        .admin-output .key-item .plan-tag.ai_basic { background: rgba(108,99,255,0.15); color: #6c63ff; }
-        .admin-output .key-item .plan-tag.ai_max { background: rgba(255,215,0,0.15); color: #ffd700; }
-
-        /* ===== АКТИВАЦИЯ КЛЮЧА ===== */
-        .key-section {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .key-section h3 {
-            font-size: 16px;
             margin-bottom: 12px;
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .profile-email {
+            color: #8888aa;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .role-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .role-free { background: rgba(255,255,255,0.05); color: #8888aa; }
+        .role-elite { background: rgba(108,99,255,0.1); color: #6c63ff; }
+        .role-ai_basic { background: rgba(108,99,255,0.15); color: #6c63ff; }
+        .role-ai_max { background: rgba(255,215,0,0.1); color: #ffd700; }
+        .role-nemesis { background: rgba(255,215,0,0.2); color: #ffd700; box-shadow: 0 0 20px rgba(255,215,0,0.1); }
+        .role-lynx { background: rgba(0,200,255,0.2); color: #00ccff; box-shadow: 0 0 20px rgba(0,200,255,0.1); }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
             color: #fff;
+            text-align: left;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
         }
-        .key-input-group {
-            display: flex;
-            gap: 10px;
+        .btn:hover { background: rgba(255,255,255,0.05); }
+        .btn .icon { margin-right: 10px; }
+        .btn-danger { color: #ff4455; border-color: rgba(255,68,68,0.1); }
+        .btn-danger:hover { background: rgba(255,68,68,0.05); }
+        .input-group {
+            margin-bottom: 16px;
         }
-        .key-input-group input {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 12px;
+        .input-group label {
+            display: block;
+            color: #8888aa;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(0,0,0,0.35);
+            border-radius: 10px;
             color: #fff;
             font-size: 14px;
             outline: none;
             font-family: 'Inter', sans-serif;
         }
-        .key-input-group input:focus {
-            border-color: #6c63ff;
+        .input-group input:focus { border-color: #6c63ff; }
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
-        .key-input-group button {
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, #6c63ff, #a78bfa);
-            color: #fff;
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #0d0d1a;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .modal-title {
+            font-size: 20px;
             font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .modal-close {
+            margin-top: 12px;
+            padding: 10px;
+            width: 100%;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            color: #8888aa;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
         }
-        .key-input-group button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 32px rgba(108,99,255,0.2);
-        }
-        .key-status {
-            margin-top: 12px;
-            font-size: 13px;
-            min-height: 20px;
-            color: #8888aa;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(11,11,18,0.95);
-            color: #fff;
-            padding: 14px 36px;
-            border-radius: 60px;
-            border: 1px solid rgba(108,99,255,0.15);
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 9999;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            animation: fadeUp 0.3s ease;
-            text-align: center;
-            max-width: 90%;
-        }
-        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
-
-        @media (max-width: 600px) {
-            .header .logo { font-size: 17px; }
-            .card { padding: 30px 20px; }
-            .key-input-group { flex-direction: column; }
-            .admin-grid { grid-template-columns: 1fr; }
-        }
+        .modal-close:hover { background: rgba(255,255,255,0.03); }
     </style>
 </head>
 <body>
-
-    <div id="stars"></div>
-
     <div class="container">
         <div class="header">
-            <a href="/" class="logo">
-                <div class="icon">N</div>
-                <span class="nemesis">NEMESIS</span> <span style="color:#6c63ff;">:3</span>
-            </a>
-            <a href="/" class="back-btn">← На главную</a>
+            <span class="logo">👤 Аккаунт</span>
+            <a href="/ai/" class="back-btn">→ Чат</a>
         </div>
 
-        <div class="card">
-            <!-- ФОРМА ВХОДА -->
-            <div id="auth-form-container">
-                <h2 id="form-title">ВХОД</h2>
-                <div class="sub" id="form-subtitle">ВОЙДИТЕ В СВОЙ АККАУНТ</div>
-                <form id="auth-form" onsubmit="handleAuth(event)">
-                    <div id="reg-fields" class="hidden">
-                        <div class="input-group">
-                            <input type="text" id="reg-username" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" autocomplete="off" />
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <input type="email" id="auth-email" placeholder="EMAIL" required autocomplete="email" />
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="auth-pass" placeholder="ПАРОЛЬ" required autocomplete="current-password" />
-                    </div>
-                    <div id="reg-pass-repeat" class="input-group hidden">
-                        <input type="password" id="auth-pass-repeat" placeholder="ПОВТОРИТЕ ПАРОЛЬ" autocomplete="new-password" />
-                    </div>
-                    <button type="submit" class="btn-submit" id="auth-btn">ВОЙТИ</button>
-                </form>
-                <div class="toggle-mode">
-                    <span id="toggle-link">НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ</span>
+        <div id="login-section">
+            <div class="profile-card" style="text-align:center; padding: 40px;">
+                <h2>ВХОД</h2>
+                <p style="color: #8888aa; font-size: 14px; margin-bottom: 20px;">Войдите в свой аккаунт</p>
+                <div class="input-group">
+                    <input type="email" id="login-email" placeholder="Email" />
                 </div>
-                <div id="auth-status"></div>
+                <div class="input-group">
+                    <input type="password" id="login-password" placeholder="Пароль" />
+                </div>
+                <button class="btn" id="login-btn" style="text-align:center; background: #6c63ff; border: none; font-weight: 600;">Войти</button>
+                <button class="btn" id="register-toggle" style="text-align:center; margin-top: 8px;">Нет аккаунта? Зарегистрироваться</button>
+                <div id="login-status" style="color: #ff4455; margin-top: 12px; font-size: 13px;"></div>
+            </div>
+        </div>
+
+        <div id="profile-section" style="display:none;">
+            <div class="profile-card">
+                <div class="profile-avatar" id="avatar">U</div>
+                <div class="profile-name" id="display-name">Пользователь</div>
+                <div class="profile-email" id="display-email">email@mail.com</div>
+                <span class="role-badge" id="display-role">FREE</span>
             </div>
 
-            <!-- ИНФОРМАЦИЯ ОБ АККАУНТЕ -->
-            <div id="account-info" class="hidden">
-                <h2>👤 АККАУНТ</h2>
-                <div class="sub">ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ</div>
-                <div class="info-row">
-                    <span class="label">Имя пользователя</span>
-                    <span class="value highlight" id="acc-username">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Email</span>
-                    <span class="value" id="acc-email">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Роль</span>
-                    <span class="value" id="acc-role">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Дата регистрации</span>
-                    <span class="value" id="acc-date">—</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Статус</span>
-                    <span class="value" style="color:#6c63ff;" id="acc-status">Активен</span>
-                </div>
-                <button class="btn-logout" id="btn-logout">ВЫЙТИ</button>
+            <button class="btn" onclick="openKeyModal()"><span class="icon">🔑</span> Активировать ключ</button>
+            <button class="btn" onclick="logout()"><span class="icon">🚪</span> Выйти</button>
 
-                <!-- АКТИВАЦИЯ КЛЮЧА -->
-                <div class="key-section">
-                    <h3>🎁 Активировать ключ</h3>
-                    <div class="key-input-group">
-                        <input type="text" id="key-input" placeholder="Введите ключ..." autocomplete="off">
-                        <button onclick="activateKeyFromAccount()">Активировать</button>
-                    </div>
-                    <div class="key-status" id="key-status"></div>
-                </div>
-
-                <!-- АДМИН-ПАНЕЛЬ (только для nemesis) -->
-                <div class="admin-panel" id="admin-panel">
-                    <h3>👑 АДМИН-ПАНЕЛЬ <span class="badge">NEMESIS</span></h3>
-                    <div class="admin-grid">
-                        <button class="admin-btn gold" onclick="generateKeys(10, 'ai_basic')">
-                            <span class="icon">🧠</span>
-                            <span class="label">+ 10 AI+</span>
-                            <span class="sub-label">Ключей</span>
-                        </button>
-                        <button class="admin-btn gold" onclick="generateKeys(5, 'elite')">
-                            <span class="icon">⚡</span>
-                            <span class="label">+ 5 ELITE</span>
-                            <span class="sub-label">Ключей</span>
-                        </button>
-                        <button class="admin-btn gold" onclick="generateKeys(3, 'ai_max')">
-                            <span class="icon">🚀</span>
-                            <span class="label">+ 3 AI MAX</span>
-                            <span class="sub-label">Ключей</span>
-                        </button>
-                        <button class="admin-btn danger" onclick="deleteAllUsedKeys()">
-                            <span class="icon">🗑️</span>
-                            <span class="label">Очистить</span>
-                            <span class="sub-label">Использованные ключи</span>
-                        </button>
-                    </div>
-                    <div class="admin-output" id="admin-output">
-                        <span style="color:#555566;">Нажмите кнопку, чтобы сгенерировать ключи...</span>
-                    </div>
-                </div>
+            <div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+                <p style="color: #8888aa; font-size: 12px; text-align: center;">
+                    Роль: <strong id="role-text">FREE</strong><br>
+                    Токенов: <strong id="token-text">1500</strong>
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- FIREBASE -->
-    <script type="importmap">
-        {
-            "imports": {
-                "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
-                "firebase/auth": "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js",
-                "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
-            }
-        }
-    </script>
+    <div class="modal" id="key-modal">
+        <div class="modal-content">
+            <div class="modal-title">🔑 Активировать ключ</div>
+            <div class="input-group">
+                <input type="text" id="key-input" placeholder="Введите ключ..." />
+            </div>
+            <button class="btn" id="activate-btn" style="text-align:center; background: #6c63ff; border: none; font-weight: 600;">Активировать</button>
+            <button class="modal-close" onclick="closeKeyModal()">✕ Закрыть</button>
+            <div id="key-status" style="color: #ff4455; margin-top: 12px; font-size: 13px;"></div>
+        </div>
+    </div>
 
-    <script type="module">
+    <script>
+        // ===== FIREBASE =====
         import { initializeApp } from "firebase/app";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-        import { getDatabase, ref, set, get, update, remove, push } from "firebase/database";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
+        import { getDatabase, ref, set, get, update } from "firebase/database";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
@@ -511,432 +236,170 @@
             projectId: "nemesissteam-13577",
             storageBucket: "nemesissteam-13577.firebasestorage.app",
             messagingSenderId: "649763368476",
-            appId: "1:649763368476:web:de4e044d4d971168fa79d9",
-            measurementId: "G-GJ9KHSG65L"
+            appId: "1:649763368476:web:de4e044d4d971168fa79d9"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        let isLoginMode = true;
+        // ===== DOM =====
+        const loginSection = document.getElementById('login-section');
+        const profileSection = document.getElementById('profile-section');
+        const loginEmail = document.getElementById('login-email');
+        const loginPassword = document.getElementById('login-password');
+        const loginStatus = document.getElementById('login-status');
+        const loginBtn = document.getElementById('login-btn');
+        const registerToggle = document.getElementById('register-toggle');
+        const displayName = document.getElementById('display-name');
+        const displayEmail = document.getElementById('display-email');
+        const displayRole = document.getElementById('display-role');
+        const avatar = document.getElementById('avatar');
+        const roleText = document.getElementById('role-text');
+        const tokenText = document.getElementById('token-text');
+
+        let isRegister = false;
         let currentUser = null;
-        let currentUserRole = 'free';
 
-        const statusDiv = document.getElementById('auth-status');
-        const authFormContainer = document.getElementById('auth-form-container');
-        const accountInfo = document.getElementById('account-info');
-        const accUsername = document.getElementById('acc-username');
-        const accEmail = document.getElementById('acc-email');
-        const accRole = document.getElementById('acc-role');
-        const accDate = document.getElementById('acc-date');
-        const adminPanel = document.getElementById('admin-panel');
-        const adminOutput = document.getElementById('admin-output');
-
-        // ===== ТОСТ =====
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
-        // ===== ГЕНЕРАЦИЯ КЛЮЧА =====
-        function generateKey() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let key = '';
-            for (let i = 0; i < 12; i++) {
-                if (i > 0 && i % 4 === 0) key += '-';
-                key += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return key;
-        }
-
-        // ===== ГЕНЕРАЦИЯ КЛЮЧЕЙ (ГЛОБАЛЬНАЯ) =====
-        window.generateKeys = async function(count, plan) {
-            if (!currentUser || currentUserRole !== 'nemesis') {
-                showToast('❌ Доступно только для NEMESIS');
-                return;
-            }
-
-            adminOutput.innerHTML = '⏳ Генерация ключей...';
-            const keys = [];
-            
-            for (let i = 0; i < count; i++) {
-                const key = generateKey();
-                keys.push(key);
-                await set(ref(db, `keys/${key}`), {
-                    plan: plan,
-                    used: false,
-                    createdAt: new Date().toISOString(),
-                    usedBy: null,
-                    usedAt: null
-                });
-            }
-
-            const planLabels = {
-                'elite': '⚡ ELITE',
-                'ai_basic': '🧠 AI+',
-                'ai_max': '🚀 AI MAX'
-            };
-
-            adminOutput.innerHTML = `
-                ✅ Сгенерировано ${count} ключей для ${planLabels[plan]}:\n\n
-                ${keys.map(k => `🔑 ${k}`).join('\n')}\n\n
-                📋 Скопируйте и загрузите в FunPay
-            `;
-            
-            showToast(`✅ ${count} ключей ${planLabels[plan]} создано!`);
+        // ===== РОЛИ =====
+        const ROLE_CONFIG = {
+            free: { maxTokens: 1500, label: '🆓 FREE' },
+            elite: { maxTokens: 1500, label: '⚡ ELITE' },
+            ai_basic: { maxTokens: 5000, label: '🧠 AI+' },
+            ai_max: { maxTokens: 5000, label: '🚀 AI MAX' },
+            nemesis: { maxTokens: 5000, label: '👑 NEMESIS' },
+            lynx: { maxTokens: 5000, label: '🐆 LYNX' },
         };
 
-        // ===== УДАЛЕНИЕ ИСПОЛЬЗОВАННЫХ КЛЮЧЕЙ =====
-        window.deleteAllUsedKeys = async function() {
-            if (!currentUser || currentUserRole !== 'nemesis') {
-                showToast('❌ Доступно только для NEMESIS');
-                return;
-            }
-
-            if (!confirm('🗑️ Удалить все использованные ключи?')) return;
-
-            adminOutput.innerHTML = '⏳ Поиск использованных ключей...';
-            
-            try {
-                const snapshot = await get(ref(db, 'keys'));
-                if (!snapshot.exists()) {
-                    adminOutput.innerHTML = '📭 Нет ключей в базе';
-                    return;
-                }
-
-                const keysData = snapshot.val();
-                const usedKeys = Object.keys(keysData).filter(key => keysData[key].used === true);
-                
-                if (usedKeys.length === 0) {
-                    adminOutput.innerHTML = '📭 Нет использованных ключей для удаления';
-                    return;
-                }
-
-                // Удаляем ключи
-                for (const key of usedKeys) {
-                    await remove(ref(db, `keys/${key}`));
-                }
-
-                adminOutput.innerHTML = `
-                    ✅ Удалено ${usedKeys.length} использованных ключей:\n
-                    ${usedKeys.map(k => `🗑️ ${k}`).join('\n')}
-                `;
-                showToast(`✅ Удалено ${usedKeys.length} использованных ключей`);
-                
-            } catch (error) {
-                console.error('Ошибка удаления:', error);
-                adminOutput.innerHTML = `❌ Ошибка: ${error.message}`;
-                showToast('❌ Ошибка при удалении ключей');
-            }
+        const ROLE_CLASSES = {
+            free: 'role-free',
+            elite: 'role-elite',
+            ai_basic: 'role-ai_basic',
+            ai_max: 'role-ai_max',
+            nemesis: 'role-nemesis',
+            lynx: 'role-lynx',
         };
 
-        // ===== АКТИВАЦИЯ КЛЮЧА =====
-        window.activateKeyFromAccount = function() {
-            const input = document.getElementById('key-input');
-            const key = input.value.trim().toUpperCase();
-            const status = document.getElementById('key-status');
-            
-            if (!key) {
-                status.textContent = '❌ Введите ключ';
-                status.style.color = '#ff4444';
-                return;
-            }
-            
-            if (!currentUser) {
-                status.textContent = '❌ Войдите в аккаунт!';
-                status.style.color = '#ff4444';
-                return;
-            }
-            
-            activateKey(key);
-            input.value = '';
-        };
-
-        async function activateKey(key) {
-            const status = document.getElementById('key-status');
-            status.textContent = '⏳ Проверка ключа...';
-            status.style.color = '#8888aa';
-            
-            try {
-                const keyRef = ref(db, `keys/${key}`);
-                const snapshot = await get(keyRef);
-                
-                if (!snapshot.exists()) {
-                    status.textContent = '❌ Неверный ключ';
-                    status.style.color = '#ff4444';
-                    return;
-                }
-                
-                const keyData = snapshot.val();
-                
-                if (keyData.used) {
-                    status.textContent = '❌ Ключ уже использован';
-                    status.style.color = '#ff4444';
-                    return;
-                }
-                
-                const userSnapshot = await get(ref(db, `users/${currentUser.uid}`));
-                const userData = userSnapshot.val();
-                const currentRole = userData.role || 'free';
-                
-                let newRole = currentRole;
-                const plan = keyData.plan;
-                
-                if (plan === 'elite' && currentRole === 'ai_basic') {
-                    newRole = 'ai_max';
-                } else if (plan === 'ai_basic' && currentRole === 'elite') {
-                    newRole = 'ai_max';
-                } else if (plan === 'ai_max') {
-                    newRole = 'ai_max';
-                } else {
-                    newRole = plan;
-                }
-                
-                // Обновляем роль пользователя
-                await update(ref(db, `users/${currentUser.uid}`), {
-                    role: newRole
-                });
-                
-                // УДАЛЯЕМ КЛЮЧ ИЗ БАЗЫ ПОСЛЕ ИСПОЛЬЗОВАНИЯ
-                await remove(ref(db, `keys/${key}`));
-                
-                const roleLabels = {
-                    'free': '🆓 FREE',
-                    'elite': '⚡ ELITE',
-                    'ai_basic': '🧠 AI+',
-                    'ai_max': '🚀 AI MAX',
-                    'nemesis': '👑 NEMESIS'
-                };
-                
-                status.textContent = `🎉 Подписка активирована! ${roleLabels[newRole] || newRole.toUpperCase()}`;
-                status.style.color = '#22c55e';
-                
-                // Обновляем отображение роли
-                const roleDisplay = roleLabels[newRole] || newRole.toUpperCase();
-                accRole.textContent = roleDisplay;
-                accRole.className = 'value role-' + newRole;
-                
-                // Обновляем админ-панель
-                if (newRole === 'nemesis') {
-                    adminPanel.classList.add('show');
-                }
-                
-                showToast(`🎉 Добро пожаловать в ${roleDisplay}!`);
-                
-            } catch (error) {
-                console.error('Ошибка активации:', error);
-                status.textContent = '❌ Ошибка активации ключа';
-                status.style.color = '#ff4444';
-            }
+        function getMaxTokens(role) {
+            return ROLE_CONFIG[role]?.maxTokens || 1500;
         }
 
-        // ===== ОБНОВЛЕНИЕ UI =====
-        async function updateUI(user) {
+        function getRoleLabel(role) {
+            return ROLE_CONFIG[role]?.label || '🆓 FREE';
+        }
+
+        // ===== UI =====
+        function updateUI(user, data) {
             if (user) {
                 currentUser = user;
-                try {
-                    const snapshot = await get(ref(db, `users/${user.uid}`));
-                    let data = snapshot.exists() ? snapshot.val() : {};
-
-                    if (!data.role) {
-                        const userData = {
-                            username: user.displayName || user.email.split('@')[0],
-                            email: user.email,
-                            role: 'free',
-                            createdAt: new Date().toISOString()
-                        };
-                        await set(ref(db, `users/${user.uid}`), userData);
-                        data = userData;
-                    }
-
-                    currentUserRole = data.role || 'free';
-                    accUsername.textContent = data.username || user.displayName || user.email.split('@')[0];
-                    accEmail.textContent = user.email;
-
-                    const role = data.role || 'free';
-                    const roleLabels = {
-                        'free': '🆓 FREE',
-                        'elite': '⚡ ELITE',
-                        'ai_basic': '🧠 AI+',
-                        'ai_max': '🚀 AI MAX',
-                        'nemesis': '👑 NEMESIS'
-                    };
-                    accRole.textContent = roleLabels[role] || 'FREE';
-                    accRole.className = 'value role-' + role;
-
-                    accDate.textContent = data.createdAt ? new Date(data.createdAt).toLocaleDateString('ru-RU') : '—';
-
-                    authFormContainer.style.display = 'none';
-                    accountInfo.classList.remove('hidden');
-
-                    // Показываем админ-панель только для nemesis
-                    if (role === 'nemesis') {
-                        adminPanel.classList.add('show');
-                        adminOutput.innerHTML = '👑 Добро пожаловать в админ-панель NEMESIS!\nИспользуйте кнопки для генерации ключей.';
-                    } else {
-                        adminPanel.classList.remove('show');
-                    }
-
-                } catch (error) {
-                    console.error('Ошибка загрузки данных:', error);
-                }
+                loginSection.style.display = 'none';
+                profileSection.style.display = 'block';
+                displayName.textContent = data.username || user.displayName || user.email.split('@')[0];
+                displayEmail.textContent = user.email;
+                avatar.textContent = (data.username || 'U')[0].toUpperCase();
+                const role = data.role || 'free';
+                displayRole.textContent = getRoleLabel(role);
+                displayRole.className = 'role-badge ' + (ROLE_CLASSES[role] || 'role-free');
+                roleText.textContent = role.toUpperCase();
+                tokenText.textContent = getMaxTokens(role);
             } else {
                 currentUser = null;
-                currentUserRole = 'free';
-                authFormContainer.style.display = 'block';
-                accountInfo.classList.add('hidden');
-                adminPanel.classList.remove('show');
-                statusDiv.textContent = '';
-                document.getElementById('key-status').textContent = '';
+                loginSection.style.display = 'block';
+                profileSection.style.display = 'none';
+                loginStatus.textContent = '';
             }
         }
 
         // ===== АВТОРИЗАЦИЯ =====
-        window.handleAuth = async function(event) {
-            event.preventDefault();
+        registerToggle.addEventListener('click', () => {
+            isRegister = !isRegister;
+            loginBtn.textContent = isRegister ? 'Зарегистрироваться' : 'Войти';
+            registerToggle.textContent = isRegister ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться';
+            loginStatus.textContent = '';
+        });
 
-            const email = document.getElementById('auth-email').value.trim();
-            const password = document.getElementById('auth-pass').value;
-
-            statusDiv.textContent = '⏳ Обработка...';
-            statusDiv.style.color = '#8888aa';
+        loginBtn.addEventListener('click', async () => {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            if (!email || !password) {
+                loginStatus.textContent = '❌ Заполните все поля';
+                return;
+            }
+            loginStatus.textContent = '⏳ Обработка...';
+            loginStatus.style.color = '#8888aa';
 
             try {
-                if (isLoginMode) {
-                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    await updateUI(userCredential.user);
-                    document.getElementById('auth-form').reset();
-                    showToast('Добро пожаловать!');
-                } else {
-                    const username = document.getElementById('reg-username').value.trim();
-                    const passwordRepeat = document.getElementById('auth-pass-repeat').value;
-
-                    if (!username || username.length < 3) {
-                        statusDiv.textContent = '❌ Имя не менее 3 символов!';
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-                    if (password.length < 6) {
-                        statusDiv.textContent = '❌ Пароль не менее 6 символов!';
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-                    if (password !== passwordRepeat) {
-                        statusDiv.textContent = '❌ Пароли не совпадают!';
-                        statusDiv.style.color = '#ff4444';
-                        return;
-                    }
-
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    await updateProfile(user, { displayName: username });
-
-                    await set(ref(db, `users/${user.uid}`), {
+                if (isRegister) {
+                    const username = email.split('@')[0];
+                    const cred = await createUserWithEmailAndPassword(auth, email, password);
+                    await updateProfile(cred.user, { displayName: username });
+                    await set(ref(db, `users/${cred.user.uid}`), {
                         username: username,
                         email: email,
-                        role: "free",
+                        role: 'free',
                         createdAt: new Date().toISOString()
                     });
-
-                    await updateUI(user);
-                    document.getElementById('auth-form').reset();
-                    showToast('Аккаунт создан!');
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
                 }
-            } catch (error) {
-                console.error('Ошибка:', error);
-                let msg = '❌ Ошибка! ';
-                switch (error.code) {
-                    case 'auth/email-already-in-use': msg += 'Email уже используется.'; break;
-                    case 'auth/invalid-email': msg += 'Некорректный email.'; break;
-                    case 'auth/user-not-found': msg += 'Пользователь не найден. Зарегистрируйтесь!'; break;
-                    case 'auth/wrong-password': msg += 'Неверный пароль.'; break;
-                    case 'auth/weak-password': msg += 'Слабый пароль (мин. 6 символов).'; break;
-                    default: msg += error.message;
-                }
-                statusDiv.textContent = msg;
-                statusDiv.style.color = '#ff4444';
+                loginEmail.value = '';
+                loginPassword.value = '';
+            } catch (e) {
+                loginStatus.textContent = '❌ ' + e.message;
+                loginStatus.style.color = '#ff4444';
             }
-        };
+        });
 
-        // ===== ТОГГЛ РЕГИСТРАЦИИ =====
-        document.getElementById('toggle-link').addEventListener('click', function() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('form-title');
-            const subtitle = document.getElementById('form-subtitle');
-            const btn = document.getElementById('auth-btn');
-            const link = this;
-            const regFields = document.getElementById('reg-fields');
-            const regPassRepeat = document.getElementById('reg-pass-repeat');
-            const emailField = document.getElementById('auth-email');
+        // ===== АКТИВАЦИЯ КЛЮЧА =====
+        function openKeyModal() {
+            document.getElementById('key-modal').classList.add('active');
+            document.getElementById('key-status').textContent = '';
+            document.getElementById('key-input').value = '';
+        }
+        function closeKeyModal() {
+            document.getElementById('key-modal').classList.remove('active');
+        }
 
-            if (isLoginMode) {
-                title.textContent = 'ВХОД';
-                subtitle.textContent = 'ВОЙДИТЕ В СВОЙ АККАУНТ';
-                btn.textContent = 'ВОЙТИ';
-                link.textContent = 'НЕТ АККАУНТА? ЗАРЕГИСТРИРУЙТЕСЬ';
-                regFields.classList.add('hidden');
-                regPassRepeat.classList.add('hidden');
-                emailField.placeholder = 'EMAIL';
-            } else {
-                title.textContent = 'РЕГИСТРАЦИЯ';
-                subtitle.textContent = 'СОЗДАЙТЕ НОВЫЙ АККАУНТ';
-                btn.textContent = 'ЗАРЕГИСТРИРОВАТЬСЯ';
-                link.textContent = 'УЖЕ ЕСТЬ АККАУНТ? ВОЙДИТЕ';
-                regFields.classList.remove('hidden');
-                regPassRepeat.classList.remove('hidden');
-                emailField.placeholder = 'EMAIL (для входа)';
+        document.getElementById('activate-btn').addEventListener('click', async () => {
+            const key = document.getElementById('key-input').value.trim();
+            const status = document.getElementById('key-status');
+            if (!key) { status.textContent = '❌ Введите ключ'; return; }
+
+            try {
+                const snapshot = await get(ref(db, `keys/${key}`));
+                const data = snapshot.val();
+                if (!data) { status.textContent = '❌ Неверный ключ'; return; }
+                if (data.used) { status.textContent = '❌ Ключ уже использован'; return; }
+
+                const role = data.plan || 'free';
+                await update(ref(db, `users/${currentUser.uid}`), { role: role });
+                await update(ref(db, `keys/${key}`), { used: true, usedBy: currentUser.uid, usedAt: new Date().toISOString() });
+
+                const snapshotUser = await get(ref(db, `users/${currentUser.uid}`));
+                updateUI(currentUser, snapshotUser.val());
+                closeKeyModal();
+                status.textContent = '✅ Роль обновлена!';
+                status.style.color = '#22c55e';
+            } catch (e) {
+                status.textContent = '❌ ' + e.message;
             }
-            statusDiv.textContent = '';
-            statusDiv.style.color = '#8888aa';
         });
 
         // ===== ВЫХОД =====
-        document.getElementById('btn-logout').addEventListener('click', async function() {
-            try {
-                await signOut(auth);
-                await updateUI(null);
-                showToast('Вы вышли из аккаунта!');
-            } catch (error) {
-                console.error('Ошибка выхода:', error);
-            }
-        });
+        window.logout = async function() {
+            await signOut(auth);
+        };
 
         // ===== СОСТОЯНИЕ =====
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                await updateUI(user);
+                const snapshot = await get(ref(db, `users/${user.uid}`));
+                const data = snapshot.val() || { role: 'free', username: user.displayName || user.email.split('@')[0] };
+                updateUI(user, data);
             } else {
-                await updateUI(null);
+                updateUI(null, {});
             }
         });
-
-        // ===== ЗВЁЗДЫ =====
-        function createStars() {
-            const container = document.getElementById('stars');
-            for (let i = 0; i < 120; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (Math.random() * 2 + 1) + 'px';
-                star.style.height = star.style.width;
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(star);
-            }
-        }
-        createStars();
-
-        console.log('📋 Страница аккаунта NEMESIS :3');
-        console.log('👑 Админ-панель доступна для роли nemesis');
-        console.log('🔑 Ключи удаляются после использования');
     </script>
 </body>
 </html>
