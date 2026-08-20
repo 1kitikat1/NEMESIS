@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nemesis Steam — Скачать</title>
-    <meta name="theme-color" content="#07070d" />
+    <title>Nemesis Steam</title>
+    <meta name="theme-color" content="#0a0a0f" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #07070d;
             font-family: 'Inter', sans-serif;
-            color: #fff;
+            background: #0a0a0f;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            overflow-x: hidden;
+            color: #fff;
         }
-
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 600px 600px at 20% 20%, rgba(219,39,119,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 80%, rgba(219,39,119,0.08) 0%, transparent 70%),
+                #0a0a0f;
+        }
         #stars {
             position: fixed;
             top: 0;
@@ -34,295 +39,174 @@
             height: 2px;
             background: #fff;
             border-radius: 50%;
-            opacity: 0.6;
+            opacity: 0.4;
             animation: twinkle var(--duration) ease-in-out infinite alternate;
         }
         @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 0.9; transform: scale(1.2); }
+            0% { opacity: 0.1; transform: scale(0.8); }
+            100% { opacity: 0.6; transform: scale(1.2); }
         }
 
-        .glow {
+        nav {
             position: fixed;
-            border-radius: 50%;
-            filter: blur(140px);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .glow-1 {
-            width: 700px;
-            height: 700px;
-            background: rgba(108, 99, 255, 0.08);
-            top: -20%;
-            left: -15%;
-        }
-        .glow-2 {
-            width: 600px;
-            height: 600px;
-            background: rgba(255, 215, 0, 0.05);
-            bottom: -20%;
-            right: -15%;
-        }
-        .glow-3 {
-            width: 500px;
-            height: 500px;
-            background: rgba(108, 99, 255, 0.06);
-            top: 30%;
-            left: 55%;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 24px;
-        }
-        .header .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-        }
-        .header .logo .icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: rgba(108,99,255,0.15);
-            border: 1px solid rgba(108,99,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #6c63ff;
-        }
-        .header .logo span.nemesis {
-            background: linear-gradient(135deg, #6c63ff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .header .back-btn {
-            color: #8899bb;
-            text-decoration: none;
-            font-size: 13px;
-            padding: 8px 18px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-        }
-        .header .back-btn:hover { color: #fff; background: rgba(255,255,255,0.06); }
-
-        .card {
-            background: rgba(255,255,255,0.025);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 28px;
-            padding: 44px 36px;
-            text-align: center;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-        }
-
-        .card .icon-big { font-size: 64px; margin-bottom: 16px; }
-        .card h1 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-        .card h1 .gradient {
-            background: linear-gradient(135deg, #6c63ff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card .desc {
-            color: #8888aa;
-            font-size: 14px;
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            padding: 18px 52px;
-            background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(108,99,255,0.05));
-            border: 1px solid rgba(108,99,255,0.15);
-            border-radius: 60px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 16px;
-            text-decoration: none;
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 320px;
-            margin: 0 auto 16px;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-        }
-        .btn-download:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: rgba(108,99,255,0.3);
-            box-shadow: 0 16px 48px rgba(108,99,255,0.15);
-        }
-
-        .btn-download .arrow { font-size: 22px; }
-
-        .features {
-            margin-top: 24px;
-            text-align: left;
-        }
-        .features .item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            color: #aaaacc;
-            font-size: 13px;
-        }
-        .features .item:last-child { border-bottom: none; }
-        .features .item .check { color: #6c63ff; font-weight: 700; }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
+            top: 16px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(11,11,18,0.95);
-            color: #fff;
-            padding: 14px 36px;
-            border-radius: 60px;
-            border: 1px solid rgba(108,99,255,0.15);
-            font-size: 14px;
+            z-index: 100;
+            background: rgba(10,10,15,0.8);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(219,39,119,0.15);
+            border-radius: 22px;
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .logo { font-size: 1.1rem; font-weight: 700; color: #f472b6; }
+        .logo span { color: #ec4899; }
+        .nav-links { display: flex; gap: 4px; list-style: none; }
+        .nav-links a {
+            color: #666; text-decoration: none; font-size: 0.85rem;
+            padding: 6px 14px; border-radius: 12px; transition: all 0.25s ease;
+        }
+        .nav-links a:hover { color: #f472b6; background: rgba(219,39,119,0.08); }
+        .nav-links a.active { color: #ec4899; background: rgba(219,39,119,0.12); }
+
+        .hero {
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; text-align: center; padding: 120px 24px 80px;
+        }
+        .island {
+            background: rgba(10,10,15,0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(219,39,119,0.15);
+            border-radius: 36px;
+            padding: 48px 56px;
+            max-width: 560px;
+            width: 100%;
+            box-shadow: 0 8px 40px rgba(219,39,119,0.05);
+            animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .island .tag {
+            display: inline-block;
+            font-size: 0.7rem;
             font-weight: 600;
-            z-index: 9999;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            animation: fadeUp 0.3s ease;
-            text-align: center;
-            max-width: 90%;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ec4899;
+            background: rgba(219,39,119,0.12);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
         }
-        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+        .island h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; color: #fff; }
+        .island h1 em { font-style: normal; background: linear-gradient(135deg, #ec4899, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .island .desc { font-size: 0.95rem; color: #888; line-height: 1.6; margin-bottom: 24px; }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .cannon-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: #fff; font-size: 1rem; font-weight: 600; border: none;
+            border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 20px rgba(219,39,119,0.3);
+            transition: all 0.3s ease;
+            text-decoration: none; width: 100%;
+            font-family: 'Inter', sans-serif;
         }
+        .cannon-btn:hover { transform: scale(1.02); box-shadow: 0 8px 32px rgba(219,39,119,0.4); }
 
-        @media (max-width: 600px) {
-            .card { padding: 30px 20px; }
-            .card h1 { font-size: 24px; }
-            .btn-download { padding: 14px 28px; font-size: 14px; }
+        .features-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .features-list .item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: #888; font-size: 0.85rem;
+        }
+        .features-list .item:last-child { border-bottom: none; }
+        .features-list .item .check { color: #ec4899; font-weight: 700; }
+
+        .back-link {
+            display: inline-block; margin-top: 20px;
+            color: #888; text-decoration: none; font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .back-link:hover { color: #ec4899; }
+
+        .footer { text-align: center; padding: 32px; color: #444; font-size: 0.8rem; }
+
+        @media (max-width: 480px) {
+            nav { padding: 10px 16px; gap: 12px; flex-wrap: wrap; justify-content: center; }
+            .island { padding: 28px 20px; }
+            .island h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="stars"></div>
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
-    <div class="glow glow-3"></div>
+<div class="bg"></div>
+<div id="stars"></div>
 
-    <div class="container">
+<nav>
+    <div class="logo">nemesis<span>:3</span></div>
+    <ul class="nav-links">
+        <li><a href="/">главная</a></li>
+        <li><a href="/steam" class="active">steam</a></li>
+        <li><a href="/ai">ai</a></li>
+        <li><a href="/minecraft">minecraft</a></li>
+        <li><a href="/account">аккаунт</a></li>
+    </ul>
+</nav>
 
-        <!-- ХЕДЕР -->
-        <div class="header">
-            <a href="/" class="logo">
-                <div class="icon">N</div>
-                <span class="nemesis">NEMESIS</span> <span style="color:#6c63ff;">:3</span>
-            </a>
-            <a href="/" class="back-btn">← На главную</a>
+<section class="hero">
+    <div class="island">
+        <div class="tag">⚡ оптимизация</div>
+        <h1>Nemesis <em>Steam</em></h1>
+        <div class="desc">Оптимизация FPS и ОЗУ для игр. Повысь производительность до +40%.</div>
+
+        <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/0.4.0/NemesisSteam.exe"
+           class="cannon-btn" target="_blank">
+            <span>⬇️</span> СКАЧАТЬ ЛАУНЧЕР
+        </a>
+
+        <div class="features-list">
+            <div class="item"><span class="check">✦</span> Повышение FPS до +40%</div>
+            <div class="item"><span class="check">✦</span> Оптимизация ОЗУ и CPU</div>
+            <div class="item"><span class="check">✦</span> Встроенный прицел для игр</div>
+            <div class="item"><span class="check">✦</span> DEV Консоль</div>
+            <div class="item"><span class="check">✦</span> Библиотека и история игр</div>
+            <div class="item"><span class="check">✦</span> ИИ-помощник (AI+ / AI MAX)</div>
         </div>
 
-        <div class="card">
-            <div class="icon-big">🖥️</div>
-            <h1><span class="gradient">Nemesis Steam</span></h1>
-            <div class="desc">Оптимизация FPS и ОЗУ для игр. Повысь производительность до +40%.</div>
-
-            <!-- КНОПКА СКАЧИВАНИЯ v0.4.0 -->
-            <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/0.4.0/NemesisSteam.exe"
-               class="btn-download"
-               target="_blank"
-               id="downloadBtn">
-                <span class="arrow">⬇️</span>
-                <span>СКАЧАТЬ ЛАУНЧЕР</span>
-            </a>
-
-            <!-- ФИЧИ -->
-            <div class="features">
-                <div class="item"><span class="check">✦</span> Повышение FPS до +40%</div>
-                <div class="item"><span class="check">✦</span> Оптимизация ОЗУ и CPU</div>
-                <div class="item"><span class="check">✦</span> Встроенный прицел для игр</div>
-                <div class="item"><span class="check">✦</span> DEV Консоль</div>
-                <div class="item"><span class="check">✦</span> Библиотека и история игр</div>
-                <div class="item"><span class="check">✦</span> ИИ-помощник (AI+ / AI MAX)</div>
-            </div>
-        </div>
-
+        <a href="/" class="back-link">← На главную</a>
     </div>
+</section>
 
-    <script type="module">
-        const downloadBtn = document.getElementById('downloadBtn');
+<div class="footer">© 2026 nemesis · kotik team</div>
 
-        downloadBtn.addEventListener('click', function(e) {
-            showToast('⬇️ Скачивание началось...');
-            try {
-                let downloads = parseInt(localStorage.getItem('nemesis_downloads') || '0');
-                downloads++;
-                localStorage.setItem('nemesis_downloads', downloads);
-            } catch(e) {}
-        });
-
-        function showToast(message) {
-            const existing = document.querySelector('.toast');
-            if (existing) existing.remove();
-
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
+<script>
+    function createStars() {
+        const container = document.getElementById('stars');
+        for (let i = 0; i < 120; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = (Math.random() * 2 + 1) + 'px';
+            star.style.height = star.style.width;
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.animationDelay = (Math.random() * 5) + 's';
+            container.appendChild(star);
         }
-
-        function createStars() {
-            const container = document.getElementById('stars');
-            for (let i = 0; i < 120; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (Math.random() * 2 + 1) + 'px';
-                star.style.height = star.style.width;
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(star);
-            }
-        }
-        createStars();
-
-        console.log('🖥️ Nemesis Steam v0.4.0');
-        console.log('⬇️ Ссылка:', downloadBtn.href);
-    </script>
-
+    }
+    createStars();
+</script>
 </body>
 </html>
