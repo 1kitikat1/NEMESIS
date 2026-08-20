@@ -302,7 +302,34 @@
         .product-card h4 { font-size: 0.95rem; font-weight: 600; color: #fff; }
         .product-card p { font-size: 0.75rem; color: #666; margin-top: 2px; }
 
-        .footer { text-align: center; padding: 40px; color: #444; font-size: 0.8rem; }
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: #444;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            margin-top: 60px;
+            width: 100%;
+            max-width: 1100px;
+        }
+        .footer a {
+            color: #666;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer a:hover { color: #ec4899; }
+        .footer .support {
+            color: #f472b6;
+            margin-top: 8px;
+            font-size: 0.85rem;
+        }
+        .footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
 
         @media (max-width: 480px) {
             nav { padding: 10px 16px; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -439,9 +466,17 @@
         </div>
     </div>
 
-</section>
+    <!-- ===== ФУТЕР ===== -->
+    <div class="footer">
+        <div class="links">
+            <a href="/privacy">Политика конфиденциальности</a>
+            <a href="/terms">Пользовательское соглашение</a>
+        </div>
+        <div class="support">📱 Поддержка: <a href="https://t.me/Nemesissup" target="_blank">@Nemesissup</a></div>
+        <div style="margin-top: 8px;">© 2026 nemesis · kotik team</div>
+    </div>
 
-<div class="footer">© 2026 nemesis · kotik team</div>
+</section>
 
 <script>
     function createStars() {
@@ -460,5 +495,6 @@
     }
     createStars();
 </script>
+
 </body>
 </html>
