@@ -3,937 +3,259 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEMESIS :3</title>
-    <meta name="theme-color" content="#07070d" />
+    <title>Nemesis · Главная</title>
+    <meta name="theme-color" content="#0a0a0f" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== ОСНОВНЫЕ СТИЛИ (ТВОИ) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #07070d;
             font-family: 'Inter', sans-serif;
-            color: #fff;
+            background: #0a0a0f;
+            min-height: 100vh;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 80px;
+            color: #fff;
         }
-
-        #stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 600px 600px at 20% 20%, rgba(219,39,119,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 80% 80%, rgba(219,39,119,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 300px 300px at 60% 30%, rgba(219,39,119,0.06) 0%, transparent 70%),
+                #0a0a0f;
+        }
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
         .star {
             position: absolute;
             width: 2px;
             height: 2px;
             background: #fff;
             border-radius: 50%;
-            opacity: 0.6;
+            opacity: 0.4;
             animation: twinkle var(--duration) ease-in-out infinite alternate;
         }
         @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 0.9; transform: scale(1.2); }
+            0% { opacity: 0.1; transform: scale(0.8); }
+            100% { opacity: 0.6; transform: scale(1.2); }
         }
 
-        .glow {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(140px);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .glow-1 { width: 700px; height: 700px; background: rgba(108, 99, 255, 0.08); top: -20%; left: -15%; }
-        .glow-2 { width: 600px; height: 600px; background: rgba(255, 215, 0, 0.05); bottom: -20%; right: -15%; }
-        .glow-3 { width: 500px; height: 500px; background: rgba(108, 99, 255, 0.06); top: 30%; left: 55%; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-in { animation: fadeUp 0.7s ease forwards; opacity: 0; }
-
-        /* ===== ХЕДЕР ===== */
-        header {
-            width: 100%;
-            max-width: 1280px;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 10;
-            backdrop-filter: blur(4px);
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            margin-top: 10px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-weight: 800;
-            font-size: 21px;
-            letter-spacing: -0.5px;
-            flex-shrink: 0;
-            text-decoration: none;
-            color: #fff;
-        }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(108,99,255,0.05));
-            border: 1px solid rgba(108,99,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 800;
-            color: #6c63ff;
-        }
-        .logo:hover .logo-icon { transform: rotate(-5deg) scale(1.05); }
-        .logo-text .nemesis {
-            background: linear-gradient(135deg, #6c63ff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .logo-text .smile { color: #6c63ff; font-size: 20px; }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-shrink: 0;
-        }
         nav {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            background: rgba(255,255,255,0.03);
-            padding: 4px;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-        nav a {
-            color: #8899bb;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 8px 18px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-        }
-        nav a:hover { color: #fff; background: rgba(255,255,255,0.04); }
-        nav a.active {
-            color: #fff;
-            background: rgba(108,99,255,0.15);
-            box-shadow: 0 0 20px rgba(108,99,255,0.05);
-        }
-        nav a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
+            position: fixed;
+            top: 16px;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
-            height: 2px;
-            background: #6c63ff;
-            border-radius: 2px;
-        }
-
-        .lang-switcher {
-            display: flex;
-            gap: 4px;
-            background: rgba(255,255,255,0.04);
-            padding: 4px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-        }
-        .lang-btn {
-            padding: 6px 14px;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #8899bb;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .lang-btn:hover { color: #fff; }
-        .lang-btn.active {
-            background: rgba(108,99,255,0.15);
-            color: #6c63ff;
-        }
-
-        .profile-btn {
+            z-index: 100;
+            background: rgba(10,10,15,0.8);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(219,39,119,0.15);
+            border-radius: 22px;
+            padding: 12px 28px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 16px 8px 12px;
-            border-radius: 40px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.04);
-            color: #8899bb;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            text-decoration: none;
+            gap: 24px;
         }
-        .profile-btn:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(255,255,255,0.08);
-            color: #fff;
+        .logo { font-size: 1.1rem; font-weight: 700; color: #f472b6; }
+        .logo span { color: #ec4899; }
+        .nav-links { display: flex; gap: 4px; list-style: none; }
+        .nav-links a {
+            color: #666; text-decoration: none; font-size: 0.85rem;
+            padding: 6px 14px; border-radius: 12px; transition: all 0.25s ease;
         }
-        .profile-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6c63ff, #a78bfa);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            color: #fff;
-        }
-        .profile-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #22c55e;
-            display: inline-block;
-        }
-        .hidden { display: none !important; }
-
-        /* ===== КОНТЕЙНЕР ===== */
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            padding: 20px 40px 80px;
-            position: relative;
-            z-index: 5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .nav-links a:hover { color: #f472b6; background: rgba(219,39,119,0.08); }
+        .nav-links a.active { color: #ec4899; background: rgba(219,39,119,0.12); }
 
         .hero {
-            text-align: center;
-            max-width: 740px;
-            margin: 0 auto 50px;
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; text-align: center; padding: 120px 24px 80px;
+        }
+        .island {
+            background: rgba(10,10,15,0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(219,39,119,0.15);
+            border-radius: 36px;
+            padding: 48px 56px;
+            max-width: 640px;
             width: 100%;
+            box-shadow: 0 8px 40px rgba(219,39,119,0.05);
+            animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both;
         }
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 18px;
-        }
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 50%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero p {
-            color: #8888aa;
-            font-size: 17px;
-            line-height: 1.8;
-        }
-        .hero .sub {
-            color: #555566;
-            font-size: 14px;
-            margin-top: 6px;
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .products-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto 60px;
-        }
-        .product-card {
-            background: rgba(255,255,255,0.025);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 28px;
-            padding: 30px;
-            width: 280px;
-            text-align: center;
-            transition: all 0.35s ease;
-            cursor: pointer;
-        }
-        .product-card:hover {
-            transform: translateY(-12px);
-            border-color: rgba(108,99,255,0.3);
-            box-shadow: 0 24px 64px rgba(108,99,255,0.1);
-        }
-        .product-card .icon { font-size: 48px; margin-bottom: 12px; }
-        .product-card h3 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-        .product-card p {
-            color: #8888aa;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        .product-card .tag {
+        .island .tag {
             display: inline-block;
-            margin-top: 12px;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 11px;
+            font-size: 0.7rem;
             font-weight: 600;
-            background: rgba(108,99,255,0.15);
-            color: #6c63ff;
-        }
-        .product-card .tag.premium { background: rgba(255,215,0,0.1); color: #ffd700; }
-
-        .section-title {
-            font-size: 40px;
-            font-weight: 800;
-            text-align: center;
-            margin: 20px auto 50px;
-            letter-spacing: -1.5px;
-            width: 100%;
-        }
-        .section-title .gradient {
-            background: linear-gradient(135deg, #6c63ff, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ===== КАРТОЧКИ ТАРИФОВ ===== */
-        .pricing-grid {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 30px;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 960px;
-            margin: 0 auto 70px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.025);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 28px;
-            padding: 36px 30px 30px;
-            width: 280px;
-            flex: 1 1 240px;
-            max-width: 320px;
-            text-align: center;
-            transition: all 0.35s ease;
-            position: relative;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .card:hover {
-            transform: translateY(-12px);
-            border-color: rgba(255,255,255,0.12);
-            box-shadow: 0 24px 64px rgba(0,0,0,0.45);
-        }
-        .card .badge {
-            position: absolute;
-            top: -12px;
-            right: 18px;
-            background: linear-gradient(135deg, #6c63ff, #8b7aff);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 18px;
-            border-radius: 40px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            box-shadow: 0 4px 20px rgba(108,99,255,0.25);
-        }
-        .card .icon-big { font-size: 36px; }
-        .card h3 { font-size: 22px; font-weight: 700; margin: 6px 0; }
-        .card .price {
-            font-size: 36px;
-            font-weight: 800;
-            margin: 4px 0;
-        }
-        .card .price small {
-            font-size: 14px;
-            color: #8888aa;
-            font-weight: 400;
-        }
-        .card .price-sub {
-            font-size: 12px;
-            color: #6c63ff;
-            font-weight: 600;
-            margin-bottom: 18px;
-        }
-        .card ul {
-            list-style: none;
-            width: 100%;
-            text-align: left;
-            margin: 16px 0 24px;
-            padding: 0;
-        }
-        .card ul li {
-            padding: 8px 0;
-            color: #aaaacc;
-            font-size: 13px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .card ul li::before {
-            content: "✦";
-            color: #6c63ff;
-            font-weight: 700;
-            font-size: 12px;
-            opacity: 0.8;
-        }
-        .card ul li:last-child { border-bottom: none; }
-
-        .card .btn {
-            width: 100%;
-            padding: 13px 0;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 13px;
-            border: none;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            cursor: pointer;
-        }
-        .btn-gray {
-            background: rgba(255,255,255,0.03);
-            color: #8888aa;
-            border: 1px solid rgba(255,255,255,0.04);
-        }
-        .btn-buy {
-            background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(108,99,255,0.05));
-            color: #fff;
-            border: 1px solid rgba(108,99,255,0.15);
-        }
-        .btn-buy:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 32px rgba(108,99,255,0.15);
-        }
-        .btn-active {
-            background: rgba(34,197,94,0.1);
-            color: #22c55e;
-            border: 1px solid rgba(34,197,94,0.2);
-            cursor: default;
-        }
-        .btn-nemesis {
-            background: rgba(255,215,0,0.06);
-            color: #ffd700;
-            border: 1px solid rgba(255,215,0,0.08);
-            cursor: default;
-        }
-        .btn-buy-hidden { display: none !important; }
-
-        /* ===== АКТИВАЦИЯ КЛЮЧА ===== */
-        .key-activation {
-            width: 100%;
-            max-width: 500px;
-            margin: 30px auto;
-            padding: 24px;
-            background: rgba(255,255,255,0.025);
+            color: #ec4899;
+            background: rgba(219,39,119,0.12);
+            padding: 5px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
+            margin-bottom: 20px;
         }
-        .key-activation h3 {
-            font-size: 18px;
+        .island h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
             margin-bottom: 12px;
             color: #fff;
         }
-        .key-input-group {
-            display: flex;
-            gap: 10px;
+        .island h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .key-input-group input {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(0,0,0,0.35);
+        .island .sub {
+            font-size: 0.95rem;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .cannon-btn {
+            display: inline-block;
+            padding: 16px 44px;
+            background: linear-gradient(135deg, #ec4899, #db2777);
             color: #fff;
-            font-size: 14px;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-        .key-input-group input:focus {
-            border-color: #6c63ff;
-        }
-        .key-input-group button {
-            padding: 12px 24px;
-            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
             border: none;
-            background: linear-gradient(135deg, #6c63ff, #a78bfa);
-            color: #fff;
-            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
+            box-shadow: 0 4px 20px rgba(219,39,119,0.3);
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+            text-decoration: none;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
         }
-        .key-input-group button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 32px rgba(108,99,255,0.2);
-        }
-        .key-status {
-            margin-top: 12px;
-            font-size: 14px;
-            min-height: 24px;
-            color: #8888aa;
-        }
+        .cannon-btn:hover { transform: scale(1.04); box-shadow: 0 8px 32px rgba(219,39,119,0.4); }
 
-        /* ===== ТОСТЫ ===== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(11,11,18,0.95);
-            color: #fff;
-            padding: 14px 36px;
-            border-radius: 60px;
-            border: 1px solid rgba(108,99,255,0.15);
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 9999;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            animation: fadeUp 0.3s ease;
+        .products-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .products-grid.open { display: grid; }
+
+        .product-card {
+            background: rgba(10,10,15,0.5);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(219,39,119,0.1);
+            border-radius: 20px;
+            padding: 24px 16px;
+            transition: all 0.35s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
             text-align: center;
-            max-width: 90%;
         }
-        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(219,39,119,0.25);
+            box-shadow: 0 12px 40px rgba(219,39,119,0.08);
+        }
+        .product-card .icon { font-size: 2.4rem; display: block; margin-bottom: 8px; }
+        .product-card h4 { font-size: 0.95rem; font-weight: 600; color: #fff; }
+        .product-card p { font-size: 0.75rem; color: #666; margin-top: 2px; }
 
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 900px) {
-            header { padding: 18px 20px; flex-wrap: wrap; gap: 16px; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 10px; }
-            .header-right { flex-wrap: wrap; justify-content: center; gap: 12px; }
-            .container { padding: 20px 20px 60px; }
-            .hero h1 { font-size: 36px; }
-            .section-title { font-size: 28px; }
-            .pricing-grid { flex-direction: column; align-items: center; }
-            .card { width: 100%; max-width: 340px; }
-            .logo { font-size: 17px; }
-            .logo-icon { width: 34px; height: 34px; font-size: 17px; }
-            .products-grid { flex-direction: column; align-items: center; }
-            .product-card { width: 100%; max-width: 340px; }
-            .key-input-group { flex-direction: column; }
-        }
+        .footer { text-align: center; padding: 32px; color: #444; font-size: 0.8rem; }
+
         @media (max-width: 480px) {
-            .hero h1 { font-size: 28px; }
-            .logo { font-size: 15px; }
-            .logo-icon { width: 30px; height: 30px; font-size: 15px; }
-            nav a { font-size: 11px; padding: 5px 10px; }
+            nav { padding: 10px 16px; gap: 12px; flex-wrap: wrap; justify-content: center; }
+            .island { padding: 32px 20px; }
+            .island h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ЗВЁЗДЫ И ГЛОУ -->
-    <div id="stars"></div>
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
-    <div class="glow glow-3"></div>
+<div class="bg"></div>
+<div id="stars"></div>
 
-    <!-- ХЕДЕР -->
-    <header class="animate-in">
-        <a href="#" class="logo" id="logo-home">
-            <div class="logo-icon">N</div>
-            <div class="logo-text">
-                <span class="nemesis">NEMESIS</span>
-                <span class="smile">:3</span>
-            </div>
-        </a>
+<nav>
+    <div class="logo">nemesis<span>:3</span></div>
+    <ul class="nav-links">
+        <li><a href="/" class="active">главная</a></li>
+        <li><a href="/steam">steam</a></li>
+        <li><a href="/ai">ai</a></li>
+        <li><a href="/minecraft">minecraft</a></li>
+        <li><a href="/account">аккаунт</a></li>
+    </ul>
+</nav>
 
-        <div class="header-right">
-            <nav>
-                <a class="active" id="nav-home">ГЛАВНАЯ</a>
-            </nav>
-            <div class="lang-switcher">
-                <button class="lang-btn active" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-            </div>
-            <div class="header-profile">
-                <a href="/akk" class="profile-btn" id="profile-btn">
-                    <span class="profile-avatar">👤</span>
-                    <span id="profile-label">Войти</span>
-                    <span class="profile-dot"></span>
-                </a>
-            </div>
-        </div>
-    </header>
+<section class="hero">
+    <div class="island">
+        <div class="tag">✦ kotik team</div>
+        <h1>Выбери <em>продукт</em></h1>
+        <div class="sub">Экосистема для оптимизации, игр и искусственного интеллекта</div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <div class="container">
-        <div id="page-home" style="width:100%; display:flex; flex-direction:column; align-items:center;">
+        <button class="cannon-btn" onclick="toggleProducts()">🔽 Выбрать продукт</button>
 
-            <!-- ГЕРО -->
-            <div class="hero animate-in">
-                <h1>NEMESIS <span class="gradient">:3</span></h1>
-                <p>Экосистема продуктов для оптимизации, игр и искусственного интеллекта.</p>
-                <p>Nemesis Steam · Nemesis AI</p>
-                <p class="sub">🚀 Всё в одном месте</p>
-            </div>
-
-            <!-- ПРОДУКТЫ -->
-            <h2 class="section-title animate-in delay-1"><span class="gradient">ПРОДУКТЫ</span></h2>
-            <div class="products-grid animate-in delay-2">
-                <div class="product-card" onclick="location.href='/steam'">
-                    <div class="icon">🖥️</div>
-                    <h3>Nemesis Steam</h3>
-                    <p>Лаунчер + оптимизация Steam. Повысь FPS до +40%.</p>
-                    <span class="tag">FREE / ELITE</span>
-                </div>
-                <div class="product-card" onclick="location.href='/ai'">
-                    <div class="icon">🤖</div>
-                    <h3>Nemesis AI</h3>
-                    <p>ИИ-помощник для любых задач: чат, код, советы.</p>
-                    <span class="tag premium">AI+ / AI MAX</span>
-                </div>
-            </div>
-
-            <!-- ТАРИФЫ -->
-            <h2 class="section-title animate-in delay-2">ВЫБЕРИ <span class="gradient">ТАРИФ</span></h2>
-            <div class="pricing-grid">
-                <!-- FREE -->
-                <div class="card free animate-in delay-3">
-                    <div class="icon-big">🆓</div>
-                    <h3>FREE</h3>
-                    <div class="price">0 ₽</div>
-                    <ul>
-                        <li>Steam (база)</li>
-                        <li>Прицел</li>
-                        <li>Утилиты</li>
-                        <li>ИИ (базовый)</li>
-                        <li>Режим кода</li>
-                    </ul>
-                    <div class="btn btn-gray">Текущий тариф</div>
-                </div>
-
-                <!-- ELITE -->
-                <div class="card elite animate-in delay-3" id="card-elite">
-                    <div class="badge">🔥 ПОПУЛЯРНЫЙ</div>
-                    <div class="icon-big">⭐</div>
-                    <h3>NEMESIS ELITE</h3>
-                    <div class="price">199 ₽</div>
-                    <div class="price-sub" id="elite-status">Для Steam</div>
-                    <ul>
-                        <li>Steam (полная)</li>
-                        <li>Всё из FREE</li>
-                        <li>Приоритетная поддержка</li>
-                    </ul>
-                    <button class="btn btn-buy" id="btn-buy-elite" onclick="goToFunPay('elite')">
-                        ⚡ КУПИТЬ ЗА 199 ₽
-                    </button>
-                    <button class="btn btn-active hidden" id="btn-active-elite">✅ АКТИВЕН</button>
-                </div>
-
-                <!-- AI+ -->
-                <div class="card elite animate-in delay-3" id="card-ai-plus">
-                    <div class="icon-big">🧠</div>
-                    <h3>AI+</h3>
-                    <div class="price">99 ₽ <small></div>
-                    <div class="price-sub" id="ai-plus-status">Только ИИ</div>
-                    <ul>
-                        <li>ИИ (полный)</li>
-                        <li>Экспорт диалогов</li>
-                        <li>Приоритет</li>
-                        <li>Режим кода</li>
-                    </ul>
-                    <button class="btn btn-buy" id="btn-buy-ai-plus" onclick="goToFunPay('ai_plus')">
-                        ⚡ КУПИТЬ AI+
-                    </button>
-                    <button class="btn btn-active hidden" id="btn-active-ai-plus">✅ АКТИВЕН</button>
-                </div>
-
-                <!-- AI MAX -->
-                <div class="card elite animate-in delay-4" id="card-ai-max">
-                    <div class="badge" style="background: linear-gradient(135deg, #ffd700, #ff8c00);">👑 ВСЁ ВКЛЮЧЕНО</div>
-                    <div class="icon-big">🚀</div>
-                    <h3>AI MAX</h3>
-                    <div class="price">299 ₽</div>
-                    <div class="price-sub" id="ai-max-status">Steam + ИИ</div>
-                    <ul>
-                        <li>Steam (полная)</li>
-                        <li>ИИ (полный)</li>
-                        <li>Экспорт диалогов</li>
-                        <li>Приоритет</li>
-                        <li>Всё из ELITE и AI+</li>
-                    </ul>
-                    <button class="btn btn-buy" id="btn-buy-ai-max" onclick="goToFunPay('ai_max')">
-                        ⚡ КУПИТЬ AI MAX
-                    </button>
-                    <button class="btn btn-active hidden" id="btn-active-ai-max">✅ АКТИВЕН</button>
-                </div>
-
-                <!-- NEMESIS (скрыт) -->
-                <div class="card nemesis hidden" id="card-nemesis">
-                    <div class="icon-big">👑</div>
-                    <h3>NEMESIS</h3>
-                    <div class="price">Эксклюзив</div>
-                    <ul>
-                        <li>Всё, что есть в AI MAX</li>
-                        <li>Эксклюзивный доступ</li>
-                        <li>Имя в истории проекта</li>
-                    </ul>
-                    <div class="btn btn-nemesis">Только для Nemesis</div>
-                </div>
-            </div>
-
-            <!-- АКТИВАЦИЯ КЛЮЧА -->
-            <div class="key-activation animate-in delay-4" id="key-activation">
-                <h3>🎁 Есть ключ? Активируй!</h3>
-                <div class="key-input-group">
-                    <input type="text" id="key-input" placeholder="Введите ключ..." autocomplete="off">
-                    <button onclick="activateKeyFromInput()">Активировать</button>
-                </div>
-                <div class="key-status" id="key-status"></div>
-            </div>
-
+        <div class="products-grid" id="productsGrid">
+            <a href="/steam" class="product-card">
+                <span class="icon">🖥️</span>
+                <h4>Nemesis Steam</h4>
+                <p>Оптимизация FPS</p>
+            </a>
+            <a href="/minecraft" class="product-card">
+                <span class="icon">⛏️</span>
+                <h4>Nemesis Minecraft</h4>
+                <p>Клиент 1.21.11</p>
+            </a>
+            <a href="/ai" class="product-card">
+                <span class="icon">🤖</span>
+                <h4>Nemesis AI</h4>
+                <p>ИИ-помощник</p>
+            </a>
+            <a href="/account" class="product-card">
+                <span class="icon">👤</span>
+                <h4>Аккаунт</h4>
+                <p>Управление</p>
+            </a>
         </div>
     </div>
+</section>
 
-    <!-- FIREBASE -->
-    <script type="importmap">
-        {
-            "imports": {
-                "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
-                "firebase/auth": "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js",
-                "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
-            }
+<div class="footer">© 2026 nemesis · kotik team</div>
+
+<script>
+    function createStars() {
+        const container = document.getElementById('stars');
+        for (let i = 0; i < 120; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = (Math.random() * 2 + 1) + 'px';
+            star.style.height = star.style.width;
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            star.style.animationDelay = (Math.random() * 5) + 's';
+            container.appendChild(star);
         }
-    </script>
+    }
+    createStars();
 
-    <script type="module">
-        import { initializeApp } from "firebase/app";
-        import { getAuth, onAuthStateChanged } from "firebase/auth";
-        import { getDatabase, ref, get, update } from "firebase/database";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
-            authDomain: "nemesissteam-13577.firebaseapp.com",
-            databaseURL: "https://nemesissteam-13577-default-rtdb.firebaseio.com",
-            projectId: "nemesissteam-13577",
-            storageBucket: "nemesissteam-13577.firebasestorage.app",
-            messagingSenderId: "649763368476",
-            appId: "1:649763368476:web:de4e044d4d971168fa79d9",
-            measurementId: "G-GJ9KHSG65L"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app);
-
-        // ===== ФУНКЦИИ =====
-        let currentUser = null;
-
-        // ===== ПЕРЕХОД НА FUNPAY =====
-        window.goToFunPay = function(plan) {
-            const lotUrls = {
-                'elite': 'https://funpay.com/users/7382049/',
-                'ai_plus': 'https://funpay.com/users/7382049/',
-                'ai_max': 'https://funpay.com/users/7382049/'
-            };
-            window.open(lotUrls[plan], '_blank');
-        };
-
-        // ===== ТОСТ =====
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
-        // ===== АКТИВАЦИЯ КЛЮЧА =====
-        window.activateKeyFromInput = function() {
-            const input = document.getElementById('key-input');
-            const key = input.value.trim().toUpperCase();
-            const status = document.getElementById('key-status');
-            
-            if (!key) {
-                status.textContent = '❌ Введите ключ';
-                status.style.color = '#ff4444';
-                return;
-            }
-            
-            if (!currentUser) {
-                status.textContent = '❌ Войдите в аккаунт!';
-                status.style.color = '#ff4444';
-                return;
-            }
-            
-            activateKey(key);
-            input.value = '';
-        };
-
-        async function activateKey(key) {
-            const status = document.getElementById('key-status');
-            status.textContent = '⏳ Проверка ключа...';
-            status.style.color = '#8888aa';
-            
-            try {
-                const keyRef = ref(db, `keys/${key}`);
-                const snapshot = await get(keyRef);
-                
-                if (!snapshot.exists()) {
-                    status.textContent = '❌ Неверный ключ';
-                    status.style.color = '#ff4444';
-                    return;
-                }
-                
-                const keyData = snapshot.val();
-                
-                if (keyData.used) {
-                    status.textContent = '❌ Ключ уже использован';
-                    status.style.color = '#ff4444';
-                    return;
-                }
-                
-                // Получаем текущего пользователя
-                const userSnapshot = await get(ref(db, `users/${currentUser.uid}`));
-                const userData = userSnapshot.val();
-                const currentRole = userData.role || 'free';
-                
-                // Определяем новую роль
-                let newRole = currentRole;
-                const plan = keyData.plan;
-                
-                if (plan === 'elite' && currentRole === 'ai_basic') {
-                    newRole = 'ai_max';
-                } else if (plan === 'ai_basic' && currentRole === 'elite') {
-                    newRole = 'ai_max';
-                } else if (plan === 'ai_max') {
-                    newRole = 'ai_max';
-                } else {
-                    newRole = plan;
-                }
-                
-                // Обновляем роль пользователя
-                await update(ref(db, `users/${currentUser.uid}`), {
-                    role: newRole
-                });
-                
-                // Отмечаем ключ как использованный
-                await update(ref(db, `keys/${key}`), {
-                    used: true,
-                    usedBy: currentUser.uid,
-                    usedAt: new Date().toISOString()
-                });
-                
-                const roleLabels = {
-                    'free': '🆓 FREE',
-                    'elite': '⚡ ELITE',
-                    'ai_basic': '🧠 AI+',
-                    'ai_max': '🚀 AI MAX',
-                    'nemesis': '👑 NEMESIS'
-                };
-                
-                status.textContent = `🎉 Подписка активирована! ${roleLabels[newRole] || newRole.toUpperCase()}`;
-                status.style.color = '#22c55e';
-                
-                // Обновляем кнопки
-                updateButtons(newRole);
-                showToast(`🎉 Добро пожаловать в ${roleLabels[newRole] || newRole.toUpperCase()}!`);
-                
-            } catch (error) {
-                console.error('Ошибка активации:', error);
-                status.textContent = '❌ Ошибка активации ключа';
-                status.style.color = '#ff4444';
-            }
-        }
-
-        // ===== УПРАВЛЕНИЕ КНОПКАМИ =====
-        function updateButtons(role) {
-            const hasElite = role === 'elite' || role === 'ai_max' || role === 'nemesis';
-            const hasAiPlus = role === 'ai_basic' || role === 'ai_max' || role === 'nemesis';
-            const hasAiMax = role === 'ai_max' || role === 'nemesis';
-
-            document.getElementById('btn-buy-elite').classList.toggle('hidden', hasElite);
-            document.getElementById('btn-active-elite').classList.toggle('hidden', !hasElite);
-            document.getElementById('btn-buy-ai-plus').classList.toggle('hidden', hasAiPlus);
-            document.getElementById('btn-active-ai-plus').classList.toggle('hidden', !hasAiPlus);
-            document.getElementById('btn-buy-ai-max').classList.toggle('hidden', hasAiMax);
-            document.getElementById('btn-active-ai-max').classList.toggle('hidden', !hasAiMax);
-
-            if (hasElite) document.getElementById('elite-status').textContent = '✅ АКТИВЕН';
-            if (hasAiPlus) document.getElementById('ai-plus-status').textContent = '✅ АКТИВЕН';
-            if (hasAiMax) document.getElementById('ai-max-status').textContent = '✅ АКТИВЕН';
-        }
-
-        // ===== ПРОФИЛЬ =====
-        const profileLabel = document.getElementById('profile-label');
-        
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUser = user;
-                try {
-                    const snapshot = await get(ref(db, `users/${user.uid}`));
-                    const data = snapshot.val();
-                    if (data) {
-                        profileLabel.textContent = data.username || user.email;
-                        updateButtons(data.role || 'free');
-                    }
-                } catch (error) {
-                    console.error('Ошибка загрузки данных:', error);
-                }
-            } else {
-                currentUser = null;
-                profileLabel.textContent = 'Войти';
-                updateButtons('free');
-                document.getElementById('key-status').textContent = '';
-            }
-        });
-
-        // ===== ЗВЁЗДЫ =====
-        function createStars() {
-            const container = document.getElementById('stars');
-            for (let i = 0; i < 120; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (Math.random() * 2 + 1) + 'px';
-                star.style.height = star.style.width;
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(star);
-            }
-        }
-        createStars();
-
-        console.log('🚀 NEMESIS :3 готов к работе!');
-        console.log('👑 Роли: free, elite, ai_basic, ai_max, nemesis');
-        console.log('🔑 Система ключей активна!');
-    </script>
-
+    function toggleProducts() {
+        const grid = document.getElementById('productsGrid');
+        grid.classList.toggle('open');
+    }
+</script>
 </body>
 </html>
