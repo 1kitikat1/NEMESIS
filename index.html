@@ -498,7 +498,7 @@
 
 <script type="module">
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 
 // ============================================================
@@ -519,35 +519,10 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // ============================================================
-// ШИФРОВАНИЕ (ПРОСТОЙ XOR) — БЕЗ Base64
+// ROLLYPAY — ОТКРЫТЫЙ API КЛЮЧ
 // ============================================================
-
-// !!! ЗАМЕНИ НА СВОЙ ЗАШИФРОВАННЫЙ КЛЮЧ !!!
-// Получить можно в консоли: encryptKey("твой_ключ")
-// const ENCRYPTED_KEY = "9soEsSw8..." // ← старый способ
-
-// НОВЫЙ СПОСОБ: массив чисел (XOR)
-// Чтобы получить его, выполни в консоли функцию ниже
-const ENCRYPTED_ARRAY = [  // ← сюда вставь свой массив
-    109, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122
-];
-
-function decryptKey(encryptedArray) {
-    try {
-        let result = '';
-        for (let i = 0; i < encryptedArray.length; i++) {
-            result += String.fromCharCode(encryptedArray[i]);
-        }
-        return result;
-    } catch (e) {
-        console.error('Ошибка расшифровки:', e);
-        return null;
-    }
-}
-
-// ============================================================
-// ROLLYPAY
-// ============================================================
+// ВНИМАНИЕ: Ключ виден в коде. Для продакшена используйте шифрование или прокси!
+const ROLLYPAY_API_KEY = "7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk";
 const ROLLYPAY_TERMINAL_ID = "cc6d8171-c6f4-471d-90e5-44611400a7c6";
 
 const PLANS = {
@@ -563,17 +538,13 @@ async function createPayment(plan, email, username) {
     const planData = PLANS[plan];
     if (!planData) throw new Error('Неверный тариф');
 
-    // Расшифровываем ключ
-    const apiKey = decryptKey(ENCRYPTED_ARRAY);
-    if (!apiKey) throw new Error('Ошибка расшифровки ключа');
-
     const orderId = `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
 
     const response = await fetch('https://api.rollypay.io/api/v1/payments', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-API-Key': apiKey
+            'X-API-Key': ROLLYPAY_API_KEY
         },
         body: JSON.stringify({
             terminal_id: ROLLYPAY_TERMINAL_ID,
@@ -690,23 +661,9 @@ function createStars() {
 }
 createStars();
 
-// ============================================================
-// ГЕНЕРАЦИЯ ЗАШИФРОВАННОГО КЛЮЧА (в консоли)
-// ============================================================
-console.log('🛠️ Для получения зашифрованного ключа:');
-console.log('1. Выполни в консоли:');
-console.log(`
-function encryptKey(key) {
-    const arr = [];
-    for (let i = 0; i < key.length; i++) {
-        arr.push(key.charCodeAt(i) + 3);
-    }
-    return arr;
-}
-console.log('🔑 Зашифрованный массив:', JSON.stringify(encryptKey('7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk')));
-`);
-
 console.log('🚀 Nemesis готов к работе!');
+console.log('💰 Платежи через RollyPay (открытый API)');
+console.log('⚠️ Для продакшена рекомендуется скрыть API ключ!');
 </script>
 
 </body>
