@@ -1,204 +1,248 @@
 // functions/index.js
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
+const axios = require("axios");
 
 admin.initializeApp();
 
 // ============================================================
-//  БЭКЕНД НЕМЕЗИС АЙ
+//  КОНФИГУРАЦИЯ ROLLYPAY
 // ============================================================
 
-const AGNES_API_KEY = "sk-9OBSttI1TxXspLMDenWdnk5nfuzJsRXAHvvI5fCO18SOZVj0";
-const AGNES_URL = "https://apihub.agnes-ai.com/v1/chat/completions";
+const ROLLYPAY_API_KEY = "7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk";
+const ROLLYPAY_TERMINAL_ID = "cc6d8171-c6f4-471d-90e5-44611400a7c6";
+const ROLLYPAY_URL = "https://api.rollypay.io/api/v1";
 
-// Системный промпт с рассуждениями
-const SYSTEM_PROMPT = `
-  Ты — Nemesis AI, продвинутый ассистент.
+const PLANS = {
+    elite: { name: 'ELITE', price: 199, role: 'elite' },
+    ai_plus: { name: 'AI+', price: 99, role: 'ai_basic' },
+    ai_max: { name: 'AI MAX', price: 299, role: 'ai_max' }
+};
 
-  **1. Рассуждения (Chain of Thought)**
-  - Сначала ПРОАНАЛИЗИРУЙ вопрос пользователя.
-  - ОПИШИ свои рассуждения и шаги к решению задачи.
-  - Только после этого ДАЙ окончательный ответ.
+// ============================================================
+//  CORS ХЕЛПЕР
+// ============================================================
 
-  **2. Поиск информации**
-  - Если вопрос требует актуальных данных, используй свои знания.
-  - Если данных нет — скажи это честно.
-
-  **3. Правила**
-  - Ты — Nemesis AI, не представляйся как другая модель.
-  - Отвечай на русском языке.
-  - Не пиши вредоносный код.
-`;
-
-// Роли
-function permsForRole(role) {
-  switch (role) {
-    case "nemesis": return { model: "agnes-2.0-flash", maxTokens: 4000, canVision: true };
-    case "ai_max": return { model: "agnes-2.0-flash", maxTokens: 4000, canVision: true };
-    case "ai_basic": return { model: "agnes-2.0-flash", maxTokens: 2000, canVision: true };
-    default: return { model: "agnes-2.0-flash-lite", maxTokens: 500, canVision: false };
-  }
-}
-
-// ===== CORS ХЕЛПЕР =====
 function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 }
 
-// ===== /chat =====
-exports.chat = onRequest(
-  { 
-    cors: true,
-    maxInstances: 10,
-  },
-  async (req, res) => {
-    // CORS заголовки
-    setCorsHeaders(res);
+// ============================================================
+//  СОЗДАНИЕ ПЛАТЕЖА
+// ============================================================
 
-    if (req.method === 'OPTIONS') {
-      res.status(204).send('');
-      return;
-    }
+exports.createPayment = onRequest(
+    { cors: true, maxInstances: 10 },
+    async (req, res) => {
+        setCorsHeaders(res);
 
-    if (req.method !== "POST") {
-      return res.status(405).send("Method not allowed");
-    }
-
-    try {
-      const { messages, imageUrl, role } = req.body || {};
-      
-      if (!messages || !Array.isArray(messages) || messages.length === 0) {
-        return res.status(400).json({ error: "Пустое сообщение" });
-      }
-
-      const perms = permsForRole(role || "free");
-
-      if (imageUrl && !perms.canVision) {
-        return res.status(403).json({ error: "Ваш тариф не поддерживает фото" });
-      }
-
-      let formatted = [{ role: "system", content: SYSTEM_PROMPT }, ...messages];
-      
-      if (imageUrl) {
-        const last = messages[messages.length - 1];
-        formatted = [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages.slice(0, -1),
-          {
-            role: "user",
-            content: [
-              { type: "text", text: last.content },
-              { type: "image_url", image_url: { url: imageUrl } },
-            ],
-          },
-        ];
-      }
-
-      const upstream = await fetch(AGNES_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${AGNES_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: perms.model,
-          messages: formatted,
-          max_tokens: perms.maxTokens,
-          temperature: 0.7,
-          stream: true,
-        }),
-      });
-
-      if (!upstream.ok || !upstream.body) {
-        const errText = await upstream.text().catch(() => "");
-        return res.status(502).json({ error: `Ошибка AI API: ${errText || upstream.status}` });
-      }
-
-      res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
-      res.setHeader("Cache-Control", "no-cache");
-      res.setHeader("Connection", "keep-alive");
-      setCorsHeaders(res);
-
-      const reader = upstream.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
-
-        for (const line of lines) {
-          if (!line.startsWith("data: ")) continue;
-          const data = line.slice(6);
-          if (data === "[DONE]") continue;
-          try {
-            const json = JSON.parse(data);
-            const chunk = json.choices?.[0]?.delta?.content || "";
-            if (chunk) res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
-          } catch (_) {}
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
         }
-      }
 
-      res.write("data: [DONE]\n\n");
-      res.end();
-    } catch (err) {
-      console.error(err);
-      if (!res.headersSent) {
-        res.status(500).json({ error: err.message || "Внутренняя ошибка" });
-      } else {
-        res.end();
-      }
+        if (req.method !== "POST") {
+            return res.status(405).send("Method not allowed");
+        }
+
+        try {
+            const { plan, email, username } = req.body || {};
+
+            // Проверка авторизации через Firebase
+            const authHeader = req.headers.authorization;
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                return res.status(401).json({ error: "Не авторизован" });
+            }
+
+            const token = authHeader.split('Bearer ')[1];
+            let decodedToken;
+            try {
+                decodedToken = await admin.auth().verifyIdToken(token);
+            } catch (e) {
+                return res.status(401).json({ error: "Недействительный токен" });
+            }
+
+            const userId = decodedToken.uid;
+
+            const planData = PLANS[plan];
+            if (!planData) {
+                return res.status(400).json({ error: "Неверный тариф" });
+            }
+
+            // Создаём платёж в RollyPay
+            const response = await axios.post(
+                `${ROLLYPAY_URL}/payments/create`,
+                {
+                    terminal_id: ROLLYPAY_TERMINAL_ID,
+                    amount: String(planData.price),
+                    order_id: `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+                    description: `Подписка ${planData.name} для ${username}`,
+                    customer_email: email,
+                    payment_method: "sbp",
+                    redirect_url: "https://nemesisx.fun/payment/success",
+                    webhook_url: "https://nemesisx.fun/api/webhook"
+                },
+                {
+                    headers: {
+                        'X-API-Key': ROLLYPAY_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            const paymentId = response.data.payment_id;
+
+            // Сохраняем в Firebase
+            await admin.database().ref(`payments/${paymentId}`).set({
+                user_id: userId,
+                plan: plan,
+                role: planData.role,
+                amount: planData.price,
+                status: 'pending',
+                created_at: new Date().toISOString(),
+                email: email,
+                username: username
+            });
+
+            return res.json({
+                payment_id: paymentId,
+                pay_url: response.data.pay_url,
+                amount: planData.price
+            });
+
+        } catch (error) {
+            console.error('RollyPay error:', error.response?.data || error.message);
+            return res.status(500).json({ error: 'Ошибка создания платежа' });
+        }
     }
-  }
 );
 
-// ===== /uploadImage =====
-exports.uploadImage = onRequest(
-  { 
-    cors: true,
-    maxInstances: 10,
-  },
-  async (req, res) => {
-    // CORS заголовки
-    setCorsHeaders(res);
+// ============================================================
+//  ВЕБХУК ДЛЯ ROLLYPAY
+// ============================================================
 
-    if (req.method === 'OPTIONS') {
-      res.status(204).send('');
-      return;
+exports.webhook = onRequest(
+    { cors: true, maxInstances: 10 },
+    async (req, res) => {
+        setCorsHeaders(res);
+
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
+        }
+
+        if (req.method !== "POST") {
+            return res.status(405).send("Method not allowed");
+        }
+
+        try {
+            const { payment_id, status } = req.body;
+
+            if (!payment_id) {
+                return res.status(400).json({ error: 'No payment_id' });
+            }
+
+            const paymentRef = admin.database().ref(`payments/${payment_id}`);
+            const snapshot = await paymentRef.once('value');
+            const paymentData = snapshot.val();
+
+            if (!paymentData) {
+                return res.status(404).json({ error: 'Payment not found' });
+            }
+
+            if (status === 'succeeded') {
+                // Активируем подписку
+                await admin.database().ref(`users/${paymentData.user_id}`).update({
+                    role: paymentData.role,
+                    tariff_activated_at: new Date().toISOString(),
+                    tariff_expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+                });
+
+                await paymentRef.update({
+                    status: 'completed',
+                    completed_at: new Date().toISOString()
+                });
+
+                console.log(`✅ Подписка активирована для пользователя ${paymentData.user_id}`);
+            } else if (status === 'failed' || status === 'cancelled') {
+                await paymentRef.update({
+                    status: status,
+                    completed_at: new Date().toISOString()
+                });
+            }
+
+            return res.json({ status: 'ok' });
+
+        } catch (error) {
+            console.error('Webhook error:', error);
+            return res.status(500).json({ error: 'Internal error' });
+        }
     }
+);
 
-    if (req.method !== "POST") {
-      return res.status(405).send("Method not allowed");
+// ============================================================
+//  ПРОВЕРКА СТАТУСА ПЛАТЕЖА
+// ============================================================
+
+exports.getPaymentStatus = onRequest(
+    { cors: true, maxInstances: 10 },
+    async (req, res) => {
+        setCorsHeaders(res);
+
+        if (req.method === 'OPTIONS') {
+            res.status(204).send('');
+            return;
+        }
+
+        if (req.method !== "GET") {
+            return res.status(405).send("Method not allowed");
+        }
+
+        try {
+            const paymentId = req.query.payment_id;
+            if (!paymentId) {
+                return res.status(400).json({ error: 'Не указан payment_id' });
+            }
+
+            const authHeader = req.headers.authorization;
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                return res.status(401).json({ error: "Не авторизован" });
+            }
+
+            const token = authHeader.split('Bearer ')[1];
+            let decodedToken;
+            try {
+                decodedToken = await admin.auth().verifyIdToken(token);
+            } catch (e) {
+                return res.status(401).json({ error: "Недействительный токен" });
+            }
+
+            const userId = decodedToken.uid;
+
+            const snapshot = await admin.database().ref(`payments/${paymentId}`).once('value');
+            const paymentData = snapshot.val();
+
+            if (!paymentData) {
+                return res.status(404).json({ error: 'Платёж не найден' });
+            }
+
+            if (paymentData.user_id !== userId) {
+                return res.status(403).json({ error: 'Нет доступа' });
+            }
+
+            return res.json({
+                status: paymentData.status,
+                role: paymentData.role,
+                amount: paymentData.amount,
+                created_at: paymentData.created_at,
+                completed_at: paymentData.completed_at || null
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+            return res.status(500).json({ error: 'Ошибка получения статуса' });
+        }
     }
-
-    try {
-      const { imageBase64 } = req.body || {};
-      if (!imageBase64) {
-        return res.status(400).json({ error: "Нет изображения" });
-      }
-
-      const form = new URLSearchParams();
-      form.append("source", imageBase64);
-      form.append("format", "json");
-
-      const r = await fetch(
-        `https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5`,
-        { method: "POST", body: form }
-      );
-      const data = await r.json();
-
-      if (data.status_code === 200) {
-        return res.json({ url: data.image.url });
-      }
-      return res.status(502).json({ error: "Ошибка загрузки фото" });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message || "Ошибка сервера" });
-    }
-  }
 );
