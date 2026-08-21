@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nemesis · Главная</title>
+    <title>Nemesis · Тарифы</title>
     <meta name="theme-color" content="#0a0a0f" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
@@ -116,24 +116,6 @@
             line-height: 1.6;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 14px 40px;
-            background: linear-gradient(135deg, #ec4899, #db2777);
-            color: #fff;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(219,39,119,0.3);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
-            margin-top: 16px;
-        }
-        .btn:hover { transform: scale(1.04); box-shadow: 0 8px 32px rgba(219,39,119,0.4); }
-
         .pricing {
             width: 100%;
             max-width: 1100px;
@@ -231,7 +213,6 @@
         .price-card .features li:last-child { border-bottom: none; }
         .price-card .features li .check { color: #22c55e; font-weight: 700; }
         .price-card .features li .cross { color: #ff4444; font-weight: 700; }
-        .price-card .features li .limit { color: #fbbf24; font-weight: 600; }
 
         .price-card .btn-card {
             display: block;
@@ -259,76 +240,46 @@
             box-shadow: 0 4px 16px rgba(219,39,119,0.2);
         }
         .btn-card.buy:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(219,39,119,0.3); }
+        .btn-card.buy:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
         .btn-card.active {
             background: rgba(34,197,94,0.08);
             color: #22c55e;
             border: 1px solid rgba(34,197,94,0.1);
         }
 
-        .products-section {
-            width: 100%;
-            max-width: 900px;
-            margin: 50px auto 0;
-        }
-        .products-section h2 {
-            text-align: center;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-        .product-card {
-            background: rgba(10,10,15,0.5);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(219,39,119,0.1);
-            border-radius: 20px;
-            padding: 24px 16px;
-            transition: all 0.35s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            text-align: center;
-        }
-        .product-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(219,39,119,0.25);
-            box-shadow: 0 12px 40px rgba(219,39,119,0.08);
-        }
-        .product-card .icon { font-size: 2.2rem; display: block; margin-bottom: 6px; }
-        .product-card h4 { font-size: 0.95rem; font-weight: 600; color: #fff; }
-        .product-card p { font-size: 0.75rem; color: #666; margin-top: 2px; }
-
-        .footer {
-            text-align: center;
-            padding: 40px 0 20px;
-            color: #444;
-            font-size: 0.8rem;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            margin-top: 60px;
-            width: 100%;
-            max-width: 1100px;
-        }
-        .footer a {
-            color: #666;
-            text-decoration: none;
-            transition: 0.2s;
-        }
+        .footer { text-align: center; padding: 40px 0 20px; color: #444; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 60px; width: 100%; max-width: 1100px; }
+        .footer a { color: #666; text-decoration: none; transition: 0.2s; }
         .footer a:hover { color: #ec4899; }
-        .footer .support {
-            color: #f472b6;
-            margin-top: 8px;
-            font-size: 0.85rem;
+        .footer .support { color: #f472b6; margin-top: 8px; font-size: 0.85rem; }
+        .footer .links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(11,11,18,0.95);
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 60px;
+            border: 1px solid rgba(108,99,255,0.15);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            animation: fadeUp 0.3s ease;
+            text-align: center;
+            max-width: 90%;
         }
-        .footer .links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
+        .toast.fade-out { opacity: 0; transition: opacity 0.4s ease; }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
         @media (max-width: 480px) {
@@ -348,11 +299,11 @@
 <nav>
     <div class="logo">nemesis<span>:3</span></div>
     <ul class="nav-links">
-        <li><a href="/" class="active">главная</a></li>
+        <li><a href="/">главная</a></li>
         <li><a href="/steam">steam</a></li>
         <li><a href="/ai">ai</a></li>
         <li><a href="/minecraft">minecraft</a></li>
-        <li><a href="/account">аккаунт</a></li>
+        <li><a href="/account" class="active">аккаунт</a></li>
     </ul>
 </nav>
 
@@ -362,10 +313,8 @@
         <div class="tag">✦ kotik team</div>
         <h1>Выбери свой <em>тариф</em></h1>
         <p>Доступ ко всем продуктам Nemesis</p>
-        <a href="#pricing" class="btn">⬇️ Смотреть тарифы</a>
     </div>
 
-    <!-- ===== ТАРИФЫ ===== -->
     <div class="pricing" id="pricing">
         <h2>📊 <em>Тарифы</em></h2>
 
@@ -400,7 +349,7 @@
                     <li><span class="check">✦</span> AI (8 сообщений/день)</li>
                     <li><span class="check">✦</span> Фото в AI (8/день)</li>
                 </ul>
-                <a href="/account" class="btn-card buy">Купить</a>
+                <button class="btn-card buy" onclick="buyTariff('elite')">⚡ Купить за 199 ₽</button>
             </div>
 
             <!-- AI+ -->
@@ -416,7 +365,7 @@
                     <li><span class="check">✦</span> Фото в AI (безлимит)</li>
                     <li><span class="check">✦</span> Приоритетная поддержка</li>
                 </ul>
-                <a href="/account" class="btn-card buy">Купить</a>
+                <button class="btn-card buy" onclick="buyTariff('ai_plus')">🧠 Купить AI+ за 99 ₽</button>
             </div>
 
             <!-- AI MAX -->
@@ -433,40 +382,12 @@
                     <li><span class="check">✦</span> Фото в AI (безлимит)</li>
                     <li><span class="check">✦</span> Приоритетная поддержка</li>
                 </ul>
-                <a href="/account" class="btn-card buy">Купить</a>
+                <button class="btn-card buy" onclick="buyTariff('ai_max')">🚀 Купить AI MAX за 299 ₽</button>
             </div>
 
         </div>
     </div>
 
-    <!-- ===== ПРОДУКТЫ ===== -->
-    <div class="products-section">
-        <h2>🛠️ <em>Продукты</em></h2>
-        <div class="products-grid">
-            <a href="/steam" class="product-card">
-                <span class="icon">🖥️</span>
-                <h4>Nemesis Steam</h4>
-                <p>Оптимизация FPS</p>
-            </a>
-            <a href="/minecraft" class="product-card">
-                <span class="icon">⛏️</span>
-                <h4>Nemesis Minecraft</h4>
-                <p>Клиент 1.21.11</p>
-            </a>
-            <a href="/ai" class="product-card">
-                <span class="icon">🤖</span>
-                <h4>Nemesis AI</h4>
-                <p>ИИ-помощник</p>
-            </a>
-            <a href="/account" class="product-card">
-                <span class="icon">👤</span>
-                <h4>Аккаунт</h4>
-                <p>Управление</p>
-            </a>
-        </div>
-    </div>
-
-    <!-- ===== ФУТЕР ===== -->
     <div class="footer">
         <div class="links">
             <a href="/privacy">Политика конфиденциальности</a>
@@ -478,22 +399,222 @@
 
 </section>
 
-<script>
-    function createStars() {
-        const container = document.getElementById('stars');
-        for (let i = 0; i < 120; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = (Math.random() * 2 + 1) + 'px';
-            star.style.height = star.style.width;
-            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-            star.style.animationDelay = (Math.random() * 5) + 's';
-            container.appendChild(star);
+<!-- ===== FIREBASE ===== -->
+<script type="importmap">
+{
+    "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js",
+        "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
+    }
+}
+</script>
+
+<script type="module">
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
+
+// ============================================================
+// FIREBASE КОНФИГ
+// ============================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
+    authDomain: "nemesissteam-13577.firebaseapp.com",
+    databaseURL: "https://nemesissteam-13577-default-rtdb.firebaseio.com",
+    projectId: "nemesissteam-13577",
+    storageBucket: "nemesissteam-13577.firebasestorage.app",
+    messagingSenderId: "649763368476",
+    appId: "1:649763368476:web:de4e044d4d971168fa79d9"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+// ============================================================
+// ЗАШИФРОВАННЫЙ API КЛЮЧ ROLLYPAY
+// ============================================================
+// !!! ВАЖНО: сгенерируй свой зашифрованный ключ через encryptKey() !!!
+const ENCRYPTED_API_KEY = "J3QlPjZ6Kj83PzA5PjYhPi..." // ← ЗАМЕНИ НА СВОЙ!
+const SALT = "nemesis2026";
+
+// Функция расшифровки
+function decryptKey(encrypted, salt) {
+    try {
+        const decoded = atob(encrypted);
+        let decrypted = '';
+        for (let i = 0; i < decoded.length; i++) {
+            const charCode = decoded.charCodeAt(i) ^ salt.charCodeAt(i % salt.length);
+            decrypted += String.fromCharCode(charCode);
+        }
+        return decrypted;
+    } catch (e) {
+        console.error('Ошибка расшифровки:', e);
+        return null;
+    }
+}
+
+// ============================================================
+// ПЛАНЫ ТАРИФОВ
+// ============================================================
+const PLANS = {
+    elite: { name: 'ELITE', price: 199, role: 'elite' },
+    ai_plus: { name: 'AI+', price: 99, role: 'ai_basic' },
+    ai_max: { name: 'AI MAX', price: 299, role: 'ai_max' }
+};
+
+// ============================================================
+// СОЗДАНИЕ ПЛАТЕЖА
+// ============================================================
+async function createPayment(plan, email, username) {
+    const planData = PLANS[plan];
+    if (!planData) throw new Error('Неверный тариф');
+
+    const apiKey = decryptKey(ENCRYPTED_API_KEY, SALT);
+    if (!apiKey) throw new Error('Ошибка расшифровки ключа');
+
+    const orderId = `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+
+    const response = await fetch('https://api.rollypay.io/api/v1/payments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': apiKey
+        },
+        body: JSON.stringify({
+            terminal_id: 'cc6d8171-c6f4-471d-90e5-44611400a7c6',
+            amount: String(planData.price),
+            payment_currency: 'RUB',
+            order_id: orderId,
+            customer_email: email,
+            description: `Подписка ${planData.name} для ${username}`,
+            redirect_url: 'https://nemesisx.fun/account',
+            payment_method: 'sbp'
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || data.message || 'Ошибка создания платежа');
+    }
+
+    return data;
+}
+
+// ============================================================
+// КНОПКА "КУПИТЬ"
+// ============================================================
+window.buyTariff = async function(plan) {
+    const user = auth.currentUser;
+    if (!user) {
+        showToast('❌ Войдите в аккаунт!');
+        return;
+    }
+
+    const planData = PLANS[plan];
+    if (!planData) {
+        showToast('❌ Неверный тариф');
+        return;
+    }
+
+    try {
+        const btn = document.querySelector(`[onclick="buyTariff('${plan}')"]`);
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = '⏳ Обработка...';
+        }
+
+        const data = await createPayment(
+            plan,
+            user.email,
+            user.displayName || user.email.split('@')[0]
+        );
+
+        if (data.pay_url) {
+            // Сохраняем платёж в Firebase
+            await set(ref(db, `payments/${data.payment_id}`), {
+                user_id: user.uid,
+                plan: plan,
+                role: planData.role,
+                amount: planData.price,
+                status: 'pending',
+                created_at: new Date().toISOString(),
+                email: user.email
+            });
+
+            showToast('💳 Перенаправление на оплату...');
+            window.location.href = data.pay_url;
+        } else {
+            showToast('❌ Ошибка: ' + (data.error || 'Неизвестная ошибка'));
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        showToast('❌ ' + error.message);
+    } finally {
+        const btn = document.querySelector(`[onclick="buyTariff('${plan}')"]`);
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = `⚡ Купить за ${planData.price} ₽`;
         }
     }
-    createStars();
+};
+
+// ============================================================
+// ТОСТ УВЕДОМЛЕНИЯ
+// ============================================================
+function showToast(message) {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
+}
+
+// ============================================================
+// ЗВЁЗДЫ
+// ============================================================
+function createStars() {
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = (Math.random() * 2 + 1) + 'px';
+        star.style.height = star.style.width;
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(star);
+    }
+}
+createStars();
+
+// ============================================================
+// ГЕНЕРАЦИЯ ЗАШИФРОВАННОГО КЛЮЧА (для разработчика)
+// ============================================================
+// Раскомментируй и выполни в консоли, чтобы получить зашифрованный ключ:
+/*
+function encryptKey(key, salt) {
+    let encrypted = '';
+    for (let i = 0; i < key.length; i++) {
+        const charCode = key.charCodeAt(i) ^ salt.charCodeAt(i % salt.length);
+        encrypted += String.fromCharCode(charCode);
+    }
+    return btoa(encrypted);
+}
+console.log('🔑 Зашифрованный ключ:', encryptKey('7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk', 'nemesis2026'));
+*/
+
+console.log('🚀 Nemesis Payment готов к работе!');
 </script>
 
 </body>
