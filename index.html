@@ -435,7 +435,7 @@
                     <li><span class="check">✦</span> AI (8 сообщений/день)</li>
                     <li><span class="check">✦</span> Фото в AI (8/день)</li>
                 </ul>
-                <button class="btn-card buy" id="btn-elite" onclick="buyTariff('elite')">⚡ Купить за 199 ₽</button>
+                <a href="https://funpay.com/users/7382049/" class="btn-card buy" target="_blank">⚡ Купить за 199 ₽</a>
             </div>
 
             <!-- AI+ -->
@@ -451,7 +451,7 @@
                     <li><span class="check">✦</span> Фото в AI (безлимит)</li>
                     <li><span class="check">✦</span> Приоритетная поддержка</li>
                 </ul>
-                <button class="btn-card buy" id="btn-aiplus" onclick="buyTariff('ai_plus')">🧠 Купить AI+ за 99 ₽</button>
+                <a href="https://funpay.com/users/7382049/" class="btn-card buy" target="_blank">🧠 Купить AI+ за 99 ₽</a>
             </div>
 
             <!-- AI MAX -->
@@ -468,7 +468,7 @@
                     <li><span class="check">✦</span> Фото в AI (безлимит)</li>
                     <li><span class="check">✦</span> Приоритетная поддержка</li>
                 </ul>
-                <button class="btn-card buy" id="btn-aimax" onclick="buyTariff('ai_max')">🚀 Купить AI MAX за 299 ₽</button>
+                <a href="https://funpay.com/users/7382049/" class="btn-card buy" target="_blank">🚀 Купить AI MAX за 299 ₽</a>
             </div>
 
         </div>
@@ -485,142 +485,7 @@
 
 </section>
 
-<!-- ===== FIREBASE ===== -->
-<script type="importmap">
-{
-    "imports": {
-        "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
-        "firebase/auth": "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js",
-        "firebase/database": "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js"
-    }
-}
-</script>
-
-<script type="module">
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
-
-// ============================================================
-// FIREBASE
-// ============================================================
-const firebaseConfig = {
-    apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
-    authDomain: "nemesissteam-13577.firebaseapp.com",
-    databaseURL: "https://nemesissteam-13577-default-rtdb.firebaseio.com",
-    projectId: "nemesissteam-13577",
-    storageBucket: "nemesissteam-13577.firebasestorage.app",
-    messagingSenderId: "649763368476",
-    appId: "1:649763368476:web:de4e044d4d971168fa79d9"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
-
-// ============================================================
-// ROLLYPAY — ЧЕРЕЗ PROXY
-// ============================================================
-const PROXY_URL = 'https://rollypay-proxy.player9009r.workers.dev';
-const TERMINAL_ID = "cc6d8171-c6f4-471d-90e5-44611400a7c6";
-
-const PLANS = {
-    elite: { name: 'ELITE', price: 199, role: 'elite' },
-    ai_plus: { name: 'AI+', price: 99, role: 'ai_basic' },
-    ai_max: { name: 'AI MAX', price: 299, role: 'ai_max' }
-};
-
-// ============================================================
-// КНОПКА "КУПИТЬ"
-// ============================================================
-window.buyTariff = async function(plan) {
-    const user = auth.currentUser;
-    if (!user) {
-        showToast('❌ Войдите в аккаунт!');
-        return;
-    }
-
-    const planData = PLANS[plan];
-    if (!planData) {
-        showToast('❌ Неверный тариф');
-        return;
-    }
-
-    try {
-        const btn = document.getElementById(`btn-${plan === 'ai_plus' ? 'aiplus' : plan}`);
-        if (btn) {
-            btn.disabled = true;
-            btn.textContent = '⏳ Обработка...';
-        }
-
-        const orderId = `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
-
-        const response = await fetch(PROXY_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                terminal_id: TERMINAL_ID,
-                amount: String(planData.price),
-                payment_currency: 'RUB',
-                order_id: orderId,
-                customer_email: user.email,
-                description: `Подписка ${planData.name} для ${user.displayName || user.email}`,
-                redirect_url: 'https://nemesisx.fun/account',
-                payment_method: 'sbp'
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.pay_url) {
-            // Сохраняем в Firebase
-            await set(ref(db, `payments/${data.payment_id}`), {
-                user_id: user.uid,
-                plan: plan,
-                role: planData.role,
-                amount: planData.price,
-                status: 'pending',
-                created_at: new Date().toISOString(),
-                email: user.email
-            });
-
-            showToast('💳 Перенаправление на оплату...');
-            window.location.href = data.pay_url;
-        } else {
-            showToast('❌ Ошибка: ' + (data.error || 'Неизвестная ошибка'));
-        }
-    } catch (error) {
-        console.error('Ошибка:', error);
-        showToast('❌ ' + error.message);
-    } finally {
-        const btn = document.getElementById(`btn-${plan === 'ai_plus' ? 'aiplus' : plan}`);
-        if (btn) {
-            btn.disabled = false;
-            btn.textContent = `⚡ Купить за ${planData.price} ₽`;
-        }
-    }
-};
-
-// ============================================================
-// ТОСТ
-// ============================================================
-function showToast(message) {
-    const existing = document.querySelector('.toast');
-    if (existing) existing.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.add('fade-out');
-        setTimeout(() => toast.remove(), 500);
-    }, 4000);
-}
-
+<script>
 // ============================================================
 // ЗВЁЗДЫ
 // ============================================================
@@ -641,8 +506,8 @@ function createStars() {
 createStars();
 
 console.log('🚀 Nemesis готов к работе!');
-console.log('💰 Платежи через RollyPay');
-console.log('📍 Прокси:', PROXY_URL);
+console.log('💰 Платежи через FunPay Бем бем бем');
+console.log('📱 Поддержка: @Nemesissup');
 </script>
 
 </body>
