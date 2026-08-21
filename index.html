@@ -307,11 +307,6 @@
             cursor: not-allowed;
             transform: none;
         }
-        .btn-card.active {
-            background: rgba(34,197,94,0.08);
-            color: #22c55e;
-            border: 1px solid rgba(34,197,94,0.1);
-        }
 
         .footer { text-align: center; padding: 40px 0 20px; color: #444; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.03); margin-top: 60px; width: 100%; max-width: 1100px; }
         .footer a { color: #666; text-decoration: none; transition: 0.2s; }
@@ -524,19 +519,24 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // ============================================================
-// ШИФРОВАНИЕ / РАСШИФРОВКА
+// ШИФРОВАНИЕ (ПРОСТОЙ XOR) — БЕЗ Base64
 // ============================================================
+
 // !!! ЗАМЕНИ НА СВОЙ ЗАШИФРОВАННЫЙ КЛЮЧ !!!
 // Получить можно в консоли: encryptKey("твой_ключ")
-const ENCRYPTED_KEY = "9soEsSw8..."; // ← СЮДА ВСТАВЬ СВОЙ
+// const ENCRYPTED_KEY = "9soEsSw8..." // ← старый способ
 
-function decryptKey(encrypted) {
+// НОВЫЙ СПОСОБ: массив чисел (XOR)
+// Чтобы получить его, выполни в консоли функцию ниже
+const ENCRYPTED_ARRAY = [  // ← сюда вставь свой массив
+    109, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122
+];
+
+function decryptKey(encryptedArray) {
     try {
-        const decoded = atob(encrypted);
         let result = '';
-        for (let i = 0; i < decoded.length; i++) {
-            const code = decoded.charCodeAt(i);
-            result += String.fromCharCode(code - 2);
+        for (let i = 0; i < encryptedArray.length; i++) {
+            result += String.fromCharCode(encryptedArray[i]);
         }
         return result;
     } catch (e) {
@@ -564,7 +564,7 @@ async function createPayment(plan, email, username) {
     if (!planData) throw new Error('Неверный тариф');
 
     // Расшифровываем ключ
-    const apiKey = decryptKey(ENCRYPTED_KEY);
+    const apiKey = decryptKey(ENCRYPTED_ARRAY);
     if (!apiKey) throw new Error('Ошибка расшифровки ключа');
 
     const orderId = `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
@@ -693,9 +693,18 @@ createStars();
 // ============================================================
 // ГЕНЕРАЦИЯ ЗАШИФРОВАННОГО КЛЮЧА (в консоли)
 // ============================================================
-console.log('Для получения зашифрованного ключа выполни в консоли:');
-console.log('function encryptKey(k) { let r=""; for(let i=0;i<k.length;i++){r+=String.fromCharCode(k.charCodeAt(i)+2)}return btoa(r)}');
-console.log('encryptKey("твой_ключ")');
+console.log('🛠️ Для получения зашифрованного ключа:');
+console.log('1. Выполни в консоли:');
+console.log(`
+function encryptKey(key) {
+    const arr = [];
+    for (let i = 0; i < key.length; i++) {
+        arr.push(key.charCodeAt(i) + 3);
+    }
+    return arr;
+}
+console.log('🔑 Зашифрованный массив:', JSON.stringify(encryptKey('7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk')));
+`);
 
 console.log('🚀 Nemesis готов к работе!');
 </script>
