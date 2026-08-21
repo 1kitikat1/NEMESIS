@@ -844,7 +844,9 @@ function escapeHtml(text) {
 
 function renderCodeBlock(code, lang, isComplete = true) {
     const isHtml = ['html', 'htm', 'xhtml'].includes(lang.toLowerCase());
-    const runBtn = (isComplete && isHtml) ? `<button class="run-btn" onclick="runCode('${escapeHtml(code)}', '${escapeHtml(lang)}')">▶ Запустить</button>` : '';
+    const runBtn = (isComplete && isHtml) 
+        ? `<button class="run-btn" data-code="${encodeURIComponent(code)}" data-lang="${lang}">▶ Запустить</button>` 
+        : '';
     const actions = isComplete
         ? `<button class="copy-btn" onclick="copyCode(this)">📋 Копировать</button>${runBtn}`
         : `<span style="color:#444;font-size:0.7rem;">печатает…</span>`;
@@ -889,8 +891,15 @@ window.copyCode = function(btn) {
 };
 
 // ===== ЗАПУСК КОДА В НОВОЙ ВКЛАДКЕ =====
-window.runCode = function(code, lang) {
-    if (!['html', 'htm', 'xhtml'].includes(lang.toLowerCase())) return;
+window.runCode = function(btn) {
+    if (!btn) return;
+    const code = decodeURIComponent(btn.dataset.code);
+    const lang = btn.dataset.lang;
+
+    if (!['html', 'htm', 'xhtml'].includes(lang.toLowerCase())) {
+        alert('Запуск доступен только для HTML кода');
+        return;
+    }
 
     let htmlCode = code;
     if (!htmlCode.trim().toLowerCase().startsWith('<!doctype') && !htmlCode.trim().toLowerCase().startsWith('<html')) {
@@ -911,6 +920,15 @@ window.runCode = function(code, lang) {
     window.open(url, '_blank');
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
+
+// ===== ОБРАБОТЧИК КЛИКОВ =====
+document.addEventListener('click', function(e) {
+    const target = e.target;
+    if (target.classList.contains('run-btn')) {
+        runCode(target);
+        e.preventDefault();
+    }
+});
 
 // ===== ОТПРАВКА СООБЩЕНИЯ =====
 window.sendMessage = async function() {
