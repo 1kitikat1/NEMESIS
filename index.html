@@ -435,7 +435,7 @@
                     <li><span class="check">✦</span> AI (8 сообщений/день)</li>
                     <li><span class="check">✦</span> Фото в AI (8/день)</li>
                 </ul>
-                <button class="btn-card buy" onclick="buyTariff('elite')">⚡ Купить за 199 ₽</button>
+                <button class="btn-card buy" id="btn-elite" onclick="buyTariff('elite')">⚡ Купить за 199 ₽</button>
             </div>
 
             <!-- AI+ -->
@@ -451,7 +451,7 @@
                     <li><span class="check">✦</span> Фото в AI (безлимит)</li>
                     <li><span class="check">✦</span> Приоритетная поддержка</li>
                 </ul>
-                <button class="btn-card buy" onclick="buyTariff('ai_plus')">🧠 Купить AI+ за 99 ₽</button>
+                <button class="btn-card buy" id="btn-aiplus" onclick="buyTariff('ai_plus')">🧠 Купить AI+ за 99 ₽</button>
             </div>
 
             <!-- AI MAX -->
@@ -468,7 +468,7 @@
                     <li><span class="check">✦</span> Фото в AI (безлимит)</li>
                     <li><span class="check">✦</span> Приоритетная поддержка</li>
                 </ul>
-                <button class="btn-card buy" onclick="buyTariff('ai_max')">🚀 Купить AI MAX за 299 ₽</button>
+                <button class="btn-card buy" id="btn-aimax" onclick="buyTariff('ai_max')">🚀 Купить AI MAX за 299 ₽</button>
             </div>
 
         </div>
@@ -499,7 +499,7 @@
 <script type="module">
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 // ============================================================
 // FIREBASE
@@ -519,21 +519,21 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // ============================================================
-// ПРЯМАЯ ССЫЛКА НА ROLLYPAY (БЕЗ API)
+// ROLLYPAY — ЧЕРЕЗ PROXY
 // ============================================================
+const PROXY_URL = 'https://rollypay-proxy.player9009r.workers.dev';
 const TERMINAL_ID = "cc6d8171-c6f4-471d-90e5-44611400a7c6";
-const REDIRECT_URL = "https://nemesisx.fun/account";
 
 const PLANS = {
-    elite: { name: 'ELITE', price: 199 },
-    ai_plus: { name: 'AI+', price: 99 },
-    ai_max: { name: 'AI MAX', price: 299 }
+    elite: { name: 'ELITE', price: 199, role: 'elite' },
+    ai_plus: { name: 'AI+', price: 99, role: 'ai_basic' },
+    ai_max: { name: 'AI MAX', price: 299, role: 'ai_max' }
 };
 
 // ============================================================
-// КНОПКА "КУПИТЬ" (ПРЯМАЯ ССЫЛКА)
+// КНОПКА "КУПИТЬ"
 // ============================================================
-window.buyTariff = function(plan) {
+window.buyTariff = async function(plan) {
     const user = auth.currentUser;
     if (!user) {
         showToast('❌ Войдите в аккаунт!');
@@ -546,14 +546,61 @@ window.buyTariff = function(plan) {
         return;
     }
 
-    // Формируем ссылку на оплату
-    const desc = encodeURIComponent(`Подписка ${planData.name} для ${user.email}`);
-    const payUrl = `https://pay.rollypay.io/${TERMINAL_ID}?amount=${planData.price}&desc=${desc}&email=${encodeURIComponent(user.email)}&redirect=${encodeURIComponent(REDIRECT_URL)}`;
+    try {
+        const btn = document.getElementById(`btn-${plan === 'ai_plus' ? 'aiplus' : plan}`);
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = '⏳ Обработка...';
+        }
 
-    // Открываем в новой вкладке
-    window.open(payUrl, '_blank');
+        const orderId = `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
 
-    showToast(`💳 Переход к оплате ${planData.name} (${planData.price} ₽). После оплаты введите ключ в аккаунте.`);
+        const response = await fetch(PROXY_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                terminal_id: TERMINAL_ID,
+                amount: String(planData.price),
+                payment_currency: 'RUB',
+                order_id: orderId,
+                customer_email: user.email,
+                description: `Подписка ${planData.name} для ${user.displayName || user.email}`,
+                redirect_url: 'https://nemesisx.fun/account',
+                payment_method: 'sbp'
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.pay_url) {
+            // Сохраняем в Firebase
+            await set(ref(db, `payments/${data.payment_id}`), {
+                user_id: user.uid,
+                plan: plan,
+                role: planData.role,
+                amount: planData.price,
+                status: 'pending',
+                created_at: new Date().toISOString(),
+                email: user.email
+            });
+
+            showToast('💳 Перенаправление на оплату...');
+            window.location.href = data.pay_url;
+        } else {
+            showToast('❌ Ошибка: ' + (data.error || 'Неизвестная ошибка'));
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        showToast('❌ ' + error.message);
+    } finally {
+        const btn = document.getElementById(`btn-${plan === 'ai_plus' ? 'aiplus' : plan}`);
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = `⚡ Купить за ${planData.price} ₽`;
+        }
+    }
 };
 
 // ============================================================
@@ -571,7 +618,7 @@ function showToast(message) {
     setTimeout(() => {
         toast.classList.add('fade-out');
         setTimeout(() => toast.remove(), 500);
-    }, 5000);
+    }, 4000);
 }
 
 // ============================================================
@@ -594,7 +641,8 @@ function createStars() {
 createStars();
 
 console.log('🚀 Nemesis готов к работе!');
-
+console.log('💰 Платежи через RollyPay');
+console.log('📍 Прокси:', PROXY_URL);
 </script>
 
 </body>
