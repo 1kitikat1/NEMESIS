@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nemesis · Тарифы</title>
+    <title>Nemesis · Главная</title>
     <meta name="theme-color" content="#0a0a0f" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
@@ -116,6 +116,78 @@
             line-height: 1.6;
         }
 
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(219,39,119,0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            margin-top: 16px;
+        }
+        .btn:hover { transform: scale(1.04); box-shadow: 0 8px 32px rgba(219,39,119,0.4); }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: #f472b6;
+            border: 1px solid rgba(219,39,119,0.15);
+            box-shadow: none;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); transform: scale(1.02); }
+
+        /* ===== ПРОДУКТЫ ===== */
+        .products-section {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 50px;
+        }
+        .products-section h2 {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .products-section h2 em {
+            font-style: normal;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .product-card {
+            background: rgba(10,10,15,0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(219,39,119,0.1);
+            border-radius: 20px;
+            padding: 24px 16px;
+            transition: all 0.35s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            text-align: center;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(219,39,119,0.25);
+            box-shadow: 0 12px 40px rgba(219,39,119,0.08);
+        }
+        .product-card .icon { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+        .product-card h4 { font-size: 0.95rem; font-weight: 600; color: #fff; }
+        .product-card p { font-size: 0.75rem; color: #666; margin-top: 2px; }
+
+        /* ===== ТАРИФЫ ===== */
         .pricing {
             width: 100%;
             max-width: 1100px;
@@ -299,11 +371,11 @@
 <nav>
     <div class="logo">nemesis<span>:3</span></div>
     <ul class="nav-links">
-        <li><a href="/">главная</a></li>
+        <li><a href="/" class="active">главная</a></li>
         <li><a href="/steam">steam</a></li>
         <li><a href="/ai">ai</a></li>
         <li><a href="/minecraft">minecraft</a></li>
-        <li><a href="/account" class="active">аккаунт</a></li>
+        <li><a href="/account">аккаунт</a></li>
     </ul>
 </nav>
 
@@ -311,10 +383,39 @@
 
     <div class="hero-top">
         <div class="tag">✦ kotik team</div>
-        <h1>Выбери свой <em>тариф</em></h1>
-        <p>Доступ ко всем продуктам Nemesis</p>
+        <h1>Экосистема <em>Nemesis</em></h1>
+        <p>Продукты для оптимизации, игр и искусственного интеллекта</p>
+        <a href="#products" class="btn">⬇️ Выбрать продукт</a>
     </div>
 
+    <!-- ===== ПРОДУКТЫ ===== -->
+    <div class="products-section" id="products">
+        <h2>🛠️ <em>Продукты</em></h2>
+        <div class="products-grid">
+            <a href="/steam" class="product-card">
+                <span class="icon">🖥️</span>
+                <h4>Nemesis Steam</h4>
+                <p>Оптимизация FPS для Steam</p>
+            </a>
+            <a href="/minecraft" class="product-card">
+                <span class="icon">⛏️</span>
+                <h4>Nemesis Minecraft</h4>
+                <p>Клиент 1.21.11</p>
+            </a>
+            <a href="/ai" class="product-card">
+                <span class="icon">🤖</span>
+                <h4>Nemesis AI</h4>
+                <p>ИИ-помощник</p>
+            </a>
+            <a href="/account" class="product-card">
+                <span class="icon">👤</span>
+                <h4>Аккаунт</h4>
+                <p>Управление подпиской</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== ТАРИФЫ ===== -->
     <div class="pricing" id="pricing">
         <h2>📊 <em>Тарифы</em></h2>
 
@@ -433,31 +534,13 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // ============================================================
-// ЗАШИФРОВАННЫЙ API КЛЮЧ ROLLYPAY
+// ROLLYPAY API (без шифрования — простой способ)
 // ============================================================
-// !!! ВАЖНО: сгенерируй свой зашифрованный ключ через encryptKey() !!!
-const ENCRYPTED_API_KEY = "J3QlPjZ6Kj83PzA5PjYhPi..." // ← ЗАМЕНИ НА СВОЙ!
-const SALT = "nemesis2026";
+// !!! ВНИМАНИЕ: Этот ключ виден в коде, но для теста OK !!!
+// Для продакшена используй шифрование или прокси
+const ROLLYPAY_API_KEY = "7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk";
+const ROLLYPAY_TERMINAL_ID = "cc6d8171-c6f4-471d-90e5-44611400a7c6";
 
-// Функция расшифровки
-function decryptKey(encrypted, salt) {
-    try {
-        const decoded = atob(encrypted);
-        let decrypted = '';
-        for (let i = 0; i < decoded.length; i++) {
-            const charCode = decoded.charCodeAt(i) ^ salt.charCodeAt(i % salt.length);
-            decrypted += String.fromCharCode(charCode);
-        }
-        return decrypted;
-    } catch (e) {
-        console.error('Ошибка расшифровки:', e);
-        return null;
-    }
-}
-
-// ============================================================
-// ПЛАНЫ ТАРИФОВ
-// ============================================================
 const PLANS = {
     elite: { name: 'ELITE', price: 199, role: 'elite' },
     ai_plus: { name: 'AI+', price: 99, role: 'ai_basic' },
@@ -471,19 +554,16 @@ async function createPayment(plan, email, username) {
     const planData = PLANS[plan];
     if (!planData) throw new Error('Неверный тариф');
 
-    const apiKey = decryptKey(ENCRYPTED_API_KEY, SALT);
-    if (!apiKey) throw new Error('Ошибка расшифровки ключа');
-
     const orderId = `NEM-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
 
     const response = await fetch('https://api.rollypay.io/api/v1/payments', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-API-Key': apiKey
+            'X-API-Key': ROLLYPAY_API_KEY
         },
         body: JSON.stringify({
-            terminal_id: 'cc6d8171-c6f4-471d-90e5-44611400a7c6',
+            terminal_id: ROLLYPAY_TERMINAL_ID,
             amount: String(planData.price),
             payment_currency: 'RUB',
             order_id: orderId,
@@ -598,23 +678,8 @@ function createStars() {
 }
 createStars();
 
-// ============================================================
-// ГЕНЕРАЦИЯ ЗАШИФРОВАННОГО КЛЮЧА (для разработчика)
-// ============================================================
-// Раскомментируй и выполни в консоли, чтобы получить зашифрованный ключ:
-/*
-function encryptKey(key, salt) {
-    let encrypted = '';
-    for (let i = 0; i < key.length; i++) {
-        const charCode = key.charCodeAt(i) ^ salt.charCodeAt(i % salt.length);
-        encrypted += String.fromCharCode(charCode);
-    }
-    return btoa(encrypted);
-}
-console.log('🔑 Зашифрованный ключ:', encryptKey('7kqcOdQ8aqRZc-RKo8vEYSI5Jys9WSMSSr42DlKcmtk', 'nemesis2026'));
-*/
-
-console.log('🚀 Nemesis Payment готов к работе!');
+console.log('🚀 Nemesis готов к работе!');
+console.log('💰 Платежи через RollyPay');
 </script>
 
 </body>
