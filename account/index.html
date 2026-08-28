@@ -3,161 +3,274 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nemesis :3 · Аккаунт</title>
-    <meta name="theme-color" content="#0a0a0f" />
+    <title>Nemesis · Аккаунт</title>
+    <meta name="theme-color" content="#08090d" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0a0f;
+            background: #08090d;
             min-height: 100vh;
             overflow-x: hidden;
-            color: #fff;
+            color: #f1f3f7;
         }
-        .bg {
+        body:before {
+            content: "";
             position: fixed;
             inset: 0;
-            z-index: 0;
-            background:
-                radial-gradient(ellipse 600px 600px at 20% 20%, rgba(219,39,119,0.12) 0%, transparent 70%),
-                radial-gradient(ellipse 500px 500px at 80% 80%, rgba(219,39,119,0.08) 0%, transparent 70%),
-                #0a0a0f;
+            z-index: -3;
+            background: radial-gradient(650px 480px at 75% 12%, rgba(105,122,255,.15), transparent 70%),
+                        radial-gradient(520px 420px at 10% 70%, rgba(70,96,255,.065), transparent 72%),
+                        #08090d;
         }
-        #stars {
+        body:after {
+            content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            z-index: -2;
+            opacity: .11;
+            background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 72px 72px;
             pointer-events: none;
-            z-index: 0;
-        }
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: twinkle var(--duration) ease-in-out infinite alternate;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.1; transform: scale(0.8); }
-            100% { opacity: 0.6; transform: scale(1.2); }
         }
 
-        nav {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            background: rgba(10,10,15,0.8);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(219,39,119,0.15);
-            border-radius: 22px;
-            padding: 12px 28px;
+        .header-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(8,9,13,.78);
+            backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(255,255,255,.075);
+        }
+        header {
+            height: 72px;
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 45px;
         }
-        .logo { font-size: 1.1rem; font-weight: 700; color: #f472b6; }
-        .logo span { color: #ec4899; }
-        .nav-links { display: flex; gap: 4px; list-style: none; }
-        .nav-links a {
-            color: #666; text-decoration: none; font-size: 0.85rem;
-            padding: 6px 14px; border-radius: 12px; transition: all 0.25s ease;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .12em;
         }
-        .nav-links a:hover { color: #f472b6; background: rgba(219,39,119,0.08); }
-        .nav-links a.active { color: #ec4899; background: rgba(219,39,119,0.12); }
+        .logo-mark {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: #edf0ff;
+            color: #08090d;
+            display: grid;
+            place-items: center;
+            font-size: 11px;
+        }
+        .logo span { color: #8d9aff; }
+        .nav {
+            display: flex;
+            gap: 3px;
+        }
+        .nav a {
+            font-size: 10px;
+            color: #70798a;
+            padding: 9px 12px;
+            border-radius: 7px;
+            transition: .25s;
+            text-decoration: none;
+        }
+        .nav a:hover, .nav a.active {
+            color: #fff;
+            background: rgba(255,255,255,.045);
+        }
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .lang { font-size: 9px; color: #555e6c; }
+        .login { font-size: 10px; color: #b5bdca; text-decoration: none; }
 
         .hero {
-            position: relative; z-index: 1;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 100vh; text-align: center; padding: 120px 24px 80px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 120px 24px 80px;
         }
+
         .island {
-            background: rgba(10,10,15,0.6);
+            background: rgba(12,14,19,.86);
             backdrop-filter: blur(40px);
-            border: 1px solid rgba(219,39,119,0.15);
-            border-radius: 36px;
+            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 13px;
             padding: 48px 56px;
             max-width: 480px;
             width: 100%;
-            box-shadow: 0 8px 40px rgba(219,39,119,0.05);
+            box-shadow: 0 30px 90px rgba(0,0,0,.22);
             animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both;
         }
         @keyframes rise {
             from { opacity: 0; transform: translateY(40px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+
         .island .tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 9px;
             font-weight: 600;
-            letter-spacing: 1.5px;
+            letter-spacing: .17em;
             text-transform: uppercase;
-            color: #ec4899;
-            background: rgba(219,39,119,0.12);
+            color: #8290ff;
             padding: 5px 14px;
             border-radius: 20px;
             margin-bottom: 16px;
+            border: 1px solid rgba(135,149,255,.15);
         }
-        .island h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 8px; color: #fff; }
-        .island h1 em { font-style: normal; background: linear-gradient(135deg, #ec4899, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .island .desc { font-size: 0.9rem; color: #888; line-height: 1.6; margin-bottom: 20px; }
+        .island h1 {
+            font-size: 37px;
+            font-weight: 800;
+            letter-spacing: -.05em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            color: #f1f3f7;
+        }
+        .island h1 em {
+            font-style: normal;
+            color: #8c9aff;
+        }
+        .island .desc {
+            font-size: 13px;
+            color: #777f8e;
+            line-height: 1.85;
+            margin-bottom: 28px;
+        }
 
         .form-group { margin-bottom: 14px; text-align: left; }
-        .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: #888; margin-bottom: 4px; }
+        .form-group label {
+            display: block;
+            font-size: 9px;
+            font-weight: 600;
+            color: #747d8d;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
         .form-group input {
-            width: 100%; padding: 14px 16px;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            background: rgba(255,255,255,0.04);
-            font-size: 0.95rem;
-            outline: none; transition: all 0.3s ease;
-            color: #fff;
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 8px;
+            background: rgba(255,255,255,.04);
+            font-size: 13px;
+            outline: none;
+            transition: all 0.3s ease;
+            color: #f1f3f7;
             font-family: 'Inter', sans-serif;
         }
-        .form-group input:focus { border-color: #ec4899; box-shadow: 0 0 0 4px rgba(219,39,119,0.05); }
-        .form-group input::placeholder { color: #444; }
+        .form-group input:focus {
+            border-color: rgba(135,149,255,.35);
+            box-shadow: 0 0 0 4px rgba(135,149,255,.05);
+        }
+        .form-group input::placeholder { color: #555e6c; }
 
         .btn {
             display: inline-flex;
-            align-items: center; justify-content: center;
+            align-items: center;
+            justify-content: center;
             padding: 16px 36px;
-            background: linear-gradient(135deg, #ec4899, #db2777);
-            color: #fff; font-size: 0.95rem; font-weight: 600; border: none;
-            border-radius: 50px; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(219,39,119,0.3);
+            background: #eef0ff;
+            color: #08090d;
+            font-size: 10px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 10px 35px rgba(150,160,255,.1);
             transition: all 0.3s ease;
-            text-decoration: none; width: 100%;
+            text-decoration: none;
+            width: 100%;
             font-family: 'Inter', sans-serif;
         }
-        .btn:hover { transform: scale(1.02); box-shadow: 0 8px 32px rgba(219,39,119,0.4); }
-        .btn-secondary { background: rgba(255,255,255,0.05); color: #888; box-shadow: none; border: 1px solid rgba(255,255,255,0.05); }
-        .btn-secondary:hover { background: rgba(255,255,255,0.08); transform: scale(1.02); }
-        .btn-danger { background: linear-gradient(135deg, #f87171, #dc2626); box-shadow: 0 4px 20px rgba(220,38,38,0.3); }
-        .btn-danger:hover { box-shadow: 0 8px 32px rgba(220,38,38,0.4); }
+        .btn:hover { transform: translateY(-2px); }
 
-        .toggle-link { margin-top: 16px; font-size: 0.85rem; color: #666; }
-        .toggle-link span { color: #ec4899; cursor: pointer; font-weight: 600; }
+        .btn-secondary {
+            background: rgba(255,255,255,.045);
+            color: #aab2c0;
+            box-shadow: none;
+            border: 1px solid rgba(255,255,255,.075);
+        }
+        .btn-secondary:hover {
+            background: #eef0ff;
+            color: #08090d;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background: rgba(255,68,68,.12);
+            color: #ff6b6b;
+            box-shadow: none;
+            border: 1px solid rgba(255,68,68,.15);
+        }
+        .btn-danger:hover {
+            background: rgba(255,68,68,.2);
+            transform: translateY(-2px);
+        }
+
+        .toggle-link {
+            margin-top: 16px;
+            font-size: 10px;
+            color: #747d8d;
+        }
+        .toggle-link span {
+            color: #8c9aff;
+            cursor: pointer;
+            font-weight: 600;
+        }
         .toggle-link span:hover { text-decoration: underline; }
 
-        .status { margin-top: 12px; font-size: 0.85rem; min-height: 20px; color: #888; }
+        .status {
+            margin-top: 12px;
+            font-size: 10px;
+            min-height: 20px;
+            color: #747d8d;
+        }
 
         .profile-info {
-            text-align: left; margin-bottom: 20px;
-            padding: 16px; background: rgba(255,255,255,0.02);
-            border-radius: 16px; border: 1px solid rgba(255,255,255,0.04);
+            text-align: left;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(255,255,255,.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,.075);
         }
-        .profile-info .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .profile-info .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,.035);
+        }
         .profile-info .row:last-child { border-bottom: none; }
-        .profile-info .label { color: #666; font-size: 0.8rem; }
-        .profile-info .value { font-weight: 600; font-size: 0.9rem; }
-        .profile-info .value.role-free { color: #666; }
-        .profile-info .value.role-elite { color: #ec4899; }
+        .profile-info .label {
+            color: #747d8d;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+        .profile-info .value {
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .profile-info .value.role-free { color: #747d8d; }
+        .profile-info .value.role-elite { color: #8c9aff; }
         .profile-info .value.role-ai_basic { color: #a78bfa; }
         .profile-info .value.role-ai_max { color: #fbbf24; }
         .profile-info .value.role-nemesis { color: #ffd700; }
@@ -166,43 +279,86 @@
         .hidden { display: none !important; }
 
         .back-link {
-            display: inline-block; margin-top: 20px;
-            color: #888; text-decoration: none; font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 20px;
+            color: #747d8d;
+            text-decoration: none;
+            font-size: 10px;
             transition: 0.3s;
         }
-        .back-link:hover { color: #ec4899; }
+        .back-link:hover { color: #8c9aff; }
 
-        .footer { text-align: center; padding: 32px; color: #444; font-size: 0.8rem; }
+        .footer {
+            border-top: 1px solid rgba(255,255,255,.075);
+            padding: 30px 0;
+            color: #59616d;
+            font-size: 9px;
+            text-align: center;
+        }
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
+        }
+        .footer-links { display: flex; gap: 18px; }
+        .footer-links a {
+            color: #59616d;
+            text-decoration: none;
+            transition: .25s;
+        }
+        .footer-links a:hover { color: #b0b8c5; }
 
-        @media (max-width: 480px) {
-            nav { padding: 10px 16px; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        @media (max-width: 600px) {
+            header {
+                height: auto;
+                padding: 12px 0;
+                flex-wrap: wrap;
+            }
+            .nav {
+                order: 3;
+                width: 100%;
+                overflow: auto;
+            }
             .island { padding: 28px 20px; }
-            .island h1 { font-size: 1.6rem; }
+            .island h1 { font-size: 28px; }
+            .footer-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-<div class="bg"></div>
-<div id="stars"></div>
-
-<nav>
-    <div class="logo">nemesis<span>:3</span></div>
-    <ul class="nav-links">
-        <li><a href="/">главная</a></li>
-        <li><a href="/steam">steam</a></li>
-        <li><a href="/ai">ai</a></li>
-        <li><a href="/minecraft">minecraft</a></li>
-        <li><a href="/account" class="active">аккаунт</a></li>
-    </ul>
-</nav>
+<div class="header-wrap">
+    <header>
+        <a class="logo" href="/">
+            <span class="logo-mark">N</span>
+            <span>NEMESIS</span>
+        </a>
+        <nav class="nav">
+            <a href="/">Главная</a>
+            <a href="/steam">Steam</a>
+            <a href="/ai">AI</a>
+            <a href="/minecraft">Minecraft</a>
+            <a href="/account" class="active">Аккаунт</a>
+        </nav>
+        <div class="header-actions">
+            <span class="lang">RU</span>
+            <a class="login" href="/account">Войти →</a>
+        </div>
+    </header>
+</div>
 
 <section class="hero">
     <div class="island">
 
         <!-- ВХОД -->
         <div id="loginSection">
-            <div class="tag">🔐 авторизация</div>
+            <div class="tag">🔐 Авторизация</div>
             <h1>Вход в <em>аккаунт</em></h1>
             <div class="desc">Войдите, чтобы управлять подпиской</div>
 
@@ -226,7 +382,7 @@
 
         <!-- РЕГИСТРАЦИЯ -->
         <div id="registerSection" class="hidden">
-            <div class="tag">📝 создание</div>
+            <div class="tag">📝 Создание</div>
             <h1>Регистрация</h1>
             <div class="desc">Создайте новый аккаунт</div>
 
@@ -258,7 +414,7 @@
 
         <!-- ПРОФИЛЬ -->
         <div id="profileSection" class="hidden">
-            <div class="tag">👤 профиль</div>
+            <div class="tag">👤 Профиль</div>
             <h1>Привет, <em id="profileName">Пользователь</em></h1>
 
             <div class="profile-info">
@@ -278,7 +434,7 @@
 
         <!-- АКТИВАЦИЯ КЛЮЧА -->
         <div id="keySection" class="hidden">
-            <div class="tag">🎁 активация</div>
+            <div class="tag">🎁 Активация</div>
             <h1>Активировать <em>ключ</em></h1>
             <div class="desc">Введите ключ для активации тарифа</div>
 
@@ -297,7 +453,16 @@
     </div>
 </section>
 
-<div class="footer">© 2026 nemesis · kotik team</div>
+<footer class="footer">
+    <div class="footer-row">
+        <span>© 2026 NEMESIS · kotik team</span>
+        <div class="footer-links">
+            <a href="/privacy">Конфиденциальность</a>
+            <a href="/terms">Соглашение</a>
+            <a href="https://t.me/Nemesissup" target="_blank">Поддержка</a>
+        </div>
+    </div>
+</footer>
 
 <!-- ===== FIREBASE ===== -->
 <script type="importmap">
@@ -315,7 +480,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { getDatabase, ref, set, get, update } from "firebase/database";
 
-// ===== FIREBASE КОНФИГ =====
 const firebaseConfig = {
     apiKey: "AIzaSyA47KFVXVAXEjIkwCqbkwM7yLUGUco8ov8",
     authDomain: "nemesissteam-13577.firebaseapp.com",
@@ -417,14 +581,14 @@ loginBtn.addEventListener('click', async () => {
     const password = loginPassword.value;
     if (!email || !password) {
         loginStatus.textContent = '❌ Заполните все поля';
-        loginStatus.style.color = '#ff4444';
+        loginStatus.style.color = '#ff6b6b';
         return;
     }
     try {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (e) {
         loginStatus.textContent = '❌ ' + e.message;
-        loginStatus.style.color = '#ff4444';
+        loginStatus.style.color = '#ff6b6b';
     }
 });
 
@@ -436,22 +600,22 @@ registerBtn.addEventListener('click', async () => {
 
     if (!username || !email || !password || !repeat) {
         registerStatus.textContent = '❌ Заполните все поля';
-        registerStatus.style.color = '#ff4444';
+        registerStatus.style.color = '#ff6b6b';
         return;
     }
     if (username.length < 3) {
         registerStatus.textContent = '❌ Имя не менее 3 символов';
-        registerStatus.style.color = '#ff4444';
+        registerStatus.style.color = '#ff6b6b';
         return;
     }
     if (password.length < 6) {
         registerStatus.textContent = '❌ Пароль не менее 6 символов';
-        registerStatus.style.color = '#ff4444';
+        registerStatus.style.color = '#ff6b6b';
         return;
     }
     if (password !== repeat) {
         registerStatus.textContent = '❌ Пароли не совпадают';
-        registerStatus.style.color = '#ff4444';
+        registerStatus.style.color = '#ff6b6b';
         return;
     }
 
@@ -469,7 +633,7 @@ registerBtn.addEventListener('click', async () => {
         setTimeout(() => registerStatus.textContent = '', 2000);
     } catch (e) {
         registerStatus.textContent = '❌ ' + e.message;
-        registerStatus.style.color = '#ff4444';
+        registerStatus.style.color = '#ff6b6b';
     }
 });
 
@@ -477,12 +641,12 @@ activateKeySubmitBtn.addEventListener('click', async () => {
     const key = keyInput.value.trim().toUpperCase();
     if (!key) {
         keyStatus.textContent = '❌ Введите ключ';
-        keyStatus.style.color = '#ff4444';
+        keyStatus.style.color = '#ff6b6b';
         return;
     }
     if (!currentUser) {
         keyStatus.textContent = '❌ Войдите в аккаунт';
-        keyStatus.style.color = '#ff4444';
+        keyStatus.style.color = '#ff6b6b';
         return;
     }
 
@@ -491,12 +655,12 @@ activateKeySubmitBtn.addEventListener('click', async () => {
         const data = snap.val();
         if (!data) {
             keyStatus.textContent = '❌ Неверный ключ';
-            keyStatus.style.color = '#ff4444';
+            keyStatus.style.color = '#ff6b6b';
             return;
         }
         if (data.used) {
             keyStatus.textContent = '❌ Ключ уже использован';
-            keyStatus.style.color = '#ff4444';
+            keyStatus.style.color = '#ff6b6b';
             return;
         }
 
@@ -517,7 +681,7 @@ activateKeySubmitBtn.addEventListener('click', async () => {
         setTimeout(() => showProfile(), 1500);
     } catch (e) {
         keyStatus.textContent = '❌ ' + e.message;
-        keyStatus.style.color = '#ff4444';
+        keyStatus.style.color = '#ff6b6b';
     }
 });
 
@@ -554,22 +718,6 @@ onAuthStateChanged(auth, async (user) => {
         keyStatus.textContent = '';
     }
 });
-
-function createStars() {
-    const container = document.getElementById('stars');
-    for (let i = 0; i < 120; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = (Math.random() * 2 + 1) + 'px';
-        star.style.height = star.style.width;
-        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-        star.style.animationDelay = (Math.random() * 5) + 's';
-        container.appendChild(star);
-    }
-}
-createStars();
 </script>
 </body>
 </html>
