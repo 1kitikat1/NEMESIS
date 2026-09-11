@@ -619,22 +619,39 @@ registerBtn.addEventListener('click', async () => {
         return;
     }
 
-    try {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(cred.user, { displayName: username });
-        await set(ref(db, `users/${cred.user.uid}`), {
-            username: username,
-            email: email,
-            role: 'free',
-            createdAt: new Date().toISOString()
-        });
-        registerStatus.textContent = '✅ Аккаунт создан!';
-        registerStatus.style.color = '#22c55e';
-        setTimeout(() => registerStatus.textContent = '', 2000);
-    } catch (e) {
-        registerStatus.textContent = '❌ ' + e.message;
+try {
+    const lowerUsername = username.toLowerCase();
+
+    // Проверка: не занят ли ник
+    const existing = await get(ref(db, `usernames/${lowerUsername}`));
+    if (existing.exists()) {
+        registerStatus.textContent = '❌ Этот ник уже занят';
         registerStatus.style.color = '#ff6b6b';
+        return;
     }
+
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(cred.user, { displayName: username });
+
+    // 1) Защищённый узел — читает только сам юзер
+    await set(ref(db, `users/${cred.user.uid}`), {
+        username: username,
+        usernameLower: lowerUsername,
+        email: email,
+        role: 'free',
+        createdAt: new Date().toISOString()
+    });
+
+    // 2) Публичный узел — только username -> email
+    await set(ref(db, `usernames/${lowerUsername}`), email);
+
+    registerStatus.textContent = '✅ Аккаунт создан!';
+    registerStatus.style.color = '#22c55e';
+    setTimeout(() => registerStatus.textContent = '', 2000);
+} catch (e) {
+    registerStatus.textContent = '❌ ' + e.message;
+    registerStatus.style.color = '#ff6b6b';
+}
 });
 
 activateKeySubmitBtn.addEventListener('click', async () => {
