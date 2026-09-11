@@ -193,6 +193,28 @@
         }
         .cannon-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 45px rgba(150,160,255,.2); }
 
+        /* НОВОЕ: стиль для недоступной кнопки */
+        .cannon-btn.disabled {
+            background: rgba(255,255,255,.045);
+            color: #5a6270;
+            cursor: not-allowed;
+            box-shadow: none;
+            border: 1px dashed rgba(255,255,255,.12);
+            pointer-events: none;
+            user-select: none;
+        }
+        .cannon-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .soon-note {
+            margin-top: 10px;
+            font-size: 10px;
+            color: #555e6c;
+            letter-spacing: .04em;
+        }
+
         .features-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -305,10 +327,11 @@
         <h1>Nemesis <em>Steam</em></h1>
         <div class="desc">Оптимизация FPS и ОЗУ для игр. Повысь производительность до +40%.</div>
 
-        <a href="https://github.com/1kitikat1/nemesis-optimization/releases/download/0.4.0/NemesisSteam.exe"
-           class="cannon-btn" target="_blank">
-            ⬇️ СКАЧАТЬ ЛАУНЧЕР
-        </a>
+        <!-- Кнопка скачивания недоступна -->
+        <button class="cannon-btn disabled" disabled>
+            🔒 СКАЧИВАНИЕ НЕДОСТУПНО
+        </button>
+        <div class="soon-note">Скоро снова в сети · следите за обновлениями в Telegram</div>
 
         <div class="features-grid">
             <div class="item"><span class="check">✦</span> Повышение FPS до +40%</div>
