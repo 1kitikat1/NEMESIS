@@ -1,134 +1,168 @@
+
 import { auth, db } from "./firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-const message = document.querySelector("#authMessage");
-const lang = () => window.nemesisLanguage?.() || "ru";
-const text = {
-  ru: {
-    signing: "Выполняем вход…",
-    creating: "Создаём аккаунт…",
-    need: "Сначала введите email и пароль.",
-    created: "Аккаунт создан.",
-    error: "Что-то пошло не так. Попробуйте ещё раз."
-  },
-  en: {
-    signing: "Signing in…",
-    creating: "Creating account…",
-    need: "Enter your email and password first.",
-    created: "Account created.",
-    error: "Something went wrong. Please try again."
-  }
-};
+import {
+  ref, get, set, runTransaction, update, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
-const show = (value, error = true) => {
-  if (message) message.textContent = value;
-  if (message) message.className = "form-message " + (error ? "error" : "success");
-};
+const form = document.getElementById("registerForm") || document.getElementById("loginForm");
+const msg = document.getElementById("authMessage");
 
-const busy = (form, on, label) => {
-  const button = form?.querySelector('button[type="submit"]');
-  if (!button) return;
+function show(text, ok=false) {
+  if (!msg) return;
+  msg.textContent = text;
+  msg.className = "status " + (ok ? "ok" : "");
+}
 
+function errorText(error) {
+  const code = error?.code || "";
+  const map = {
+    "auth/email-already-in-use":"Этот email уже зарегистрирован.",
+    "auth/invalid-email":"Введите корректный email.",
+    "auth/weak-password":"Пароль должен содержать минимум 6 символов.",
+    "auth/invalid-credential":"Неверный email или пароль.",
+    "auth/too-many-requests":"Слишком много попыток. Попробуйте позже.",
+    "PERMISSION_DENIED":"Не удалось сохранить профиль. Проверьте настройки доступа."
+  };
+  return map[code] || error?.message || "Произошла ошибка.";
+}
+
+function busy(on, text) {
+  const b = form?.querySelector("button[type=submit]");
+  if (!b) return;
   if (on) {
-    button.dataset.old = button.textContent;
-    button.disabled = true;
-    button.textContent = label;
+    b.dataset.old = b.textContent;
+    b.disabled = true;
+    b.textContent = text;
   } else {
-    button.disabled = false;
-    if (button.dataset.old) button.textContent = button.dataset.old;
+    b.disabled = false;
+    b.textContent = b.dataset.old || b.textContent;
   }
-};
-
-function firebaseError(code) {
-  const ru = {
-    "auth/email-already-in-use": "Этот email уже зарегистрирован.",
-    "auth/invalid-email": "Введите корректный email.",
-    "auth/weak-password": "Пароль должен содержать минимум 6 символов.",
-    "auth/invalid-credential": "Неверный email или пароль.",
-    "auth/too-many-requests": "Слишком много попыток. Попробуйте позже.",
-    "PERMISSION_DENIED": "Не удалось сохранить данные аккаунта. Проверьте настройки базы данных."
-  };
-  const en = {
-    "auth/email-already-in-use": "This email is already registered.",
-    "auth/invalid-email": "Enter a valid email.",
-    "auth/weak-password": "Password must be at least 6 characters.",
-    "auth/invalid-credential": "Incorrect email or password.",
-    "auth/too-many-requests": "Too many attempts. Try again later.",
-    "PERMISSION_DENIED": "Could not save account data. Check your database settings."
-  };
-
-  return (lang() === "en" ? en : ru)[code] || text[lang()].error;
 }
 
-const login = document.querySelector("#loginForm");
-if (login) {
-  onAuthStateChanged(auth, user => {
-    if (user) location.href = "../dashboard/";
-  });
+const register = document.getElementById("registerForm");
 
-  login.addEventListener("submit", async event => {
-    event.preventDefault();
-    busy(login, true, text[lang()].signing);
-    show(text[lang()].signing, false);
-
-    try {
-      await signInWithEmailAndPassword(
-        auth,
-        login.email.value.trim(),
-        login.password.value
-      );
-      location.href = "../dashboard/";
-    } catch (error) {
-      show(firebaseError(error.code));
-    } finally {
-      busy(login, false);
-    }
-  });
-}
-
-const register = document.querySelector("#registerForm");
 if (register) {
   onAuthStateChanged(auth, user => {
     if (user) location.href = "../dashboard/";
   });
 
-  register.addEventListener("submit", async event => {
-    event.preventDefault();
-    busy(register, true, text[lang()].creating);
-    show(text[lang()].creating, false);
+  register.addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const username = register.username.value.trim();
+    const email = register.email.value.trim().toLowerCase();
+    const password = register.password.value;
+    const password2 = register.password2?.value ?? password;
+
+    if (!/^[a-zA-Z0-9_.-]{3,24}$/.test(username)) {
+      show("Username: 3–24 символа, только латиница, цифры, _ . -");
+      return;
+    }
+    if (password !== password2) {
+      show("Пароли не совпадают.");
+      return;
+    }
+
+    busy(true, "Создаём аккаунт…");
+    show("Создаём аккаунт…", true);
 
     try {
-      const username = register.username.value.trim();
-      const email = register.email.value.trim();
-      const password = register.password.value;
-
-      if (!username || !email || !password) {
-        show(text[lang()].need);
-        return;
-      }
-
+      // 1. Создаём Firebase Authentication account.
       const credential = await createUserWithEmailAndPassword(auth, email, password);
       const user = credential.user;
+      const key = username.toLowerCase();
+
+      // 2. Резервируем username в RTDB атомарно.
+      const usernameRef = ref(db, `usernames/${key}`);
+      const reservation = await runTransaction(usernameRef, current => {
+        if (current !== null) return;
+        return {
+          uid: user.uid,
+          username
+        };
+      });
+
+      if (!reservation.committed) {
+        await user.delete();
+        throw new Error("Этот username уже занят.");
+      }
 
       await updateProfile(user, { displayName: username });
 
-      // Realtime Database: users/{uid}
+      // 3. ВСЕ профильные данные — в RTDB.
       await set(ref(db, `users/${user.uid}`), {
+        uid: user.uid,
         username,
-        email: user.email || email,
+        usernameKey: key,
+        email,
         plan: "free",
+        role: "user",
         subscriptionStatus: "inactive",
-        createdAt: Date.now()
+        expiresAt: null,
+        createdAt: serverTimestamp(),
+        lastSeenAt: serverTimestamp(),
+        active: true,
+        currentProduct: "website",
+        downloads: {
+          minecraft: 0,
+          lineage2m: 0
+        }
       });
 
-      show(text[lang()].created, false);
+      show("Аккаунт успешно создан.", true);
+      setTimeout(() => location.href = "../dashboard/", 500);
+    } catch (error) {
+      console.error(error);
+      show(errorText(error));
+    } finally {
+      busy(false);
+    }
+  });
+}
+
+const login = document.getElementById("loginForm");
+
+if (login) {
+  onAuthStateChanged(auth, user => {
+    if (user) location.href = "../dashboard/";
+  });
+
+  login.addEventListener("submit", async e => {
+    e.preventDefault();
+    busy(true, "Входим…");
+    show("Входим…", true);
+
+    try {
+      const email = login.email.value.trim().toLowerCase();
+      const password = login.password.value;
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      const user = credential.user;
+
+      // После входа обязательно проверяем RTDB.
+      const snap = await get(ref(db, `users/${user.uid}`));
+      if (!snap.exists()) {
+        throw new Error("Профиль аккаунта не найден. Попробуйте войти снова.");
+      }
+
+      await update(ref(db, `users/${user.uid}`), {
+        lastSeenAt: serverTimestamp(),
+        active: true,
+        currentProduct: "website"
+      });
+
       location.href = "../dashboard/";
     } catch (error) {
-      console.error("Registration error:", error);
-      show(firebaseError(error.code || error.message));
+      console.error(error);
+      show(errorText(error));
     } finally {
-      busy(register, false);
+      busy(false);
     }
   });
 }
