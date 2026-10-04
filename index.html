@@ -1,21 +1,103 @@
-<!doctype html><html lang="ru"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nemesis — Liquid Glass</title><link rel="stylesheet" href="assets/css/main.css">
-</head><body>
-<header class="nav"><a class="brand" href="./"><img class="brand-logo" src="assets/img/logo.png" alt="Nemesis"><span>NEMESIS</span></a>
-<nav class="navlinks"><a class="active" href="./">Главная</a><a href="minecraft/">Minecraft</a><a href="pricing/">Тарифы</a></nav>
-<a class="account" href="login/">Войти →</a></header>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nemesis Launcher</title>
+<meta name="description" content="Nemesis Launcher — one place to download and launch your game modifications.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="noise"></div>
+<div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
+
+<nav class="nav glass">
+  <a class="brand" href="#">
+    <span class="brand-mark"><span></span><span></span><span></span></span>
+    <span>NEMESIS</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#games">Games</a>
+  </div>
+  <a class="nav-download unavailable" href="#download" data-unavailable>Download</a>
+</nav>
+
 <main>
-<section class="hero"><div class="wrap hero-grid"><div>
-<div class="eyebrow"><span class="dot"></span>PRIVATE GAMING ECOSYSTEM</div>
-<h1>Твой клиент.<br><span class="grad">Твой интерфейс.</span></h1>
-<p class="lead">Nemesis — экосистема с Minecraft-клиентом, аккаунтом и загрузками. Тёмный Liquid Glass интерфейс с розово-фиолетовым свечением.</p>
-<div class="actions"><a class="btn" href="register/">Создать аккаунт</a><a class="btn ghost" href="minecraft/">Открыть Minecraft →</a></div>
-</div><div class="visual glass"><div class="client-card"><div><div class="eyebrow">NEMESIS CLIENT</div><div class="big">1.21.11</div><p class="lead">Fabric · Click GUI · Modules</p></div><div class="badges"><span class="badge">FABRIC</span><span class="badge">84+ MODULES</span><span class="badge">READY</span></div></div></div></div></section>
-<section class="section"><div class="wrap"><div class="kicker">01 / ECOSYSTEM</div><h2>Всё необходимое<br><span class="grad">в одном месте.</span></h2>
-<div class="grid" style="margin-top:28px">
-<a class="card glass" href="minecraft/"><div class="icon">◆</div><h3>Nemesis Minecraft</h3><p>Fabric 1.21.11, модули, Click GUI и собственный лаунчер.</p></a>
-<a class="card glass" href="register/"><div class="icon">◉</div><h3>Аккаунт</h3><p>Username, email, роль, план, даты и активность сохраняются в базе.</p></a>
-</div></div></section>
-</main><footer><div class="wrap foot"><span>© 2026 NEMESIS</span><span>Private gaming ecosystem</span></div></footer>
-<script type="module" src="assets/js/app.js"></script></body></html>
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><i></i> NEMESIS LAUNCHER</div>
+    <h1>Your games.<br><em>Your modifications.</em><br>One launcher.</h1>
+    <p class="lead">A clean desktop launcher built to keep your game modifications, versions and downloads in one place.</p>
+    <div class="hero-actions">
+      <a class="button primary unavailable" href="#download" data-unavailable><span>Download Launcher</span><b>↗</b></a>
+      <a class="button secondary" href="#features">Explore</a>
+    </div>
+    <div class="meta"><span>Windows</span><span>·</span><span>Free</span><span>·</span><span>Nemesis</span></div>
+  </div>
+  <div class="hero-visual">
+    <div class="launcher-window glass">
+      <div class="window-top">
+        <div class="traffic"><i></i><i></i><i></i></div>
+        <span>Nemesis Launcher</span><small>LIBRARY</small>
+      </div>
+      <div class="launcher-body">
+        <aside>
+          <div class="mini-logo"><span></span><span></span><span></span></div>
+          <div class="side-item active">Library</div>
+          <div class="side-item">Downloads</div>
+          <div class="side-item">Settings</div>
+        </aside>
+        <div class="library">
+          <div class="library-head"><div><small>YOUR LIBRARY</small><h3>Games</h3></div><div class="status"><i></i> Ready</div></div>
+          <div class="game-card">
+            <div class="game-art minecraft"><div class="pixel"></div></div>
+            <div class="game-info"><span>FABRIC</span><strong>Minecraft</strong><small>Versions & modifications</small></div>
+            <div class="play">▶</div>
+          </div>
+          <div class="game-card muted">
+            <div class="game-art lineage"><div class="line"></div></div>
+            <div class="game-info"><span>COMING SOON</span><strong>Lineage2M</strong><small>Launcher support</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="section">
+  <div class="section-title"><span>01</span><div><small>WHY NEMESIS</small><h2>Everything around<br>your modifications.</h2></div></div>
+  <div class="features">
+    <article class="feature glass"><div class="icon">↓</div><h3>Fast downloads</h3><p>Download the files you need directly from the launcher without searching through folders.</p></article>
+    <article class="feature glass"><div class="icon">▣</div><h3>Game library</h3><p>Keep different games and their versions organized in one clean desktop interface.</p></article>
+    <article class="feature glass"><div class="icon">✦</div><h3>Made for Nemesis</h3><p>A minimal launcher experience with a dark glass interface and smooth transitions.</p></article>
+  </div>
+</section>
+
+<section id="games" class="games section">
+  <div class="section-title"><span>02</span><div><small>SUPPORTED GAMES</small><h2>Built around your library.</h2></div></div>
+  <div class="game-list">
+    <div class="large-game glass"><div class="game-number">01</div><div><span>FABRIC · 1.21.11</span><h3>Minecraft</h3><p>Download and manage the Nemesis Minecraft client and its required files.</p></div><b>↗</b></div>
+    <div class="large-game glass soon"><div class="game-number">02</div><div><span>LAUNCHER SUPPORT</span><h3>Lineage2M</h3><p>Nemesis launcher support for the standalone game client.</p></div><b>SOON</b></div>
+  </div>
+</section>
+
+<section id="download" class="download section">
+  <div class="download-card glass">
+    <div>
+      <small>GET STARTED</small>
+      <h2>One launcher.<br>Less friction.</h2>
+      <p>Install Nemesis Launcher and manage your supported games from one place.</p>
+    </div>
+    <div class="download-side">
+      <a class="button primary big unavailable" href="#download" data-unavailable>Download for Windows <b>↓</b></a>
+      <span class="download-status"><i></i> Launcher пока недоступен для скачивания</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="brand"><span class="brand-mark"><span></span><span></span><span></span></span><span>NEMESIS</span></div><span>© 2026 Nemesis. Built for your library.</span></footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
